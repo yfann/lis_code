@@ -16,7 +16,7 @@ angular.module('app')
         ['$stateProvider', '$urlRouterProvider',
             function ($stateProvider, $urlRouterProvider) {
 
-            $urlRouterProvider.otherwise('/app/home');
+            $urlRouterProvider.otherwise('/app/crisis');
             
             $stateProvider
                 .state('app', {
@@ -28,7 +28,14 @@ angular.module('app')
                     url: '/home',
                     templateUrl: 'tpl/home.html'
                 })
-                
+                .state('app.crisis', {
+                    url: '/crisis',
+                    templateUrl: 'tpl/crisis/crisis_list.html'
+                })
+                .state('app.crisis_detail', {
+                    url: '/crisis_detail',
+                    templateUrl: 'tpl/crisis/crisis_detail.html'
+                })
             }
         ]
     );

@@ -1,4 +1,10 @@
-.myGrid {
-    width: 500px;
-    height: 250px;
+
+
+.fann-lis .list-con{
+    margin:20px;
+    width: 100%;
+}
+
+.fann-lis .list-sty {
+    width: 95%;
 }
