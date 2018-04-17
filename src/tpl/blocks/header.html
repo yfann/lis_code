@@ -1,0 +1,39 @@
+<!-- navbar left header -->
+<div class="navbar-header {{app.settings.navbarHeaderColor}}">
+
+</div>
+
+<!-- navbar collapse -->
+<div class="collapse pos-rlt navbar-collapse box-shadow {{app.settings.navbarCollapseColor}}">
+  <div class="nav navbar-nav navbar-right">
+    <!-- login -->
+    <li class="dropdown" dropdown>
+      <a href class="dropdown-toggle clear" dropdown-toggle>
+        <span class="hidden-sm hidden-md">用户</span>
+        <b class="caret"></b>
+      </a>
+      <!-- dropdown -->
+      <ul class="dropdown-menu animated fadeInRight w">
+        <li>
+          <a ui-sref="app.admin.setting">
+            <span translate="header.user.setting">个人设置</span>
+          </a>
+        </li>
+        <li>
+          <a ui-sref="app.admin.edit_pwd">
+            <span translate="header.user.edit_pwd">修改密码</span>
+          </a>
+        </li>
+        <li>
+          <a translate="header.user.lockme">锁屏</a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <a>注销登录</a>
+        </li>
+      </ul>
+      <!-- / dropdown -->
+    </li>
+  </div>
+
+</div>

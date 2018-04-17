@@ -1,0 +1,29 @@
+{
+  "nav":{
+     "system_manage":"系统管理",
+     "crisis_manage":"危机管理",
+     "patient_manage":"用户管理",
+     "department_manage":"部门管理",
+     "item_manage":"检验项目管理",
+     "medi_manage":"医疗机构管理",
+     "category_manage":"项目类别管理",
+     "label_manage":"标签管理",
+     "request_manage":"申请单管理",
+     "logistics_manage":"物流管理",
+     "labresult":"检验结果"
+  },
+  "header":{
+    "user":{
+      "setting":"个人设置",
+      "edit_pwd":"修改密码",
+      "lockme":"锁屏",
+      "logout":"注销登录"
+    }
+  },
+  "button":{
+    "save":"保存"
+  },
+  "msg":{
+    "system_error":""
+  }
+}
