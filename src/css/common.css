@@ -8,3 +8,7 @@
 .fann-lis .list-sty {
     width: 95%;
 }
+
+.fann-lis .detail.table-header{
+    display: none;
+}
