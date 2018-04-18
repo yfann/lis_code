@@ -12,7 +12,7 @@
                     <div class="col-md-4">
                         <ui-select ng-model="selectedItem" theme="bootstrap">
                             <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices group-by="'group'" repeat="item in list | filter: $select.search">
+                            <ui-select-choices group-by="'group'" repeat="item in itemList | filter: $select.search">
                                 <span ng-bind-html="item.name | highlight: $select.search"></span>
                                 <small ng-bind-html="item.email | highlight: $select.search"></small>
                             </ui-select-choices>

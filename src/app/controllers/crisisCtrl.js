@@ -1,7 +1,7 @@
-app.controller('CrisisListCtrl', ['$scope', '$state', function ($scope, $state) {
+app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
     var editTpl = '<button id="editBtn" type="button" class="btn-small" ng-click="grid.appScope.go(row.entity)" >Edit</button>';
     $scope.go = function (rowData) {
-        $state.go('app.crisis_detail');
+        $state.go('app.crisis_detail', { id: rowData.id });
     }
     $scope.gridOptions = {
         columnDefs: [
@@ -18,35 +18,18 @@ app.controller('CrisisListCtrl', ['$scope', '$state', function ($scope, $state) 
                 displayName: 'Edit',
                 cellTemplate: editTpl
             }
-        ],
-        data: [
-            {
-                'id': 1,
-                'name': 'test001'
-            },
-            {
-                'id': 2,
-                'name': 'test002'
-            },
-            {
-                'id': 3,
-                'name': 'test003'
-            },
-            {
-                'id': 4,
-                'name': 'test004'
-            }
         ]
     };
 
+    dataService.getlabitemList().then(function (result) {
+        $scope.gridOptions.data = result.data;
+    });
 }]);
 
-app.controller('CrisisDetailCtrl', ['$scope', function ($scope) {
-    $scope.list = [{
-        name: 'test01'
-    }, {
-        name: 'test02'
-    }];
-
+app.controller('CrisisDetailCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
     $scope.selectedItem = {};
+
+    dataService.getlabitemList().then(function(result){
+        $scope.itemList=result.data;
+    });
 }]);
