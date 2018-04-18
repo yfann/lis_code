@@ -19,5 +19,7 @@ angular.module('app', [
     'ui.grid',
     'ui.grid.edit',
     'ui.grid.selection',
+    'ui.select',
+    //custom
     'httpService'
 ]);

@@ -16,26 +16,28 @@ angular.module('app')
         ['$stateProvider', '$urlRouterProvider',
             function ($stateProvider, $urlRouterProvider) {
 
-            $urlRouterProvider.otherwise('/app/crisis');
-            
-            $stateProvider
-                .state('app', {
-                    abstract: true,
-                    url: '/app',
-                    templateUrl: 'tpl/app.html'
-                })
-                .state('app.home', {
-                    url: '/home',
-                    templateUrl: 'tpl/home.html'
-                })
-                .state('app.crisis', {
-                    url: '/crisis',
-                    templateUrl: 'tpl/crisis/crisis_list.html'
-                })
-                .state('app.crisis_detail', {
-                    url: '/crisis_detail',
-                    templateUrl: 'tpl/crisis/crisis_detail.html'
-                })
+                $urlRouterProvider.otherwise('/app/crisis');
+
+                $stateProvider
+                    .state('app', {
+                        abstract: true,
+                        url: '/app',
+                        templateUrl: 'tpl/app.html'
+                    })
+                    .state('app.home', {
+                        url: '/home',
+                        templateUrl: 'tpl/home.html'
+                    })
+                    .state('app.crisis', {
+                        url: '/crisis',
+                        templateUrl: 'tpl/crisis/crisis_list.html',
+                        controller: 'CrisisListCtrl'
+                    })
+                    .state('app.crisis_detail', {
+                        url: '/crisis_detail',
+                        templateUrl: 'tpl/crisis/crisis_detail.html',
+                        controller: 'CrisisDetailCtrl'
+                    })
             }
         ]
     );

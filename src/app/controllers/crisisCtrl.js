@@ -1,4 +1,4 @@
-app.controller('CrisisCtrl', ['$scope', '$state', function ($scope, $state) {
+app.controller('CrisisListCtrl', ['$scope', '$state', function ($scope, $state) {
     var editTpl = '<button id="editBtn" type="button" class="btn-small" ng-click="grid.appScope.go(row.entity)" >Edit</button>';
     $scope.go = function (rowData) {
         $state.go('app.crisis_detail');
@@ -39,4 +39,14 @@ app.controller('CrisisCtrl', ['$scope', '$state', function ($scope, $state) {
         ]
     };
 
+}]);
+
+app.controller('CrisisDetailCtrl', ['$scope', function ($scope) {
+    $scope.list = [{
+        name: 'test01'
+    }, {
+        name: 'test02'
+    }];
+
+    $scope.selectedItem = {};
 }]);
