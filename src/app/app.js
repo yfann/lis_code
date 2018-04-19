@@ -21,5 +21,6 @@ angular.module('app', [
     'ui.grid.selection',
     'ui.select',
     //custom
-    'httpService'
+    'httpService',
+    'uiDirect'
 ]);
