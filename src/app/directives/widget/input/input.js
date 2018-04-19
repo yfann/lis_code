@@ -6,7 +6,7 @@ angular.module('uiDirect')
                 value: '='
             },
             replace: true,
-            templateUrl: '',
+            templateUrl: 'app/directives/widget/input/input.html',
             controller: function ($scope, $element, $attrs) {
 
             }

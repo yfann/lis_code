@@ -24,3 +24,5 @@ angular.module('app', [
     'httpService',
     'uiDirect'
 ]);
+
+angular.module('uiDirect',[]);
