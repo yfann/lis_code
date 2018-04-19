@@ -35,6 +35,9 @@ angular.module('app')
                     })
                     .state('app.crisis_detail', {
                         url: '/crisis_detail',
+                        params: {
+                            id: null
+                        },
                         templateUrl: 'tpl/crisis/crisis_detail.html',
                         controller: 'CrisisDetailCtrl'
                     })
