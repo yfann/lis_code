@@ -3,7 +3,7 @@ angular.module('uiDirect')
         return {
             restrict: 'E',
             scope: {
-                value: '='
+                val: '='
             },
             replace: true,
             templateUrl: 'app/directives/widget/input/input.html',

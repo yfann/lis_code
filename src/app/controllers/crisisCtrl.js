@@ -4,7 +4,7 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
     //     $state.go('app.crisis_detail', { id: rowData.id });
     // }
 
-    var editUrl ='<a ui-sref="app.crisis_detail({id: row.entity.id})">编辑</a>'
+    var editUrl = '<a ui-sref="app.crisis_detail({id: row.entity.id})">编辑</a>'
 
     $scope.gridOptions = {
         columnDefs: [
@@ -30,11 +30,17 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
 }]);
 
 app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
-    console.log($stateParams);
+    //console.log($stateParams);
     $scope.model = {
-        selectedlabItem:null
+        selectedlabItem: null,
+        normalUp: null
     };
-    dataService.getlabitemList().then(function(result){
-        $scope.itemList=result.data;
+    dataService.getlabitemList().then(function (result) {
+        $scope.itemList = result.data;
     });
+
+    $scope.submit = function () {
+        console.log($scope.model);
+    }
+
 }]);
