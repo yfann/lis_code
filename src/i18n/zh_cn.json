@@ -21,7 +21,9 @@
     }
   },
   "button":{
-    "save":"保存"
+    "save":"保存",
+    "search":"查询",
+    "create":"新建"
   },
   "msg":{
     "system_error":""

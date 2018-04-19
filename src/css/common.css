@@ -1,14 +1,28 @@
 
 
-.fann-lis .list-con{
-    margin:20px;
-    width: 100%;
-}
 
-.fann-lis .list-sty {
-    width: 95%;
-}
 
 .fann-lis .detail.table-header{
     display: none;
 }
+
+.fann-lis .right{
+    float: right;
+}
+
+/*ui grid start*/
+.fann-lis .ui-grid-cell .editTpl{
+    color: #2a6496;
+    margin-top: 5px;
+    margin-left: 7px;
+    display: inline-block;
+}
+
+.fann-lis .list-con{
+    padding: 0px;
+}
+
+.fann-lis .list-sty {
+    width: 100%;
+}
+/*ui grid end*/

@@ -4,7 +4,7 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
     //     $state.go('app.crisis_detail', { id: rowData.id });
     // }
 
-    var editUrl = '<a ui-sref="app.crisis_detail({id: row.entity.id})">编辑</a>'
+    var editUrl = '<a class="editTpl" ui-sref="app.crisis_detail({id: row.entity.id})">编辑</a>'
 
     $scope.gridOptions = {
         columnDefs: [
@@ -27,6 +27,14 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
     dataService.getlabitemList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
+
+    $scope.search = function () {
+
+    }
+
+    $scope.create = function () {
+        $state.go('app.crisis_detail');
+    }
 }]);
 
 app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {

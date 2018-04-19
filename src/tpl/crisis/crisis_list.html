@@ -1,26 +1,24 @@
-<div class="bg-light lter b-b wrapper-md table-header">
+<!-- <div class="bg-light lter b-b wrapper-md table-header">
     <h1 class="m-n font-thin h3" translate="nav.crisis_manage"></h1>
-</div>
+</div> -->
 <div class="wrapper-md">
     <div class="panel panel-default">
+        <div class="panel-heading font-bold" translate="nav.crisis_manage">
+        </div>
         <div class="panel-body">
-            <form class="form-inline" role="form">
+            <form class="form-inline">
                 <div class="form-group">
-                    <label >Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+                    <label >名称</label>
+                    <input class="form-control">
                 </div>
-                <button type="submit" class="btn btn-default">Sign in</button>
+                <button ng-click="search()" class="btn btn-default" translate="button.search"></button>
+                <button ng-click="create()" class="btn btn-primary right" translate="button.create"></button>
             </form>
         </div>
     </div>
     <div class="panel panel-default">
-            <div class="panel-body">
+            <div class="panel-body list-con">
                     <div class="list-sty" ui-grid="gridOptions"></div>
             </div>
         </div>
 </div>
-<!-- 
-
-<div class="list-con">
-    
-</div> -->
