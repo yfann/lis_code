@@ -31,7 +31,9 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
 
 app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
     console.log($stateParams);
-    $scope.selectedItem = {};
+    $scope.model = {
+        selectedlabItem:null
+    };
     dataService.getlabitemList().then(function(result){
         $scope.itemList=result.data;
     });
