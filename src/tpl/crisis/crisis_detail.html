@@ -10,11 +10,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">检验项目</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedlabItem" 
-                                   theme="bootstrap"
-                                   ng-disabled="false"
-                                   search-enabled="false"
-                                   >
+                        <ui-select ng-model="model.selectedlabItem" theme="bootstrap" ng-disabled="false" search-enabled="false">
                             <ui-select-match>{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices group-by="'group'" repeat="item in itemList | filter: $select.search">
                                 <span ng-bind-html="item.name | highlight: $select.search"></span>
@@ -33,35 +29,35 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">正常下限</label>
                     <div class="col-md-4">
-                            <input type="text" class="form-control" >
+                        <input type="text" class="form-control">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">危机上限</label>
                     <div class="col-md-4">
-                            <input type="text" class="form-control" >
+                        <input type="text" class="form-control">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">危机下限</label>
                     <div class="col-md-4">
-                            <input type="text" class="form-control" >
+                        <input type="text" class="form-control">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">危机临床提示</label>
                     <div class="col-md-4">
-                            <input type="text" class="form-control" >
+                        <input type="text" class="form-control">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">临床意义</label>
                     <div class="col-md-4">
-                            <input type="text" class="form-control" >
+                        <input type="text" class="form-control">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
