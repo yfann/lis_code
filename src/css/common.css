@@ -1,7 +1,4 @@
 
-
-
-
 .fann-lis .detail.table-header{
     display: none;
 }
@@ -26,3 +23,9 @@
     width: 100%;
 }
 /*ui grid end*/
+
+/*form start*/
+.fann-lis .form-group.select-group{
+    height: 34px;
+}
+/*form end*/
