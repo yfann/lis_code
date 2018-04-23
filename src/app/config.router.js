@@ -41,6 +41,19 @@ angular.module('app')
                         templateUrl: 'tpl/crisis/crisis_detail.html',
                         controller: 'CrisisDetailCtrl'
                     })
+                    .state('app.depart', {
+                        url: '/depart',
+                        templateUrl: 'tpl/depart/depart_list.html',
+                        controller: 'DepartListCtrl'
+                    })
+                    .state('app.depart_detail', {
+                        url: '/depart_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/depart/depart_detail.html',
+                        controller: 'DepartDetailCtrl'
+                    })
             }
         ]
     );

@@ -41,6 +41,10 @@ angular.module('httpService', []).
                 },
                 getCrisisDetailById: function () {
 
-                }
+                },
+                getMildList: function () {
+                    var url='/mock_data/list.json';
+                    return $http.get(url);
+                },
             };
         }]);
