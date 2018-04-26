@@ -54,6 +54,14 @@ angular.module('app')
                         templateUrl: 'tpl/depart/depart_detail.html',
                         controller: 'DepartDetailCtrl'
                     })
+                    .state('app.request', {
+                        url: '/request',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/request/request_list.html',
+                        controller: 'RequestListCtrl'
+                    })
             }
         ]
     );

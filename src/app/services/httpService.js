@@ -46,5 +46,9 @@ angular.module('httpService', []).
                     var url='/mock_data/list.json';
                     return $http.get(url);
                 },
+                getRequestList:function(){
+                    var url='/mock_data/request_list.json';
+                    return $http.get(url);
+                }
             };
         }]);

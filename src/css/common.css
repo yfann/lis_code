@@ -22,6 +22,15 @@
 .fann-lis .list-sty {
     width: 100%;
 }
+
+.fann-lis .btn.grid-btn{
+    margin: 2px;
+    padding: 3px;
+}
+
+.fann-lis .btn.grid-btn.left-space{
+    margin-left: 16px;
+}
 /*ui grid end*/
 
 /*form start*/
