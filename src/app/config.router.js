@@ -16,17 +16,13 @@ angular.module('app')
         ['$stateProvider', '$urlRouterProvider',
             function ($stateProvider, $urlRouterProvider) {
 
-                $urlRouterProvider.otherwise('/app/crisis');
+                $urlRouterProvider.otherwise('/app/request');
 
                 $stateProvider
                     .state('app', {
                         abstract: true,
                         url: '/app',
                         templateUrl: 'tpl/app.html'
-                    })
-                    .state('app.home', {
-                        url: '/home',
-                        templateUrl: 'tpl/home.html'
                     })
                     .state('app.crisis', {
                         url: '/crisis',
@@ -61,6 +57,38 @@ angular.module('app')
                         },
                         templateUrl: 'tpl/request/request_list.html',
                         controller: 'RequestListCtrl'
+                    })
+                    .state('app.employee', {
+                        url: '/employee',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/employee/employee_list.html',
+                        controller: 'EmployeeListCtrl'
+                    })
+                    .state('app.employee_detail', {
+                        url: '/employee_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/employee/employee_detail.html',
+                        controller: 'EmployeeDetailCtrl'
+                    })
+                    .state('app.patient', {
+                        url: '/patient',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/patient/patient_list.html',
+                        controller: 'PatientListCtrl'
+                    })
+                    .state('app.patient_detail', {
+                        url: '/patient_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/patient/patient_detail.html',
+                        controller: 'PatientDetailCtrl'
                     })
             }
         ]

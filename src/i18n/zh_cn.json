@@ -2,7 +2,8 @@
   "nav":{
      "system_manage":"系统管理",
      "crisis_manage":"危机管理",
-     "patient_manage":"用户管理",
+     "employee_manage":"用户管理",
+     "patient_manage":"病人管理",
      "department_manage":"部门管理",
      "item_manage":"检验项目管理",
      "medi_manage":"医疗机构管理",
