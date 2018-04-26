@@ -58,11 +58,26 @@ app.controller('PatientListCtrl', ['$scope', '$state', 'dataService', function (
 app.controller('PatientDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
     //console.log($stateParams);
     $scope.model = {
-        selectedlabItem: null,
-        normalUp: null
+        selectedSex: null,
+        normalUp: null,
+        birthDate: new Date()
     };
-    dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1,
+        class: 'datepicker'
+    };
+
+    $scope.openDate = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+  
+        $scope.opened = true;
+      };
+
+    dataService.getSexList().then(function (result) {
+        $scope.sexList = result.data;
     });
 
     $scope.submit = function () {
