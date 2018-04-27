@@ -106,6 +106,22 @@ angular.module('app')
                         templateUrl: 'tpl/medical/medical_detail.html',
                         controller: 'MedicalDetailCtrl'
                     })
+                    .state('app.labitem', {
+                        url: '/labitem',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/labitem/labitem_list.html',
+                        controller: 'LabitemListCtrl'
+                    })
+                    .state('app.labitem_detail', {
+                        url: '/labitem_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/labitem/labitem_detail.html',
+                        controller: 'LabitemDetailCtrl'
+                    })
             }
         ]
     );

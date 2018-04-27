@@ -5,7 +5,7 @@
      "employee_manage":"用户管理",
      "patient_manage":"病人管理",
      "department_manage":"部门管理",
-     "item_manage":"检验项目管理",
+     "labitem_manage":"检验项目管理",
      "medical_manage":"医疗机构管理",
      "category_manage":"项目类别管理",
      "label_manage":"标签管理",
