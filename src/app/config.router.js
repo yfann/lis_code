@@ -138,6 +138,22 @@ angular.module('app')
                         templateUrl: 'tpl/category/category_detail.html',
                         controller: 'CategoryDetailCtrl'
                     })
+                    .state('app.logistics', {
+                        url: '/logistics',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/logistics/logistics_list.html',
+                        controller: 'LogisticsListCtrl'
+                    })
+                    .state('app.labresult', {
+                        url: '/labresult',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/labresult/labresult_list.html',
+                        controller: 'LabresultListCtrl'
+                    })
             }
         ]
     );
