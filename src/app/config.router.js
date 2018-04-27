@@ -122,6 +122,22 @@ angular.module('app')
                         templateUrl: 'tpl/labitem/labitem_detail.html',
                         controller: 'LabitemDetailCtrl'
                     })
+                    .state('app.category', {
+                        url: '/category',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/category/category_list.html',
+                        controller: 'CategoryListCtrl'
+                    })
+                    .state('app.category_detail', {
+                        url: '/category_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/category/category_detail.html',
+                        controller: 'CategoryDetailCtrl'
+                    })
             }
         ]
     );
