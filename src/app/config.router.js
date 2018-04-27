@@ -90,6 +90,22 @@ angular.module('app')
                         templateUrl: 'tpl/patient/patient_detail.html',
                         controller: 'PatientDetailCtrl'
                     })
+                    .state('app.medical', {
+                        url: '/medical',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/medical/medical_list.html',
+                        controller: 'MedicalListCtrl'
+                    })
+                    .state('app.medical_detail', {
+                        url: '/medical_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/medical/medical_detail.html',
+                        controller: 'MedicalDetailCtrl'
+                    })
             }
         ]
     );
