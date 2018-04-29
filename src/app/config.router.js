@@ -186,6 +186,22 @@ angular.module('app')
                         templateUrl: 'tpl/qcvalue/qcvalue_detail.html',
                         controller: 'QcvalueDetailCtrl'
                     })
+                    .state('app.labitemset', {
+                        url: '/labitemset',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/labitemset/labitemset_list.html',
+                        controller: 'LabItemSetListCtrl'
+                    })
+                    .state('app.labitemset_detail', {
+                        url: '/labitemset_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/labitemset/labitemset_detail.html',
+                        controller: 'LabItemSetDetailCtrl'
+                    })
             }
         ]
     );

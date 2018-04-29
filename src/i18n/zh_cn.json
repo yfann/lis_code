@@ -8,7 +8,7 @@
      "labitem_manage":"检验项目管理",
      "medical_manage":"医疗机构管理",
      "category_manage":"项目类别管理",
-     "label_manage":"检验项目组合",
+     "labitemset_manage":"检验项目组合",
      "request_manage":"申请单管理",
      "logistics_manage":"物流管理",
      "sampletype_manage":"样本类型管理",
