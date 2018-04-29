@@ -154,6 +154,22 @@ angular.module('app')
                         templateUrl: 'tpl/labresult/labresult_list.html',
                         controller: 'LabresultListCtrl'
                     })
+                    .state('app.sampletype', {
+                        url: '/sampletype',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/sample_type/sampletype_list.html',
+                        controller: 'SampleTypeListCtrl'
+                    })
+                    .state('app.sampletype_detail', {
+                        url: '/sampletype_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/sample_type/sampletype_detail.html',
+                        controller: 'SampleTypeDetailCtrl'
+                    })
             }
         ]
     );

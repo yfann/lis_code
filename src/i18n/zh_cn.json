@@ -11,6 +11,7 @@
      "label_manage":"检验项目组合",
      "request_manage":"申请单管理",
      "logistics_manage":"物流管理",
+     "sampletype_manage":"样本类型管理",
      "labresult":"检验结果"
   },
   "header":{
