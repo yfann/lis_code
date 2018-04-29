@@ -170,6 +170,22 @@ angular.module('app')
                         templateUrl: 'tpl/sample_type/sampletype_detail.html',
                         controller: 'SampleTypeDetailCtrl'
                     })
+                    .state('app.qcvalue', {
+                        url: '/qcvalue',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/qcvalue/qcvalue_list.html',
+                        controller: 'QcvalueListCtrl'
+                    })
+                    .state('app.qcvalue_detail', {
+                        url: '/qcvalue_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/qcvalue/qcvalue_detail.html',
+                        controller: 'QcvalueDetailCtrl'
+                    })
             }
         ]
     );
