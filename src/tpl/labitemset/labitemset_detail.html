@@ -22,6 +22,15 @@
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">检验项目</label>
+                    <div class="col-md-4">
+                        <select ui-jq="chosen" multiple class="w-md">
+                            <option value="{{item.id}}" ng-repeat="item in itemList">{{item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
                     <label class="col-sm-2 control-label">备注</label>
                     <div class="col-md-4">
                         <textarea class="form-control" rows="6"></textarea>
