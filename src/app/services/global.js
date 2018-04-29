@@ -1,18 +1,3 @@
-// 翻译快捷方式
-var T = {};
-// 本地存储快捷方式
-var S = {};
-app.run(['$translate', '$localStorage',
-        function ($translate, $localStorage) {
-            // 定义翻译快捷方式
-            T = function (key) {
-                return $translate.instant(key);
-            };
-
-            S = $localStorage;
-        }
-    ]);
-
 
 var view = {
     loading_dialog: null,

@@ -26,6 +26,9 @@
     "search":"查询",
     "create":"新建"
   },
+  "list":{
+    "filter_tip":"输入搜索关键字"
+  },
   "msg":{
     "system_error":""
   }

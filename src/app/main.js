@@ -3,12 +3,12 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 
-    function(              $scope,   $translate,   $localStorage,   $window ) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window',
+    function ($scope, $translate, $localStorage, $window) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');
-      isSmartDevice( $window ) && angular.element($window.document.body).addClass('smart');
+      isSmartDevice($window) && angular.element($window.document.body).addClass('smart');
 
       // config
       $scope.app = {
@@ -31,8 +31,8 @@ angular.module('app')
       // } else {
       //   $localStorage.settings = $scope.app.settings;
       // }
-      $scope.$watch('app.settings', function(){
-        if( $scope.app.settings.asideDock  &&  $scope.app.settings.asideFixed ){
+      $scope.$watch('app.settings', function () {
+        if ($scope.app.settings.asideDock && $scope.app.settings.asideFixed) {
           // aside dock and fixed must set the header fixed.
           $scope.app.settings.headerFixed = true;
         }
@@ -40,15 +40,19 @@ angular.module('app')
         $localStorage.settings = $scope.app.settings;
       }, true);
 
-      function isSmartDevice( $window )
-      {
-          // Adapted from http://www.detectmobilebrowsers.com
-          var ua = $window['navigator']['userAgent'] || $window['navigator']['vendor'] || $window['opera'];
-          // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
-          return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
+      function isSmartDevice($window) {
+        // Adapted from http://www.detectmobilebrowsers.com
+        var ua = $window['navigator']['userAgent'] || $window['navigator']['vendor'] || $window['opera'];
+        // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
+        return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
       }
 
-      $scope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams){
+      $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
       });
-  }]);
+
+      //top level scope
+      //fix me
+      //$scope.filter_tip = T('list.filter_tip');
+      $scope.filter_tip = '输入搜索关键字';
+    }]);
