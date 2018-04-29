@@ -59,7 +59,6 @@ app.controller('PatientDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
     //console.log($stateParams);
     $scope.model = {
         selectedSex: null,
-        normalUp: null,
         birthDate: new Date()
     };
 
@@ -74,7 +73,7 @@ app.controller('PatientDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         $event.stopPropagation();
   
         $scope.opened = true;
-      };
+    };
 
     dataService.getSexList().then(function (result) {
         $scope.sexList = result.data;

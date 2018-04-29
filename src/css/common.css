@@ -33,6 +33,20 @@
 }
 /*ui grid end*/
 
+/*grid filter*/
+.fann-lis .form-inline-group{
+    display: inline;
+    margin-left: 40px;
+}
+
+.fann-lis .dash{
+    margin: 0 5px 0 5px;
+}
+
+.fann-lis .grid-search{
+    margin-left: 20px;
+}
+
 /*form start*/
 .fann-lis .form-group.select-group{
     height: 34px;

@@ -58,9 +58,23 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
 app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
     //console.log($stateParams);
     $scope.model = {
-        selectedlabItem: null,
-        normalUp: null
+        selectedSex: null,
+        birthDate: new Date()
     };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1,
+        class: 'datepicker'
+    };
+
+    $scope.openDate = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+  
+        $scope.opened = true;
+    };
+    
     dataService.getlabitemList().then(function (result) {
         $scope.itemList = result.data;
     });
