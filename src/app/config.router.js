@@ -58,6 +58,14 @@ angular.module('app')
                         templateUrl: 'tpl/request/request_list.html',
                         controller: 'RequestListCtrl'
                     })
+                    .state('app.request_detail', {
+                        url: '/request_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/request/request_detail.html',
+                        controller: 'RequestDetailCtrl'
+                    })
                     .state('app.employee', {
                         url: '/employee',
                         params: {

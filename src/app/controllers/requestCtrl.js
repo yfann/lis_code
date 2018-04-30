@@ -26,7 +26,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
     };
 
     var editTpl = '<div><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
-
+    var otherTpl = '<a class="editTpl" ui-sref="app.request_detail({id: row.entity.id})">详情</a>';
     $scope.gridOptions = {
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
@@ -58,6 +58,11 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
                 name: 'edit',
                 displayName: '操作',
                 cellTemplate: editTpl
+            },
+            {
+                name: 'other',
+                displayName: '其他',
+                cellTemplate: otherTpl
             }
         ]
     };
@@ -108,4 +113,8 @@ app.controller('RejectDialogCtrl', ['$scope', '$modalInstance', 'dataService', f
     $scope.dialogSubmit = function () {
         $modalInstance.close();
     };
+}]);
+
+app.controller('RequestDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
+
 }]);
