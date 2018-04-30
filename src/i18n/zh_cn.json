@@ -12,7 +12,7 @@
      "request_manage":"申请单管理",
      "logistics_manage":"物流管理",
      "sampletype_manage":"样本类型管理",
-     "qcvalue_manage":"质控字典维护",
+     "qcvalue_manage":"质控维护",
      "labresult":"检验结果"
   },
   "header":{

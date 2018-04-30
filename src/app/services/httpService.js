@@ -53,6 +53,10 @@ angular.module('httpService', []).
                 getSexList:function(){
                     var url='/mock_data/sex_list.json';
                     return $http.get(url);
+                },
+                getSampleList:function(){
+                    var url='/mock_data/sample_list.json';
+                    return $http.get(url);
                 }
             };
         }]);

@@ -12,20 +12,29 @@ app.controller('LogisticsListCtrl', ['$scope', '$state', 'dataService', function
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
-                field: 'requestNo',
-                displayName: 'requestNo'
+                field: 'sampleNo',
+                displayName: '样本号'
             },
             {
-                field: 'reStatus',
-                displayName: 'reStatus'
+                field: 'sendEmp',
+                displayName: '送检人'
+            },
+            {
+                field: 'sendTime',
+                displayName: '送检时间'
+            },
+            {
+                field: 'lsStatus',
+                displayName: '物流状态'
             }
         ]
     };
 
-    dataService.getRequestList().then(function (result) {
+    dataService.getSampleList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
 
