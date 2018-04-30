@@ -79,6 +79,7 @@ app.controller('SampleDialogCtrl', ['$scope', '$modalInstance', 'dataService', f
     $scope.sampleNo = null;
     $scope.focusFlag = 1;
     $scope.sampleList = [];
+    $scope.sendEmp=null;
 
     $scope.keypress = function (event) {
         if (event.charCode == 13) {
