@@ -27,7 +27,8 @@
     "save":"保存",
     "search":"查询",
     "create":"新建",
-    "confirm":"确定"
+    "confirm":"确定",
+    "accept_sample":"接受样本"
   },
   "list":{
     "filter_tip":"输入搜索关键字"

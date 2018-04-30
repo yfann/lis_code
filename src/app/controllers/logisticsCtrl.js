@@ -1,4 +1,4 @@
-app.controller('LogisticsListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
+app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService', function ($scope, $modal, $state, dataService) {
 
 
    var editTpl = '<div><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
@@ -65,4 +65,16 @@ app.controller('LogisticsListCtrl', ['$scope', '$state', 'dataService', function
     $scope.reject=function(){
 
     };
+
+    $scope.openDialog=function(){
+        $modal.open({
+            templateUrl: '../tpl/dialog/sample_dialog.html',
+            controller: 'SampleDialogCtrl',
+            size: 'lg'
+        });
+    };
+}]);
+
+app.controller('SampleDialogCtrl', ['$scope', '$modalInstance', 'dataService', function ($scope, $modalInstance, dataService) {
+
 }]);
