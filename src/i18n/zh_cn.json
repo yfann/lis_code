@@ -21,7 +21,8 @@
       "edit_pwd":"修改密码",
       "lockme":"锁屏",
       "logout":"注销登录"
-    }
+    },
+    "title":"区域LIS系统"
   },
   "button":{
     "save":"保存",

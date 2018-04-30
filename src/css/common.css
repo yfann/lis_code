@@ -64,3 +64,20 @@
     background-color: #F3F3F3;
     display: inline-block;
 }
+
+/*nav*/
+.fann-lis .navbar-header .navbar-title{
+    height: 50px;
+    width: 200px;
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 25px;
+    padding: 8px;
+    background-color: #4c637b;
+}
+
+.fann-lis .navi-pos{
+    margin-top: 25px;
+}
