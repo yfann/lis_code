@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <div class="input-group w-sm">
                             <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="model.startTime" is-open="model.startOpened" datepicker-options="dateOptions"
-                                close-text="Close" />
+                                close-text="Close" placeholder="开始申请时间"/>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="startOpen($event)">
                                     <i class="glyphicon glyphicon-calendar"></i>
@@ -28,7 +28,7 @@
                     <div class="form-group">
                             <div class="input-group w-sm">
                                 <input type="text" class="form-control" datepicker-popup="yyyy/MM/dd" ng-model="model.endDate" is-open="model.endOpened" datepicker-options="dateOptions"
-                                    close-text="Close" />
+                                    close-text="Close" placeholder="结束申请时间"/>
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="endOpen($event)">
                                         <i class="glyphicon glyphicon-calendar"></i>

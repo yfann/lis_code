@@ -1,4 +1,4 @@
-app.controller('RequestListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
+app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', function ($scope, $modal, $state, dataService) {
     $scope.model = {
         filterValue: null,
         startTime: null,
@@ -91,6 +91,20 @@ app.controller('RequestListCtrl', ['$scope', '$state', 'dataService', function (
     };
 
     $scope.reject = function () {
+        $scope.modalInstance = $modal.open({
+            templateUrl: '../tpl/dialog/reject_dialog.html',
+            controller: 'RejectDialogCtrl',
+            size: 'lg'
+        });
+    };
 
+
+}]);
+
+
+app.controller('RejectDialogCtrl', ['$scope', '$modalInstance', 'dataService', function ($scope, $modalInstance, dataService) {
+    $scope.rejectReason= null;
+    $scope.dialogSubmit = function () {
+        $modalInstance.close();
     };
 }]);
