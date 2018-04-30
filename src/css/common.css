@@ -31,7 +31,7 @@
 .fann-lis .btn.grid-btn.left-space{
     margin-left: 16px;
 }
-/*ui grid end*/
+
 
 /*grid filter*/
 .fann-lis .form-inline-group{
@@ -51,8 +51,9 @@
 .fann-lis .form-group.select-group{
     height: 34px;
 }
-/*form end*/
 
+
+/*dialog*/
 .common-dialog{
     padding: 20px;
 }
