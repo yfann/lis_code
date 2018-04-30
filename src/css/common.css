@@ -81,3 +81,14 @@
 .fann-lis .navi-pos{
     margin-top: 25px;
 }
+
+.fann-lis .navbar-right.navbar-rightspace{
+    margin-right: 20px;
+}
+
+.fann-lis .navbar-subtitle{
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 12px 0 0 10px;
+}
