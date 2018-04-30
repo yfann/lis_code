@@ -1,9 +1,9 @@
 app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService', function ($scope, $modal, $state, dataService) {
 
 
-   var editTpl = '<div><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
-   
-   $scope.gridOptions = {
+    var editTpl = '<div><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
+
+    $scope.gridOptions = {
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
@@ -42,7 +42,7 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
         $scope.gridApi.grid.refresh();
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         // var matcher = new RegExp($scope.filterValue);
         // renderableRows.forEach( function( row ) {
         //   var match = false;
@@ -58,15 +58,15 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
         return renderableRows;
     };
 
-    $scope.accept=function(){
+    $scope.accept = function () {
 
     };
 
-    $scope.reject=function(){
+    $scope.reject = function () {
 
     };
 
-    $scope.openDialog=function(){
+    $scope.openDialog = function () {
         $modal.open({
             templateUrl: '../tpl/dialog/sample_dialog.html',
             controller: 'SampleDialogCtrl',
@@ -76,5 +76,23 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
 }]);
 
 app.controller('SampleDialogCtrl', ['$scope', '$modalInstance', 'dataService', function ($scope, $modalInstance, dataService) {
+    $scope.sampleNo = null;
+    $scope.focusFlag = 1;
+    $scope.sampleList = [];
 
+    $scope.keypress = function (event) {
+        if (event.charCode == 13) {
+            event.preventDefault();
+            event.stopPropagation();
+            if($scope.sampleNo){
+                $scope.sampleList.push($scope.sampleNo);
+            }
+            $scope.sampleNo = '';
+            $scope.focusFlag++;
+        }
+    };
+
+    $scope.dialogSubmit = function () {
+        $modalInstance.close();
+    };
 }]);

@@ -56,3 +56,10 @@
 .common-dialog{
     padding: 20px;
 }
+
+.common-dialog .label-item{
+    margin: 6px 3px 0 0;
+    padding: 5px;
+    background-color: #F3F3F3;
+    display: inline-block;
+}

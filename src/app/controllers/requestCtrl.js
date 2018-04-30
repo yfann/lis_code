@@ -103,7 +103,8 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
 
 
 app.controller('RejectDialogCtrl', ['$scope', '$modalInstance', 'dataService', function ($scope, $modalInstance, dataService) {
-    $scope.rejectReason= null;
+    $scope.rejectReason = null;
+
     $scope.dialogSubmit = function () {
         $modalInstance.close();
     };

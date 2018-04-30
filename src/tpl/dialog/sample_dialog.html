@@ -3,9 +3,18 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">扫码样本</label>
             <div class="col-md-4">
-                <input type="text" class="form-control">
+                <input ui-focus="focusFlag" type="text" class="form-control" ng-model="sampleNo" ng-keypress="keypress($event)">
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">已扫样本</label>
+            <div class="col-md-8">
+                <div class="label-item" ng-repeat="item in sampleList track by $index">{{item}}</div>
+            </div>
+            
+        </div>
+
         <div class="form-group">
             <div class="col-sm-4 col-sm-offset-2">
                 <button class="btn btn-primary" translate="button.confirm" ng-click="dialogSubmit()" ng-disabled="form.$invalid"></button>
