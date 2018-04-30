@@ -1,26 +1,26 @@
 app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
-
-
-   var editTpl = '<div><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
-   
    $scope.gridOptions = {
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
             $scope.gridApi.grid.registerRowsProcessor($scope.filter, 200);
         },
-        columnDefs: [
+        columnDefs:  [
             {
                 field: 'id',
-                displayName: 'Id'
+                visible: false
             },
             {
                 field: 'requestNo',
-                displayName: 'requestNo'
+                displayName: '申请单号'
             },
             {
-                field: 'reStatus',
-                displayName: 'reStatus'
+                field: 'empName',
+                displayName: '申请员工'
+            },
+            {
+                field: 'reqTime',
+                displayName: '申请时间'
             }
         ]
     };
@@ -31,6 +31,10 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function
 
     $scope.search = function () {
         $scope.gridApi.grid.refresh();
+    };
+
+    $scope.create = function () {
+        $state.go('app.labresult_detail');
     };
 
     $scope.filter=function(renderableRows){
@@ -56,4 +60,20 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function
     $scope.reject=function(){
 
     };
+}]);
+
+app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
+
+    $scope.model = {
+        selectedlabItem: null,
+        normalUp: null
+    };
+    dataService.getRequestList().then(function (result) {
+        $scope.itemList = result.data;
+    });
+
+    $scope.submit = function () {
+        console.log($scope.model);
+    };
+
 }]);

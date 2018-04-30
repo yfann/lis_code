@@ -154,6 +154,14 @@ angular.module('app')
                         templateUrl: 'tpl/labresult/labresult_list.html',
                         controller: 'LabresultListCtrl'
                     })
+                    .state('app.labresult_detail', {
+                        url: '/labresult_detail',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/labresult/labresult_detail.html',
+                        controller: 'LabresultDetailCtrl'
+                    })
                     .state('app.sampletype', {
                         url: '/sampletype',
                         params: {
