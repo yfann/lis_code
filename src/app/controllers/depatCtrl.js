@@ -10,21 +10,30 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
-                field: 'name',
-                displayName: 'Name'
+                field: 'deptCode',
+                displayName: '科室编码'
+            },
+            {
+                field: 'deptName',
+                displayName: '科室名称'
+            },
+            {
+                field: 'siteName',
+                displayName: '所属机构'
             },
             {
                 name: 'edit',
-                displayName: 'Edit',
+                displayName: '操作',
                 cellTemplate: editUrl
             }
         ]
     };
 
-    dataService.getMildList().then(function (result) {
+    dataService.getDeptList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
 
@@ -40,7 +49,7 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach( function( row ) {
           var match = false;
-          [ 'name' ].forEach(function( field ){
+          [ 'deptName' ].forEach(function( field ){
             if ( row.entity[field].match(matcher) ){
               match = true;
             }
@@ -56,15 +65,23 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
 app.controller('DepartDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
     //console.log($stateParams);
     $scope.model = {
-        selectedlabItem: null,
-        normalUp: null
+        id:null,
+        siteId:null,
+        deptCode:null,
+        deptName:null,
+        desc:null
     };
-    dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
+    $scope.siteList=null;
+    $scope.selectedSite=null;
+
+    dataService.getSiteList().then(function (result) {
+        $scope.siteList = result.data;
     });
 
     $scope.submit = function () {
         console.log($scope.model);
+        dataService.saveSite($scope.model).then(function (result) {
+        });
     };
 
 }]);

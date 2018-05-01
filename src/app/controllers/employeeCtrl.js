@@ -12,7 +12,8 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
                 field: 'emCode',

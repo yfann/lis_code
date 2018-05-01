@@ -78,6 +78,9 @@ angular.module('httpService', []).
                     var url = '/mock_data/site_list.json';
                     return $http.get(url);
                 },
+                saveSite:function(model){
+
+                },
                 getDeptList: function () {
                     var url = '/mock_data/dept_list.json';
                     return $http.get(url);
