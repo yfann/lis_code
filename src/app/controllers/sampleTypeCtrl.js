@@ -12,21 +12,34 @@ app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', functio
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
-                field: 'name',
-                displayName: 'Name'
+                field: 'code',
+                displayName: '编码'
+            },
+            {
+                field: 'chtName',
+                displayName: '中文名称'
+            },
+            {
+                field: 'engName',
+                displayName: '英文名称'
+            },
+            {
+                field: 'seqNo',
+                displayName: '排序号'
             },
             {
                 name: 'edit',
-                displayName: 'Edit',
+                displayName: '操作',
                 cellTemplate: editUrl
             }
         ]
     };
 
-    dataService.getlabitemList().then(function (result) {
+    dataService.getSampleTypeList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
 
@@ -42,7 +55,7 @@ app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', functio
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach( function( row ) {
           var match = false;
-          [ 'name' ].forEach(function( field ){
+          [ 'code' ].forEach(function( field ){
             if ( row.entity[field].match(matcher) ){
               match = true;
             }
@@ -58,15 +71,19 @@ app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', functio
 app.controller('SampleTypeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
     $scope.model = {
-        selectedlabItem: null,
-        normalUp: null
+        id:null,
+        parentId:null,
+        code:null,
+        chtName:null,
+        engName:null,
+        seqNo:null,
+        helpCode:null
     };
-    dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
-    });
+
 
     $scope.submit = function () {
         console.log($scope.model);
+        dataService.saveSampleType($scope.model).thne();
     };
 
 }]);

@@ -52,6 +52,13 @@ angular.module('httpService', []).
                 saveLabCategory: function (model) {
 
                 },
+                getSampleTypeList: function () {
+                    var url = '/mock_data/sampleType_list.json';
+                    return $http.get(url);
+                },
+                saveSampleType: function (model) {
+
+                },
                 getCrisisList: function () {
                     var url = '/mock_data/list.json';
                     return $http.get(url);
