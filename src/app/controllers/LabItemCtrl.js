@@ -1,7 +1,7 @@
 app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
 
-    var link='app.labitem_detail';
-    var editUrl = '<a class="editTpl" ui-sref="'+link+'({id: row.entity.id})">编辑</a>'
+    var link = 'app.labitem_detail';
+    var editUrl = '<a class="editTpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -12,15 +12,28 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
-                field: 'name',
-                displayName: 'Name'
+                field: 'itemCode',
+                displayName: '代码'
+            },
+            {
+                field: 'standardCode',
+                displayName: '标准代码'
+            },
+            {
+                field: 'itemName',
+                displayName: '项目名称'
+            },
+            {
+                field: 'resultType',
+                displayName: '结果类型'
             },
             {
                 name: 'edit',
-                displayName: 'Edit',
+                displayName: '操作',
                 cellTemplate: editUrl
             }
         ]
@@ -38,18 +51,18 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
         $state.go(link);
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'name' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['itemName'].forEach(function (field) {
+                if (row.entity[field].match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -58,15 +71,39 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
 app.controller('LabitemDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
     //console.log($stateParams);
     $scope.model = {
-        selectedlabItem: null,
-        normalUp: null
+        id: null,
+        lcId: null,
+        itemCode: null,
+        standardCode: null,
+        itemName: null,
+        category: null,
+        resultType: null,
+        unit: null,
+        lifeLimit: null,
+        defValue: null,
+        typeCode1: null,
+        typeCode2: null,
+        important: null,
+        associated: null,
+        conditionAudit: null,
+        comment: null,
+        display: null,
+        precision: null,
+        price: null,
+        canZero: null,
+        canLessZero: null,
+        meanOfclinic: null,
+        desc: null
     };
-    dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
+    $scope.selectedLabCategory = null;
+    $scope.labCategoryList = null;
+    dataService.getLabCategoryList().then(function (result) {
+        $scope.labCategoryList = result.data;
     });
 
     $scope.submit = function () {
         console.log($scope.model);
+        dataService.saveLabitem($scope.model).then();
     };
 
 }]);

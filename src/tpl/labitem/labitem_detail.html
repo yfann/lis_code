@@ -10,13 +10,13 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label">检验类别</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedlabItem" 
+                        <ui-select ng-model="selectedLabCategory" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
                                    search-enabled="true">
-                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices group-by="'group'" repeat="item in itemList | filter: $select.search">
-                                <span ng-bind-html="item.name | highlight: $select.search"></span>
+                            <ui-select-match>{{$select.selected.lcName}}</ui-select-match>
+                            <ui-select-choices group-by="'group'" repeat="item in labCategoryList | filter: $select.search">
+                                <span ng-bind-html="item.lcName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -25,101 +25,100 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">代码</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.normalUp" ng-pattern="/^[a-zA-Z0-9]{4,10}$/" required>
+                        <input type="text" class="form-control" ng-model="model.itemCode">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">项目名称</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.itemName">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">检验分类</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.category">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">结果类型</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.resultType">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">单位</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.unit">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">变化率</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.lifeLimit">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">默认值</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.defValue">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">标准输入码1</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.typeCode1">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">标准输入码2</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="line line-dashed b-b line-lg pull-in"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">备注</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.typeCode2">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">精度</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.precision">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">项目金额</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.price">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">临床意义</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.meanOfclinic">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">描述</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" rows="6"></textarea>
+                        <textarea class="form-control"  ng-model="model.desc" rows="6"></textarea>
                     </div>
                 </div>
-
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">备注</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" ng-model="model.comment">
+                    </div>
+                </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <div class="col-sm-4 col-sm-offset-2">
