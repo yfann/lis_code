@@ -10,13 +10,13 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label">质控检验项目</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedlabItem" 
+                        <ui-select ng-model="selectedLabItem" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
                                    search-enabled="true">
-                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices group-by="'group'" repeat="item in itemList | filter: $select.search">
-                                <span ng-bind-html="item.name | highlight: $select.search"></span>
+                            <ui-select-match>{{$select.selected.itemName}}</ui-select-match>
+                            <ui-select-choices group-by="'group'" repeat="item in labItemList | filter: $select.search">
+                                <span ng-bind-html="item.itemName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -25,13 +25,13 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label">质控机构</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedlabItem" 
+                        <ui-select ng-model="model.selectedSite" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
                                    search-enabled="true">
-                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices group-by="'group'" repeat="item in itemList | filter: $select.search">
-                                <span ng-bind-html="item.name | highlight: $select.search"></span>
+                            <ui-select-match>{{$select.selected.miName}}</ui-select-match>
+                            <ui-select-choices group-by="'group'" repeat="item in siteList | filter: $select.search">
+                                <span ng-bind-html="item.miName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -40,42 +40,78 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">仪器名称</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.instrumentName">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">质控操作员</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.qcer">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">质控时间</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.qcTime">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">质控次数</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.qcNum">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">值控制</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.value">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">备注</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" rows="6"></textarea>
+                        <textarea class="form-control" rows="6" ng-model="model.comment"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" rows="6" ng-model="model.other1"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" rows="6" ng-model="model.other2"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" rows="6" ng-model="model.other3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" rows="6" ng-model="model.other4"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" rows="6" ng-model="model.other5"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-md-4">
+                        <textarea class="form-control" rows="6" ng-model="model.other6"></textarea>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>

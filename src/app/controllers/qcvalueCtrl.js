@@ -1,7 +1,7 @@
 app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
 
-    var link='app.qcvalue_detail';
-    var editUrl = '<a class="editTpl" ui-sref="'+link+'({id: row.entity.id})">编辑</a>'
+    var link = 'app.qcvalue_detail';
+    var editUrl = '<a class="editTpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -12,21 +12,38 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function (
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
-                field: 'name',
-                displayName: 'Name'
+                field: 'instrumentName',
+                displayName: '仪器名称'
+            },
+            {
+                field: 'qcer',
+                displayName: '质控操作员'
+            },
+            {
+                field: 'qcTime',
+                displayName: '质控时间'
+            },
+            {
+                field: 'qcNum',
+                displayName: '质控次数'
+            },
+            {
+                field: 'value',
+                displayName: '质控值'
             },
             {
                 name: 'edit',
-                displayName: 'Edit',
+                displayName: '操作',
                 cellTemplate: editUrl
             }
         ]
     };
 
-    dataService.getlabitemList().then(function (result) {
+    dataService.getQCValueList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
 
@@ -38,18 +55,18 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function (
         $state.go(link);
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'name' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['instrumentName'].forEach(function (field) {
+                if (row.entity[field].match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -58,15 +75,41 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function (
 app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
     $scope.model = {
-        selectedlabItem: null,
-        normalUp: null
+        id: null,
+        lmId: null,
+        miId: null,
+        instrumentId: null,
+        instrumentName: null,
+        qcer: null,
+        qcTime: null,
+        qcNum: null,
+        value: null,
+        comment: null,
+        other1: null,
+        other2: null,
+        other3: null,
+        other4: null,
+        other5: null,
+        other6: null
     };
+
+    $scope.labItemList=null;
+    $scope.selectedLabItem=null;
+    $scope.siteList=null;
+    $scope.selectedSite=null;
+
+
     dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
+        $scope.labItemList = result.data;
+    });
+
+    dataService.getSiteList().then(function (result) {
+        $scope.siteList = result.data;
     });
 
     $scope.submit = function () {
         console.log($scope.model);
+        dataService.saveQCValue($scope.model).then();
     };
 
 }]);

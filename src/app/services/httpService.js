@@ -52,6 +52,13 @@ angular.module('httpService', []).
                 saveLabCategory: function (model) {
 
                 },
+                getQCValueList: function () {
+                    var url = '/mock_data/qcvalue_list.json';
+                    return $http.get(url);
+                },
+                saveQCValue: function (model) {
+
+                },
                 getSampleTypeList: function () {
                     var url = '/mock_data/sampleType_list.json';
                     return $http.get(url);
