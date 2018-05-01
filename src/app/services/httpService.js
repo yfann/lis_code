@@ -42,10 +42,6 @@ angular.module('httpService', []).
                 getCrisisDetailById: function () {
 
                 },
-                getMildList: function () {
-                    var url = '/mock_data/list.json';
-                    return $http.get(url);
-                },
                 getRequestList: function () {
                     var url = '/mock_data/request_list.json';
                     return $http.get(url);
@@ -64,6 +60,27 @@ angular.module('httpService', []).
                 getCrisisList:function(){
                     var url = '/mock_data/crisis_list.json';
                     return $http.get(url);
-                }
+                },
+                savePatient: function (model) {
+
+                },
+                getPatientList: function () {
+
+                },
+                saveEmployee:function(model){
+
+                },
+                getEmployeeList:function(){
+                    var url = '/mock_data/employee_list.json';
+                    return $http.get(url);
+                },
+                getSiteList: function () {
+                    var url = '/mock_data/site_list.json';
+                    return $http.get(url);
+                },
+                getDeptList: function () {
+                    var url = '/mock_data/dept_list.json';
+                    return $http.get(url);
+                },
             };
         }]);

@@ -10,13 +10,13 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label">医疗机构</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedlabItem" 
+                        <ui-select ng-model="selectedSite" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
                                    search-enabled="false">
-                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices group-by="'group'" repeat="item in itemList | filter: $select.search">
-                                <span ng-bind-html="item.name | highlight: $select.search"></span>
+                            <ui-select-match>{{$select.selected.miName}}</ui-select-match>
+                            <ui-select-choices group-by="'group'" repeat="item in siteList | filter: $select.search">
+                                <span ng-bind-html="item.miName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -24,13 +24,13 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label">部门</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedlabItem" 
+                        <ui-select ng-model="selectedDept" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
                                    search-enabled="false">
-                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices group-by="'group'" repeat="item in itemList | filter: $select.search">
-                                <span ng-bind-html="item.name | highlight: $select.search"></span>
+                            <ui-select-match>{{$select.selected.deptName}}</ui-select-match>
+                            <ui-select-choices group-by="'group'" repeat="item in deptList | filter: $select.search">
+                                <span ng-bind-html="item.deptName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -39,14 +39,14 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">员工编码</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.normalUp" ng-pattern="/^[a-zA-Z0-9]{4,10}$/" required>
+                        <input type="text" class="form-control" ng-model="model.emCode">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">员工名称</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.emName">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -65,21 +65,21 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">身份证号</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.iDNumber">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">手机号码</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.phone">>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">职称名称</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.title">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -93,14 +93,14 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">登录密码</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.password">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">备注</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" rows="6"></textarea>
+                        <textarea class="form-control" rows="6" ng-model="model.desc"></textarea>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>

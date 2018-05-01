@@ -1,7 +1,7 @@
 app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
 
-    var link='app.employee_detail';
-    var editUrl = '<a class="editTpl" ui-sref="'+link+'({id: row.entity.id})">编辑</a>'
+    var link = 'app.employee_detail';
+    var editUrl = '<a class="editTpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -15,18 +15,30 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
                 displayName: 'Id'
             },
             {
-                field: 'name',
-                displayName: 'Name'
+                field: 'emCode',
+                displayName: '员工编码'
+            },
+            {
+                field: 'emName',
+                displayName: '员工名称'
+            },
+            {
+                field: 'titleName',
+                displayName: '职称名称'
+            },
+            {
+                field: 'iDNumber',
+                displayName: '身份证号'
             },
             {
                 name: 'edit',
-                displayName: 'Edit',
+                displayName: '操作',
                 cellTemplate: editUrl
             }
         ]
     };
 
-    dataService.getlabitemList().then(function (result) {
+    dataService.getEmployeeList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
 
@@ -38,18 +50,18 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
         $state.go(link);
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'name' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['emName'].forEach(function (field) {
+                if (row.entity[field].match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -58,9 +70,26 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
 app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
     //console.log($stateParams);
     $scope.model = {
-        selectedSex: null,
-        birthDate: new Date()
+
+        id: null,
+        siteId: null,
+        deptId: null,
+        emCode: null,
+        emName: null,
+        iDNumber: null,
+        phone: null,
+        titleId: null,
+        titleName: null,
+        password: null,
+        desc: null,
+        birthDay: null
     };
+
+    $scope.siteList = null;
+    $scope.deptList = null;
+    $scope.selectedSex = null;
+    $scope.selectedSite = null;
+    $scope.selectedDept = null;
 
     $scope.dateOptions = {
         formatYear: 'yy',
@@ -68,19 +97,25 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
         class: 'datepicker'
     };
 
-    $scope.openDate = function($event) {
+    $scope.openDate = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
-  
+
         $scope.opened = true;
     };
-    
-    dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
+
+    dataService.getSiteList().then(function (result) {
+        $scope.siteList = result.data;
+    });
+    dataService.getDeptList().then(function (result) {
+        $scope.deptList = result.data;
     });
 
     $scope.submit = function () {
         console.log($scope.model);
+        dataService.saveEmployee($scope.model).then(function(){
+
+        });
     };
 
 }]);
