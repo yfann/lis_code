@@ -17,7 +17,9 @@
         "other3":"3",
         "other4":"4",
         "other5":"5",
-        "other6":"6"
+        "other6":"6",
+        "miName":"三甲",
+        "itemName":"ccccvvvv"
     },
     {
         "qcValueDto":"",
@@ -37,7 +39,9 @@
         "other3":"3",
         "other4":"4",
         "other5":"5",
-        "other6":"6"
+        "other6":"6",
+        "miName":"三已",
+        "itemName":"ccccdddd"
     },
     {
         "qcValueDto":"",
@@ -57,7 +61,9 @@
         "other3":"3",
         "other4":"4",
         "other5":"5",
-        "other6":"6"
+        "other6":"6",
+        "miName":"三甲",
+        "itemName":"ccccaaa"
     },
     {
         "qcValueDto":"",
@@ -77,6 +83,8 @@
         "other3":"3",
         "other4":"4",
         "other5":"5",
-        "other6":"6"
+        "other6":"6",
+        "miName":"三甲",
+        "itemName":"cccc"
     }
   ]

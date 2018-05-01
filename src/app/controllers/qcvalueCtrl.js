@@ -16,24 +16,28 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function (
                 visible: false
             },
             {
+                field: 'miName',
+                displayName: '医院名称'
+            },
+            {
                 field: 'instrumentName',
                 displayName: '仪器名称'
             },
             {
-                field: 'qcer',
-                displayName: '质控操作员'
+                field: 'instrumentName',
+                displayName: '质控项目'
+            },
+            {
+                field: 'value',
+                displayName: '质控值'
             },
             {
                 field: 'qcTime',
                 displayName: '质控时间'
             },
             {
-                field: 'qcNum',
-                displayName: '质控次数'
-            },
-            {
-                field: 'value',
-                displayName: '质控值'
+                field: 'qcer',
+                displayName: '质控人员'
             },
             {
                 name: 'edit',
