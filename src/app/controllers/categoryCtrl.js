@@ -1,7 +1,7 @@
 app.controller('CategoryListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
 
-    var link='app.category_detail';
-    var editUrl = '<a class="editTpl" ui-sref="'+link+'({id: row.entity.id})">编辑</a>'
+    var link = 'app.category_detail';
+    var editUrl = '<a class="editTpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -12,21 +12,34 @@ app.controller('CategoryListCtrl', ['$scope', '$state', 'dataService', function 
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
-                field: 'name',
-                displayName: 'Name'
+                field: 'lcCode',
+                displayName: '检验类别代码'
+            },
+            {
+                field: 'lcName',
+                displayName: '检验类别名称'
+            },
+            {
+                field: 'lcName',
+                displayName: '检验类别名称'
+            },
+            {
+                field: 'barcodePre',
+                displayName: '代码前缀'
             },
             {
                 name: 'edit',
-                displayName: 'Edit',
+                displayName: '操作',
                 cellTemplate: editUrl
             }
         ]
     };
 
-    dataService.getlabitemList().then(function (result) {
+    dataService.getLabCategoryList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
 
@@ -38,18 +51,18 @@ app.controller('CategoryListCtrl', ['$scope', '$state', 'dataService', function 
         $state.go(link);
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'name' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['lcName'].forEach(function (field) {
+                if (row.entity[field].match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -58,15 +71,20 @@ app.controller('CategoryListCtrl', ['$scope', '$state', 'dataService', function 
 app.controller('CategoryDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
     $scope.model = {
-        selectedlabItem: null,
-        normalUp: null
+        id: null,
+        lcCode: null,
+        lcName: null,
+        barcodePre: null,
+        externalCode: null,
+        color: null,
+        booldAlone: null,
+        examNum: null
     };
-    dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
-    });
+
 
     $scope.submit = function () {
         console.log($scope.model);
+        dataService.saveLabCategory($scope.model).then();
     };
 
 }]);

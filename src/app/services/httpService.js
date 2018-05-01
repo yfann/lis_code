@@ -39,7 +39,7 @@ angular.module('httpService', []).
 
                 },
                 getLabCategoryList: function () {
-                    var url = '/mock_data/labcategory_list.json';
+                    var url = '/mock_data/category_list.json';
                     return $http.get(url);
                 },
                 saveLabCategory: function (model) {
