@@ -38,6 +38,13 @@ angular.module('httpService', []).
                 saveLabitem: function (model) {
 
                 },
+                getLabItemSetList: function () {
+                    var url = '/mock_data/labitemset_list.json';
+                    return $http.get(url);
+                },
+                saveLabItemSet: function (model) {
+
+                },
                 getLabCategoryList: function () {
                     var url = '/mock_data/category_list.json';
                     return $http.get(url);

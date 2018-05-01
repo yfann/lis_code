@@ -12,21 +12,30 @@ app.controller('LabItemSetListCtrl', ['$scope', '$state', 'dataService', functio
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
-                field: 'name',
-                displayName: 'Name'
+                field: 'lisCode',
+                displayName: '组合项目代码'
+            },
+            {
+                field: 'lisName',
+                displayName: '组合项目名称'
+            },
+            {
+                field: 'comment',
+                displayName: '备注'
             },
             {
                 name: 'edit',
-                displayName: 'Edit',
+                displayName: '操作',
                 cellTemplate: editUrl
             }
         ]
     };
 
-    dataService.getlabitemList().then(function (result) {
+    dataService.getLabItemSetList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
 
@@ -42,7 +51,7 @@ app.controller('LabItemSetListCtrl', ['$scope', '$state', 'dataService', functio
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach( function( row ) {
           var match = false;
-          [ 'name' ].forEach(function( field ){
+          [ 'lisName' ].forEach(function( field ){
             if ( row.entity[field].match(matcher) ){
               match = true;
             }
@@ -61,8 +70,12 @@ app.controller('LabItemSetDetailCtrl', ['$scope', '$state', '$stateParams', 'dat
         selectedlabItem: null,
         normalUp: null
     };
+
+    $scope.selectedlabItem=null;
+    $scope.labItemList=null;
+
     dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
+        $scope.labItemList = result.data;
     });
 
     $scope.submit = function () {

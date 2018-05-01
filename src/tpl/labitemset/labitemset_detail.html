@@ -10,14 +10,14 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">组合项目代码</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.normalUp" ng-pattern="/^[a-zA-Z0-9]{4,10}$/" required>
+                        <input type="text" class="form-control" ng-model="model.lisCode">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">组合项目名称</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" ng-model="model.lisName">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -25,7 +25,7 @@
                     <label class="col-sm-2 control-label">检验项目</label>
                     <div class="col-md-4">
                         <select ui-jq="chosen" multiple class="w-md">
-                            <option value="{{item.id}}" ng-repeat="item in itemList">{{item.name}}</option>
+                            <option value="{{item.id}}" ng-repeat="item in labItemList">{{item.itemName}}</option>
                         </select>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">备注</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" rows="6"></textarea>
+                        <textarea class="form-control" rows="6"  ng-model="model.comment"></textarea>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
