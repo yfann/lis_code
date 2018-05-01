@@ -10,35 +10,42 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">机构编码</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.normalUp" ng-pattern="/^[a-zA-Z0-9]{4,10}$/" required>
+                        <input type="text" class="form-control" ng-model="model.miCode">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">机构名称</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.miName">
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">机构类别</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" ng-model="model.miCategory">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">所在地区编码</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.areaCode">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">机构地址</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" ng-model="model.address">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">描述简介</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" rows="6"></textarea>
+                        <textarea class="form-control" rows="6" ng-model="model.desc"></textarea>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>

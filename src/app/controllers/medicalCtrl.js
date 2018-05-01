@@ -1,7 +1,7 @@
 app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
 
-    var link='app.medical_detail';
-    var editUrl = '<a class="editTpl" ui-sref="'+link+'({id: row.entity.id})">编辑</a>'
+    var link = 'app.medical_detail';
+    var editUrl = '<a class="editTpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -12,21 +12,30 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
-                field: 'name',
-                displayName: 'Name'
+                field: 'miCode',
+                displayName: '机构编码'
+            },
+            {
+                field: 'miName',
+                displayName: '机构名称'
+            },
+            {
+                field: 'miCategory',
+                displayName: '机构类别'
             },
             {
                 name: 'edit',
-                displayName: 'Edit',
+                displayName: '操作',
                 cellTemplate: editUrl
             }
         ]
     };
 
-    dataService.getlabitemList().then(function (result) {
+    dataService.getSiteList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
 
@@ -38,18 +47,18 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
         $state.go(link);
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'name' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['miName'].forEach(function (field) {
+                if (row.entity[field].match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -58,15 +67,18 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
 app.controller('MedicalDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
     $scope.model = {
-        selectedlabItem: null,
-        normalUp: null
+        id: null,
+        miCode: null,
+        miName: null,
+        miCategory: null,
+        areaCode: null,
+        address: null,
+        desc: null
     };
-    dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
-    });
 
     $scope.submit = function () {
         console.log($scope.model);
+        dataService.saveSite($scope.model).then();
     };
 
 }]);
