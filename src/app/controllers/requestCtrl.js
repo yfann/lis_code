@@ -25,8 +25,8 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         $scope.model.endOpened = true;
     };
 
-    var editTpl = '<div><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
-    var otherTpl = '<a class="editTpl" ui-sref="app.request_detail({id: row.entity.id})">详情</a>';
+    var tpl = '<div><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
+    var otherTpl = '<a class="edit-tpl" ui-sref="app.request_detail({id: row.entity.id})">详情</a>';
     $scope.gridOptions = {
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
@@ -57,7 +57,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
             {
                 name: 'edit',
                 displayName: '操作',
-                cellTemplate: editTpl
+                cellTemplate: tpl
             },
             {
                 name: 'other',

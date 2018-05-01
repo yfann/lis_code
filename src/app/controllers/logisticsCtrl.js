@@ -1,8 +1,5 @@
 app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService', function ($scope, $modal, $state, dataService) {
 
-
-    var editTpl = '<div><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
-
     $scope.gridOptions = {
         enableFiltering: false,
         onRegisterApi: function (gridApi) {

@@ -1,5 +1,6 @@
 app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
-    var editUrl = '<a class="editTpl" ui-sref="app.depart_detail({id: row.entity.id})">编辑</a>'
+    var editUrl = '<a class="edit-tpl" ui-sref="app.depart_detail({id: row.entity.id})">编辑</a>';
+    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity.id)">删除</a>';
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -43,6 +44,10 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
 
     $scope.create = function () {
         $state.go('app.depart_detail');
+    };
+
+    $scope.delete = function (id) {
+        dataService.deleteDept(id);
     };
 
     $scope.filter=function(renderableRows){

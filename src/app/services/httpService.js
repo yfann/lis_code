@@ -116,5 +116,35 @@ angular.module('httpService', []).
                     var url = '/mock_data/dept_list.json';
                     return $http.get(url);
                 },
+                deleteLabCategory:function(id){
+
+                },
+                deleteCrisis:function(id){
+
+                },
+                deleteDept:function(id){
+
+                },
+                deleteEmployee:function(id){
+
+                },
+                deleteLabItem:function(id){
+
+                },
+                deleteLabItemSet:function(id){
+
+                },
+                deleteSite:function(id){
+
+                },
+                deletePatient:function(id){
+
+                },
+                deleteQCValue:function(id){
+
+                },
+                deleteSampleType:function(id){
+
+                }
             };
         }]);

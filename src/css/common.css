@@ -8,10 +8,10 @@
 }
 
 /*ui grid start*/
-.fann-lis .ui-grid-cell .editTpl{
+.fann-lis .ui-grid-cell .edit-tpl,.fann-lis .ui-grid-cell .delete-tpl{
     color: #2a6496;
     margin-top: 5px;
-    margin-left: 7px;
+    margin-left: 12px;
     display: inline-block;
 }
 

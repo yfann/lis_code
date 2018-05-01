@@ -1,10 +1,10 @@
 app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
-    // var editTpl = '<button id="editBtn" type="button" class="btn-small" ng-click="grid.appScope.go(row.entity)" >Edit</button>';
+    // var tpl = '<button id="editBtn" type="button" class="btn-small" ng-click="grid.appScope.go(row.entity)" >Edit</button>';
     // $scope.go = function (rowData) {
     //     $state.go('app.crisis_detail', { id: rowData.id });
     // }
 
-    var editUrl = '<a class="editTpl" ui-sref="app.crisis_detail({id: row.entity.id})">编辑</a>'
+    var editUrl = '<a class="edit-tpl" ui-sref="app.crisis_detail({id: row.entity.id})">编辑</a><a class="delete-tpl" ng-click="grid.appScope.delete(row.entity.id)">删除</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -32,6 +32,11 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
             {
                 field: 'createTime',
                 displayName: '创建时间'
+            },
+            {
+                name: 'edit',
+                displayName: '操作',
+                cellTemplate: editUrl
             }
         ]
     };
@@ -46,6 +51,10 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
 
     $scope.create = function () {
         $state.go('app.crisis_detail');
+    };
+
+    $scope.delete = function (id) {
+        dataService.deleteCrisis(id);
     };
 
     $scope.filter=function(renderableRows){
