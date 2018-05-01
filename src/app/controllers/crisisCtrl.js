@@ -18,18 +18,25 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
                 displayName: 'Id'
             },
             {
-                field: 'name',
-                displayName: 'Name'
+                field: 'labItemName',
+                displayName: '检验项目'
             },
             {
-                name: 'edit',
-                displayName: 'Edit',
-                cellTemplate: editUrl
+                field: 'normalUpper',
+                displayName: '正常上限'
+            },
+            {
+                field: 'normalLow',
+                displayName: '正常下限'
+            },
+            {
+                field: 'createTime',
+                displayName: '创建时间'
             }
         ]
     };
 
-    dataService.getlabitemList().then(function (result) {
+    dataService.getCrisisList().then(function (result) {
         $scope.gridOptions.data = result.data;
     });
 
@@ -45,7 +52,7 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach( function( row ) {
           var match = false;
-          [ 'name' ].forEach(function( field ){
+          [ 'labItemName' ].forEach(function( field ){
             if ( row.entity[field].match(matcher) ){
               match = true;
             }
@@ -62,14 +69,24 @@ app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSer
     //console.log($stateParams);
     $scope.model = {
         selectedlabItem: null,
-        normalUp: null
+        id:null,
+        lmId:null,
+        normalUpper:null,
+        normalLow:null,
+        crisisUpper:null,
+        crisisLow:null,
+        crisisClinical:null,
+        clinicasSignificance:null
     };
     dataService.getlabitemList().then(function (result) {
-        $scope.itemList = result.data;
+        $scope.labItemList = result.data;
     });
 
     $scope.submit = function () {
         console.log($scope.model);
+        dataService.saveCrisis($scope.model).then(function(){
+
+        });
     };
 
 }]);

@@ -32,30 +32,37 @@ angular.module('httpService', []).
         function ($http) {
             return {
                 getlabitemList: function () {
-                    var url='/mock_data/list.json';
+                    var url = '/mock_data/list.json';
                     return $http.get(url);
                 },
                 getCrisisList: function () {
-                    var url='/mock_data/list.json';
+                    var url = '/mock_data/list.json';
                     return $http.get(url);
                 },
                 getCrisisDetailById: function () {
 
                 },
                 getMildList: function () {
-                    var url='/mock_data/list.json';
+                    var url = '/mock_data/list.json';
                     return $http.get(url);
                 },
-                getRequestList:function(){
-                    var url='/mock_data/request_list.json';
+                getRequestList: function () {
+                    var url = '/mock_data/request_list.json';
                     return $http.get(url);
                 },
-                getSexList:function(){
-                    var url='/mock_data/sex_list.json';
+                getSexList: function () {
+                    var url = '/mock_data/sex_list.json';
                     return $http.get(url);
                 },
-                getSampleList:function(){
-                    var url='/mock_data/sample_list.json';
+                getSampleList: function () {
+                    var url = '/mock_data/sample_list.json';
+                    return $http.get(url);
+                },
+                saveCrisis: function (model) {
+
+                },
+                getCrisisList:function(){
+                    var url = '/mock_data/crisis_list.json';
                     return $http.get(url);
                 }
             };
