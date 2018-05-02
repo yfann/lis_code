@@ -218,6 +218,14 @@ angular.module('app')
                         templateUrl: 'tpl/labitemset/labitemset_detail.html',
                         controller: 'LabItemSetDetailCtrl'
                     })
+                    .state('labresult_print', {
+                        url: '/labresult_print',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/labresult/labresult_print.html',
+                        controller: 'LabresultPrintCtrl'
+                    })
             }
         ]
     );

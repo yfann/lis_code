@@ -92,3 +92,10 @@
     font-weight: bold;
     margin: 12px 0 0 10px;
 }
+
+/*print*/
+.fann-lis .labresult-print .title{
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}

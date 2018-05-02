@@ -1,5 +1,7 @@
 app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
-   $scope.gridOptions = {
+    var editUrl = '<a class="edit-tpl" ui-sref="labresult_print({id: row.entity.id})">打印</a>'
+
+    $scope.gridOptions = {
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
@@ -21,6 +23,11 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function
             {
                 field: 'reqTime',
                 displayName: '申请时间'
+            },
+            {
+                name: 'edit',
+                displayName: '操作',
+                cellTemplate: editUrl
             }
         ]
     };
@@ -75,5 +82,9 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
     $scope.submit = function () {
         console.log($scope.model);
     };
+
+}]);
+
+app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
 }]);
