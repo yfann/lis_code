@@ -94,7 +94,7 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         id: null,
         lmId: null,
         miId: null,
-        instrumentId: null,
+        instrumentId:'',
         instrumentName: null,
         qcer: null,
         qcTime: null,
@@ -106,13 +106,13 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         other3: null,
         other4: null,
         other5: null,
-        other6: null
+        other6: null,
+        selectedLabItem:null,
+        selectedSite:null
     };
 
     $scope.labItemList=null;
-    $scope.selectedLabItem=null;
     $scope.siteList=null;
-    $scope.selectedSite=null;
 
 
     dataService.getlabitemList().then(function (result) {
@@ -133,6 +133,12 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
 
     $scope.submit = function () {
         //console.log($scope.model);
+        if ($scope.model.selectedLabItem) {
+            $scope.model.lmId = $scope.model.selectedLabItem.id;
+        }
+        if ($scope.model.selectedSite) {
+            $scope.model.miId = $scope.model.selectedSite.id;
+        }
         dataService.saveQCValue($scope.model).then(function(){
             $state.go('app.qcvalue');
         });

@@ -10,13 +10,13 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label">检验项目</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="selectedlabItem" 
+                        <ui-select ng-model="model.selectedlabItem" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
                                    search-enabled="true">
-                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                            <ui-select-match>{{$select.selected.itemName}}</ui-select-match>
                             <ui-select-choices group-by="'group'" repeat="item in labItemList | filter: $select.search">
-                                <span ng-bind-html="item.name | highlight: $select.search"></span>
+                                <span ng-bind-html="item.itemName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
                     </div>

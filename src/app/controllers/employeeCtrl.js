@@ -29,7 +29,7 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
                 displayName: '职称名称'
             },
             {
-                field: 'iDNumber',
+                field: 'idNumber',
                 displayName: '身份证号'
             },
             {
@@ -95,14 +95,14 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
         titleName: null,
         password: null,
         desc: null,
-        birthDay: null
+        birthDay: null,
+        selectedSite:null,
+        selectedDept:null
     };
 
     $scope.siteList = null;
     $scope.deptList = null;
     $scope.selectedSex = null;
-    $scope.selectedSite = null;
-    $scope.selectedDept = null;
 
     $scope.dateOptions = {
         formatYear: 'yy',
@@ -136,6 +136,13 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
 
     $scope.submit = function () {
         //console.log($scope.model);
+        if ($scope.model.selectedSite) {
+            $scope.model.siteId = $scope.model.selectedSite.id;
+        }
+        if ($scope.model.selectedDept) {
+            $scope.model.deptId = $scope.model.selectedDept.id;
+        }
+
         dataService.saveEmployee($scope.model).then(function(){
             $state.go('app.employee');
         });

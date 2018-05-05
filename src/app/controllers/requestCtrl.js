@@ -67,9 +67,13 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         ]
     };
 
-    dataService.getRequestList().then(function (result) {
-        $scope.gridOptions.data = result.data;
-    });
+    $scope.load=function(){
+        dataService.getRequestList().then(function (result) {
+            $scope.gridOptions.data = result.data;
+        });
+    };
+
+    $scope.load();
 
     $scope.search = function () {
         $scope.gridApi.grid.refresh();
@@ -91,15 +95,27 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         return renderableRows;
     };
 
-    $scope.accept = function () {
-
+    $scope.accept = function (obj) {
+        dataService.acceptRequest(obj).then(function () {
+            $scope.load();
+        });
     };
 
-    $scope.reject = function () {
+    $scope.reject = function (obj) {
         $scope.modalInstance = $modal.open({
             templateUrl: '../tpl/dialog/reject_dialog.html',
             controller: 'RejectDialogCtrl',
-            size: 'lg'
+            size: 'lg',
+            resolve:{
+                data:function(){
+                    return obj;
+                },
+                grid:function(){
+                    return {
+                        reload:$scope.load
+                    }
+                }
+            }
         });
     };
 
@@ -107,11 +123,18 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
 }]);
 
 
-app.controller('RejectDialogCtrl', ['$scope', '$modalInstance', 'dataService', function ($scope, $modalInstance, dataService) {
+app.controller('RejectDialogCtrl', ['$scope', '$modalInstance', 'dataService','data','grid', function ($scope, $modalInstance, dataService,data,grid) {
     $scope.rejectReason = null;
 
     $scope.dialogSubmit = function () {
-        $modalInstance.close();
+        if(data){
+            data.rejectReason=$scope.rejectReason;
+        }
+        dataService.rejectReqeust(data).then(function () {
+            grid.reload();
+            $modalInstance.close();
+        });
+       
     };
 }]);
 

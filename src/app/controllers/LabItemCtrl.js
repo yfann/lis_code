@@ -105,9 +105,9 @@ app.controller('LabitemDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         canZero: null,
         canLessZero: null,
         meanOfclinic: null,
-        desc: null
+        desc: null,
+        selectedLabCategory:null
     };
-    $scope.selectedLabCategory = null;
     $scope.labCategoryList = null;
     dataService.getLabCategoryList().then(function (result) {
         $scope.labCategoryList = result.data;
@@ -123,7 +123,11 @@ app.controller('LabitemDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
 
     $scope.submit = function () {
         //console.log($scope.model);
+        if ($scope.model.selectedLabCategory) {
+            $scope.model.lcId = $scope.model.selectedLabCategory.id;
+        }
         dataService.saveLabitem($scope.model).then(function(){
+
             $state.go('app.labitem');
         });
     };

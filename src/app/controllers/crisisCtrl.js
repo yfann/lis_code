@@ -18,7 +18,7 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
                 displayName: 'Id'
             },
             {
-                field: 'labItemName',
+                field: 'labItem.itemName',
                 displayName: '检验项目'
             },
             {
@@ -67,15 +67,15 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
     $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
-            var match = false;
-            ['labItemName'].forEach(function (field) {
-                if (row.entity[field].match(matcher)) {
-                    match = true;
-                }
-            });
-            if (!match) {
-                row.visible = false;
-            }
+            // var match = false;
+            // ['normalLow'].forEach(function (field) {
+            //     if (row.entity[field].match && row.entity[field].match(matcher)) {
+            //         match = true;
+            //     }
+            // });
+            // if (!match) {
+            //     row.visible = false;
+            // }
         });
         return renderableRows;
     };
@@ -91,9 +91,9 @@ app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSer
         crisisUpper: null,
         crisisLow: null,
         crisisClinical: null,
-        clinicasSignificance: null
+        clinicasSignificance: null,
+        selectedlabItem:null
     };
-    $scope.selectedlabItem = null;
     $scope.labItemList = null;
     dataService.getlabitemList().then(function (result) {
         $scope.labItemList = result.data;
@@ -109,6 +109,9 @@ app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSer
 
     $scope.submit = function () {
         //console.log($scope.model);
+        if ($scope.model.selectedlabItem) {
+            $scope.model.lmId = $scope.model.selectedlabItem.id;
+        }
         dataService.saveCrisis($scope.model).then(function () {  
             $state.go('app.crisis');
         });

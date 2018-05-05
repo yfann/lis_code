@@ -34,9 +34,21 @@ angular.module('httpService', []).
 
             return {
                 //request
+                getRequestById: function (id) {
+                    var url = '/mock_data/request_list.json';
+                    return $http.get(url);
+                },
                 getRequestList: function () {
                     var url = '/mock_data/request_list.json';
                     return $http.get(url);
+                },
+                acceptRequest: function (obj) {
+                    var url = '/api/lis/requests/accept';
+                    return $http.post(url,obj);
+                },
+                rejectReqeust: function (obj) {
+                    var url = '/api/lis/requests/refuse';
+                    return $http.post(url,obj);
                 },
                 getSexList: function () {
                     var url = '/app/mock_data/sex_list.json';
