@@ -257,10 +257,12 @@ angular.module('httpService', []).
                 },
                 //logistics
                 getLogiList: function () {
-
+                    var url = '/app/mock_data/logi_list.json';
+                    return $http.get(url);
                 },
-                acceptLogi: function () {
-
+                acceptLogi: function (model) {
+                    var url = '/api/lis/logistics';
+                    return $http.post(url,model);
                 },
                 //other
                 getSexList: function () {
