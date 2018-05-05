@@ -2,7 +2,7 @@ app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', functio
 
     var link='app.sampletype_detail';
     var editUrl = '<a class="edit-tpl" ui-sref="'+link+'({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity.id)">删除</a>';
+    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
     
     $scope.gridOptions = {
         enableFiltering: false,
@@ -52,8 +52,15 @@ app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', functio
         $state.go(link);
     };
 
-    $scope.delete = function (id) {
-        dataService.deleteSampleType(id);
+    $scope.delete = function (obj) {
+        dataService.deleteSampleType(obj).then(function(){
+            for(var i=0;i<$scope.gridOptions.data.length;i++){
+                if($scope.gridOptions.data[i].id==obj.id){
+                    $scope.gridOptions.data.splice(i,1);
+                    break
+                }
+            }
+        });
     };
 
     $scope.filter=function(renderableRows){
@@ -75,10 +82,6 @@ app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', functio
 
 app.controller('SampleTypeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
-    if($stateParams.id){
-
-    }
-
     $scope.model = {
         id:null,
         parentId:null,
@@ -89,10 +92,20 @@ app.controller('SampleTypeDetailCtrl', ['$scope', '$state', '$stateParams', 'dat
         helpCode:null
     };
 
+    if($stateParams.id){
+        dataService.getSampleTypeById($stateParams.id).then(function(result){
+            if(result.data){
+                $scope.model=result.data;
+            }
+        });
+    }
+
 
     $scope.submit = function () {
         console.log($scope.model);
-        dataService.saveSampleType($scope.model).then();
+        dataService.saveSampleType($scope.model).then(function(){
+            $state.go('app.sampletype');
+        });
     };
 
 }]);

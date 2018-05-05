@@ -61,13 +61,29 @@ angular.module('httpService', []).
                 saveQCValue: function (model) {
 
                 },
-                getSampleTypeList: function () {
-                    var url = '/mock_data/sampleType_list.json';
-                    return $http.get(url);
+                //sample type
+                getSampleTypeById:function(id){
+                    var url = '/api/system/sampletypedetail?id=';
+                    return $http.get(url + id);
+                },
+                getSampleTypeList: function (query) {
+                    var url = host+'/api/system/sampletypes?search=';
+                    return $http.get(url+(query?query:''));
                 },
                 saveSampleType: function (model) {
-
+                    var url = '/api/system/sampletypes';
+                    return $http.post(url,model);
                 },
+                deleteSampleType:function(obj){
+                    var url = '/api/system/sampletypes';
+                    return $http.delete(url,{
+                        "headers":{
+                            'Content-Type':'application/json'
+                        },
+                        data:obj
+                    });
+                },
+                //crisis
                 getCrisisList: function () {
                     var url = '/mock_data/list.json';
                     return $http.get(url);
@@ -107,6 +123,7 @@ angular.module('httpService', []).
                     var url = '/mock_data/employee_list.json';
                     return $http.get(url);
                 },
+                //medical
                 getSiteList: function (query) {
                     var url = host+'/api/system/medicalinstitutions?search=';
                     return $http.get(url+(query?query:''));
@@ -154,9 +171,6 @@ angular.module('httpService', []).
 
                 },
                 deleteQCValue:function(id){
-
-                },
-                deleteSampleType:function(id){
 
                 }
             };
