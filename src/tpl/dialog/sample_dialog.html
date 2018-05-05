@@ -34,13 +34,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">扫码样本</label>
+            <label class="col-sm-2 control-label">扫码单号</label>
             <div class="col-md-4">
                 <input ui-focus="focusFlag" type="text" class="form-control" ng-model="sampleNo" ng-keypress="keypress($event)">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">已扫样本</label>
+            <label class="col-sm-2 control-label">已扫单号</label>
             <div class="col-md-8">
                 <div class="label-item" ng-repeat="item in model.barCodes track by $index">{{item}}</div>
             </div>

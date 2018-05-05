@@ -226,6 +226,14 @@ angular.module('app')
                         templateUrl: 'tpl/labresult/labresult_print.html',
                         controller: 'LabresultPrintCtrl'
                     })
+                    .state('logistics_print', {
+                        url: '/logistics_print',
+                        params: {
+                            data: null
+                        },
+                        templateUrl: 'tpl/logistics/logistics_print.html',
+                        controller: 'LogisticsPrintCtrl'
+                    })
             }
         ]
     );

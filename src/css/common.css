@@ -99,3 +99,24 @@
     font-size: 22px;
     font-weight: bold;
 }
+
+.fann-lis .logistics-print .title{
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.fann-lis .logistics-print table td{
+    width:50%;
+}
+
+.fann-lis .logistics-print .labe-left{
+    margin-left:80%;
+}
+
+.fann-lis .logistics-print .labe-right{
+    margin-left:2px;
+}
+.fann-lis .logistics-print .labe-item{
+    margin-top:5px;
+}

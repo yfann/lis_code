@@ -31,7 +31,7 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
         ]
     };
 
-    $scope.reload=function(){
+    $scope.reload = function () {
         dataService.getLogiList().then(function (result) {
             $scope.gridOptions.data = result.data;
         });
@@ -45,16 +45,16 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
 
     $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'sampleNo' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['sampleNo'].forEach(function (field) {
+                if (row.entity[field].match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -72,10 +72,10 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
             templateUrl: '/app/tpl/dialog/sample_dialog.html',
             controller: 'SampleDialogCtrl',
             size: 'lg',
-            resolve:{
-                grid:function(){
+            resolve: {
+                grid: function () {
                     return {
-                        reload:$scope.reload
+                        reload: $scope.reload
                     }
                 }
             }
@@ -83,16 +83,16 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
     };
 }]);
 
-app.controller('SampleDialogCtrl', ['$scope', '$modalInstance', 'dataService','grid', function ($scope, $modalInstance, dataService,grid) {
+app.controller('SampleDialogCtrl', ['$scope', '$state', '$modalInstance', 'dataService', 'grid', function ($scope, $state, $modalInstance, dataService, grid) {
     $scope.sampleNo = null;
     $scope.focusFlag = 1;
     $scope.model = {
         selectedSendUser: null,
         selectedAcceptUser: null,
         selectedCenterAcceptUser: null,
-        sendEmId:null,
-        lsEmId:null,
-        centerEmId:null,
+        sendEmId: null,
+        lsEmId: null,
+        centerEmId: null,
         barCodes: []
     };
 
@@ -113,18 +113,46 @@ app.controller('SampleDialogCtrl', ['$scope', '$modalInstance', 'dataService','g
     });
 
     $scope.dialogSubmit = function () {
-        if($scope.model.selectedSendUser){
-            $scope.model.sendEmId=$scope.model.selectedSendUser.id;
+        if ($scope.model.selectedSendUser) {
+            $scope.model.sendEmId = $scope.model.selectedSendUser.id;
         }
-        if($scope.model.selectedAcceptUser){
-            $scope.model.lsEmId=$scope.model.selectedAcceptUser.id;
+        if ($scope.model.selectedAcceptUser) {
+            $scope.model.lsEmId = $scope.model.selectedAcceptUser.id;
         }
-        if($scope.model.selectedCenterAcceptUser){
-            $scope.model.centerEmId=$scope.model.selectedCenterAcceptUser.id;
+        if ($scope.model.selectedCenterAcceptUser) {
+            $scope.model.centerEmId = $scope.model.selectedCenterAcceptUser.id;
         }
         dataService.acceptLogi($scope.model).then(function () {
             grid.reload();
+            // var url = $state.href('logistics_print', { data: $scope.model });
+            // window.open(window.location.href.split('#')[0] + url, '_blank');
+            $state.go('logistics_print', { data: $scope.model });
             $modalInstance.close();
         });
     };
+}]);
+
+
+app.controller('LogisticsPrintCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
+    $scope.data = $stateParams.data;
+
+    $scope.model = {
+        sendEm: '',
+        lsEm: '',
+        centerEm: '',
+        barCodes: []
+    };
+
+    if ($stateParams.data && $stateParams.data.selectedSendUser) {
+        $scope.model.sendEm = $stateParams.data.selectedSendUser.emName;
+    }
+    if ($stateParams.data && $stateParams.data.selectedAcceptUser) {
+        $scope.model.lsEm = $stateParams.data.selectedAcceptUser.emName;
+    }
+    if ($stateParams.data && $stateParams.data.selectedCenterAcceptUser) {
+        $scope.model.centerEm = $stateParams.data.selectedCenterAcceptUser.emName;
+    }
+    if ($stateParams.data && $stateParams.data.barCodes) {
+        $scope.model.barCodes = $stateParams.data.barCodes;
+    }
 }]);
