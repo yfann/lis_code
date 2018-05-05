@@ -15,7 +15,8 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
         columnDefs: [
             {
                 field: 'id',
-                displayName: 'Id'
+                displayName: 'Id',
+                visible: false
             },
             {
                 field: 'labItem.itemName',

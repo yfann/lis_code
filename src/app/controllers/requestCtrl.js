@@ -43,8 +43,8 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
                 displayName: '申请单号'
             },
             {
-                field: 'empName',
-                displayName: '申请员工'
+                field: 'patient.ptName',
+                displayName: '病人名字'
             },
             {
                 field: 'reqTime',
@@ -139,5 +139,13 @@ app.controller('RejectDialogCtrl', ['$scope', '$modalInstance', 'dataService','d
 }]);
 
 app.controller('RequestDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
-
+    
+    
+    if($stateParams.id){
+        dataService.getRequestById($stateParams.id).then(function(result){
+            if(result.data){
+                $scope.model=result.data;
+            }
+        });
+    }
 }]);
