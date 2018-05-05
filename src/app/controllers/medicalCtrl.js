@@ -99,7 +99,7 @@ app.controller('MedicalDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
     
 
     $scope.submit = function () {
-        console.log($scope.model);
+        //console.log($scope.model);
         dataService.saveSite($scope.model).then(function(){
             $state.go('app.medical');
         });

@@ -33,33 +33,94 @@ angular.module('httpService', []).
             var host="http://localhost:8123";
 
             return {
-                getlabitemList: function () {
-                    var url = '/mock_data/labitem_list.json';
+                //request
+                getRequestList: function () {
+                    var url = '/mock_data/request_list.json';
                     return $http.get(url);
+                },
+                getSexList: function () {
+                    var url = '/app/mock_data/sex_list.json';
+                    return $http.get(url);
+                },
+                //lab item
+                getLabItemById:function(id){
+                    var url = '/api/system/labitemdetail?id=';
+                    return $http.get(url + id);
+                },
+                getlabitemList: function (query) {
+                    var url = '/api/system/labitems?search=';
+                    return $http.get(url+(query?query:''));
                 },
                 saveLabitem: function (model) {
-
+                    var url = '/api/system/labitems';
+                    return $http.post(url,model);
                 },
-                getLabItemSetList: function () {
-                    var url = '/mock_data/labitemset_list.json';
-                    return $http.get(url);
+                deleteLabItem:function(obj){
+                    var url = '/api/system/labitems';
+                    return $http.delete(url,{
+                        "headers":{
+                            'Content-Type':'application/json'
+                        },
+                        data:obj
+                    });
+                },
+                //lab item set
+                getLabItemSetById:function(id){
+                    var url = '/api/system/labitemsetdetail?id=';
+                    return $http.get(url + id);
+                },
+                getLabItemSetList: function (query) {
+                    var url = '/api/system/labitemsets?search=';
+                    return $http.get(url+(query?query:''));
                 },
                 saveLabItemSet: function (model) {
+                    var url = '/api/system/labitemsets';
+                    return $http.post(url,model);
+                },
+                deleteLabItemSet:function(obj){
+                    var url = '/api/system/labitemsets';
+                    return $http.delete(url,{
+                        "headers":{
+                            'Content-Type':'application/json'
+                        },
+                        data:obj
+                    });
+                },
+                //lab category
+                getLabCategoryById:function(){
 
                 },
-                getLabCategoryList: function () {
-                    var url = '/mock_data/category_list.json';
+                getLabCategoryList: function (query) {
+                    var url = '/app/mock_data/labcategory_list.json';
                     return $http.get(url);
                 },
                 saveLabCategory: function (model) {
 
                 },
-                getQCValueList: function () {
-                    var url = '/mock_data/qcvalue_list.json';
-                    return $http.get(url);
+                deleteLabCategory:function(id){
+
+                },
+                //qc value
+                getQCValueById:function(id){
+                    var url = '/api/system/qcvaluedetail?id=';
+                    return $http.get(url + id);
+                },
+                getQCValueList: function (query) {
+                    var url = '/api/system/qcvalues?search=';
+                    return $http.get(url+(query?query:''));
                 },
                 saveQCValue: function (model) {
-
+                    var url = '/api/system/qcvalues';
+                    return $http.post(url,model);
+                },
+                deleteQCValue:function(obj){
+                    var url = '/api/system/qcvalues';
+                    return $http.delete(url,{
+                        "headers":{
+                            'Content-Type':'application/json'
+                        },
+                        data:obj
+                    });
                 },
                 //sample type
                 getSampleTypeById:function(id){
@@ -84,44 +145,48 @@ angular.module('httpService', []).
                     });
                 },
                 //crisis
-                getCrisisList: function () {
-                    var url = '/mock_data/list.json';
-                    return $http.get(url);
+                getCrisisById:function(id){
+                    var url = '/api/system/crisisdetail?id=';
+                    return $http.get(url + id);
                 },
-                getCrisisDetailById: function () {
-
-                },
-                getRequestList: function () {
-                    var url = '/mock_data/request_list.json';
-                    return $http.get(url);
-                },
-                getSexList: function () {
-                    var url = '/mock_data/sex_list.json';
-                    return $http.get(url);
-                },
-                getSampleList: function () {
-                    var url = '/mock_data/sample_list.json';
-                    return $http.get(url);
+                getCrisisList: function (query) {
+                    var url = host+'/api/system/crisis?search=';
+                    return $http.get(url+(query?query:''));
                 },
                 saveCrisis: function (model) {
-
+                    var url = '/api/system/crisis';
+                    return $http.post(url,model);
                 },
-                getCrisisList: function () {
-                    var url = '/mock_data/crisis_list.json';
-                    return $http.get(url);
+                deleteCrisis:function(obj){
+                    var url = '/api/system/crisis';
+                    return $http.delete(url,{
+                        "headers":{
+                            'Content-Type':'application/json'
+                        },
+                        data:obj
+                    });
                 },
-                savePatient: function (model) {
-
-                },
-                getPatientList: function () {
-
+                //user
+                getEmployeeById:function(id){
+                    var url = '/api/system/userdetail?id=';
+                    return $http.get(url + id);
                 },
                 saveEmployee: function (model) {
-
+                    var url = '/api/system/users';
+                    return $http.post(url,model);
                 },
-                getEmployeeList: function () {
-                    var url = '/mock_data/employee_list.json';
-                    return $http.get(url);
+                getEmployeeList: function (query) {
+                    var url = host+'/api/system/users?search=';
+                    return $http.get(url+(query?query:''));
+                },
+                deleteEmployee:function(obj){
+                    var url = '/api/system/users';
+                    return $http.delete(url,{
+                        "headers":{
+                            'Content-Type':'application/json'
+                        },
+                        data:obj
+                    });
                 },
                 //medical
                 getSiteList: function (query) {
@@ -145,33 +210,32 @@ angular.module('httpService', []).
                         data:entity
                     });
                 },
+                // department
+                getDeptById:function(id){
+
+                },
                 getDeptList: function () {
                     var url = '/mock_data/dept_list.json';
                     return $http.get(url);
                 },
-                deleteLabCategory:function(id){
-
-                },
-                deleteCrisis:function(id){
-
-                },
                 deleteDept:function(id){
 
                 },
-                deleteEmployee:function(id){
-
-                },
-                deleteLabItem:function(id){
-
-                },
-                deleteLabItemSet:function(id){
+                saveDept:function(){
 
                 },
                 deletePatient:function(id){
 
                 },
-                deleteQCValue:function(id){
+                getSampleList: function () {
+                    var url = '/mock_data/sample_list.json';
+                    return $http.get(url);
+                },
+                savePatient: function (model) {
 
-                }
+                },
+                getPatientList: function () {
+
+                },
             };
         }]);

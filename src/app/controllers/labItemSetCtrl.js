@@ -2,7 +2,7 @@ app.controller('LabItemSetListCtrl', ['$scope', '$state', 'dataService', functio
 
     var link='app.labitemset_detail';
     var editUrl = '<a class="edit-tpl" ui-sref="'+link+'({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity.id)">删除</a>';
+    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
     
     $scope.gridOptions = {
         enableFiltering: false,
@@ -48,8 +48,15 @@ app.controller('LabItemSetListCtrl', ['$scope', '$state', 'dataService', functio
         $state.go(link);
     };
 
-    $scope.delete = function (id) {
-        dataService.deleteLabItemSet(id);
+    $scope.delete = function (obj) {
+        dataService.deleteLabItemSet(id).then(function(){
+            for(var i=0;i<$scope.gridOptions.data.length;i++){
+                if($scope.gridOptions.data[i].id==obj.id){
+                    $scope.gridOptions.data.splice(i,1);
+                    break
+                }
+            }
+        });
     };
 
     $scope.filter=function(renderableRows){

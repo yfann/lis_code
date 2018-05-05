@@ -4,7 +4,7 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
     //     $state.go('app.crisis_detail', { id: rowData.id });
     // }
 
-    var editUrl = '<a class="edit-tpl" ui-sref="app.crisis_detail({id: row.entity.id})">编辑</a><a class="delete-tpl" ng-click="grid.appScope.delete(row.entity.id)">删除</a>'
+    var editUrl = '<a class="edit-tpl" ui-sref="app.crisis_detail({id: row.entity.id})">编辑</a><a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -53,22 +53,29 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
         $state.go('app.crisis_detail');
     };
 
-    $scope.delete = function (id) {
-        dataService.deleteCrisis(id);
+    $scope.delete = function (obj) {
+        dataService.deleteCrisis(obj).then(function () {
+            for (var i = 0; i < $scope.gridOptions.data.length; i++) {
+                if ($scope.gridOptions.data[i].id == obj.id) {
+                    $scope.gridOptions.data.splice(i, 1);
+                    break
+                }
+            }
+        });
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'labItemName' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['labItemName'].forEach(function (field) {
+                if (row.entity[field].match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -77,24 +84,33 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
 app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
     //console.log($stateParams);
     $scope.model = {
-        selectedlabItem: null,
-        id:null,
-        lmId:null,
-        normalUpper:null,
-        normalLow:null,
-        crisisUpper:null,
-        crisisLow:null,
-        crisisClinical:null,
-        clinicasSignificance:null
+        id: null,
+        lmId: null,
+        normalUpper: null,
+        normalLow: null,
+        crisisUpper: null,
+        crisisLow: null,
+        crisisClinical: null,
+        clinicasSignificance: null
     };
+    $scope.selectedlabItem = null;
+    $scope.labItemList = null;
     dataService.getlabitemList().then(function (result) {
         $scope.labItemList = result.data;
     });
 
-    $scope.submit = function () {
-        console.log($scope.model);
-        dataService.saveCrisis($scope.model).then(function(){
+    if($stateParams.id){
+        dataService.getCrisisById($stateParams.id).then(function(result){
+            if(result.data){
+                $scope.model=result.data;
+            }
+        });
+    }
 
+    $scope.submit = function () {
+        //console.log($scope.model);
+        dataService.saveCrisis($scope.model).then(function () {  
+            $state.go('app.crisis');
         });
     };
 

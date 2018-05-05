@@ -2,7 +2,7 @@ app.controller('CategoryListCtrl', ['$scope', '$state', 'dataService', function 
 
     var link = 'app.category_detail';
     var editUrl = '<a class="edit-tpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>';
-        editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity.id)">删除</a>';
+        editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -52,8 +52,15 @@ app.controller('CategoryListCtrl', ['$scope', '$state', 'dataService', function 
         $state.go(link);
     };
 
-    $scope.delete = function (id) {
-        dataService.deleteLabCategory(id);
+    $scope.delete = function (obj) {
+        dataService.deleteLabCategory(obj).then(function(){
+            for(var i=0;i<$scope.gridOptions.data.length;i++){
+                if($scope.gridOptions.data[i].id==obj.id){
+                    $scope.gridOptions.data.splice(i,1);
+                    break
+                }
+            }
+        });;
     };
 
     $scope.filter = function (renderableRows) {
@@ -87,9 +94,19 @@ app.controller('CategoryDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
     };
 
 
+    if($stateParams.id){
+        dataService.getLabCategoryById($stateParams.id).then(function(result){
+            if(result.data){
+                $scope.model=result.data;
+            }
+        });
+    }
+
     $scope.submit = function () {
-        console.log($scope.model);
-        dataService.saveLabCategory($scope.model).then();
+        //console.log($scope.model);
+        dataService.saveLabCategory($scope.model).then(function(){
+            $state.go('app.category');
+        });
     };
 
 }]);
