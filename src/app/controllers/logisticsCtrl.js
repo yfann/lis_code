@@ -65,7 +65,7 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
 
     $scope.openDialog = function () {
         $modal.open({
-            templateUrl: '../tpl/dialog/sample_dialog.html',
+            templateUrl: '/app/tpl/dialog/sample_dialog.html',
             controller: 'SampleDialogCtrl',
             size: 'lg'
         });
@@ -75,22 +75,32 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
 app.controller('SampleDialogCtrl', ['$scope', '$modalInstance', 'dataService', function ($scope, $modalInstance, dataService) {
     $scope.sampleNo = null;
     $scope.focusFlag = 1;
-    $scope.sampleList = [];
-    $scope.sendEmp=null;
+    $scope.model = {
+        selectedSendUser: null,
+        selectedAcceptUser: null,
+        selectedCenterAcceptUser: null,
+        sampleList: []
+    };
 
     $scope.keypress = function (event) {
         if (event.charCode == 13) {
             event.preventDefault();
             event.stopPropagation();
-            if($scope.sampleNo){
-                $scope.sampleList.push($scope.sampleNo);
+            if ($scope.sampleNo) {
+                $scope.model.sampleList.push($scope.sampleNo);
             }
             $scope.sampleNo = '';
             $scope.focusFlag++;
         }
     };
 
+    dataService.getEmployeeList().then(function (result) {
+        $scope.userList = result.data;
+    });
+
     $scope.dialogSubmit = function () {
-        $modalInstance.close();
+        dataService.acceptLogi($scope.model).then(function () {
+            $modalInstance.close();
+        });
     };
 }]);

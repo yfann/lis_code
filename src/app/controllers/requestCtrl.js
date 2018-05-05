@@ -103,7 +103,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
 
     $scope.reject = function (obj) {
         $scope.modalInstance = $modal.open({
-            templateUrl: '../tpl/dialog/reject_dialog.html',
+            templateUrl: '/app/tpl/dialog/reject_dialog.html',
             controller: 'RejectDialogCtrl',
             size: 'lg',
             resolve:{

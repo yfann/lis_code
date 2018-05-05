@@ -97,15 +97,21 @@ app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSer
     $scope.labItemList = null;
     dataService.getlabitemList().then(function (result) {
         $scope.labItemList = result.data;
+        if($stateParams.id){
+            dataService.getCrisisById($stateParams.id).then(function(result){
+                if(result.data){
+                    $scope.model=result.data;
+                    for (var i = 0; i < $scope.labItemList.length; i++) {
+                        if ($scope.labItemList[i].id == $scope.model.lmId) {
+                            $scope.model.selectedlabItem = $scope.labItemList[i];
+                        }
+                    }
+                }
+            });
+        }
     });
 
-    if($stateParams.id){
-        dataService.getCrisisById($stateParams.id).then(function(result){
-            if(result.data){
-                $scope.model=result.data;
-            }
-        });
-    }
+
 
     $scope.submit = function () {
         //console.log($scope.model);

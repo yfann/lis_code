@@ -252,6 +252,14 @@ angular.module('httpService', []).
                     var url = '/api/system/depts';
                     return $http.post(url,model);
                 },
+                //logistics
+                getLogiList:function(){
+
+                },
+                acceptLogi:function(){
+
+                },
+                //other
                 deletePatient:function(id){
 
                 },
