@@ -1,6 +1,6 @@
 app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
     var editUrl = '<a class="edit-tpl" ui-sref="app.depart_detail({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
+    editUrl += '<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -47,28 +47,28 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
     };
 
     $scope.delete = function (obj) {
-        dataService.deleteDept(obj).then(function(){
-            for(var i=0;i<$scope.gridOptions.data.length;i++){
-                if($scope.gridOptions.data[i].id==obj.id){
-                    $scope.gridOptions.data.splice(i,1);
+        dataService.deleteDept(obj).then(function () {
+            for (var i = 0; i < $scope.gridOptions.data.length; i++) {
+                if ($scope.gridOptions.data[i].id == obj.id) {
+                    $scope.gridOptions.data.splice(i, 1);
                     break
                 }
             }
         });
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'deptName' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['deptName'].forEach(function (field) {
+                if (row.entity[field].match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -77,30 +77,39 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
 app.controller('DepartDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
     //console.log($stateParams);
     $scope.model = {
-        id:null,
-        siteId:null,
-        deptCode:null,
-        deptName:null,
-        desc:null
+        id: null,
+        siteId: null,
+        deptCode: null,
+        deptName: null,
+        desc: null,
+        selectedSite: null
     };
-    $scope.siteList=null;
-    $scope.selectedSite=null;
+    $scope.siteList = null;
 
     dataService.getSiteList().then(function (result) {
         $scope.siteList = result.data;
+        if ($stateParams.id) {
+            dataService.getDeptById($stateParams.id).then(function (result) {
+                if (result.data) {
+                    $scope.model = result.data;
+                    for (var i = 0; i < $scope.siteList.length; i++) {
+                        if ($scope.siteList[i].id == $scope.model.siteId) {
+                            $scope.model.selectedSite = $scope.siteList[i];
+                        }
+                    }
+                }
+            });
+        }
     });
 
-    if($stateParams.id){
-        dataService.getDeptById($stateParams.id).then(function(result){
-            if(result.data){
-                $scope.model=result.data;
-            }
-        });
-    }
+
 
     $scope.submit = function () {
         //console.log($scope.model);
-        dataService.saveSite($scope.model).then(function (result) {
+        if ($scope.model.selectedSite) {
+            $scope.model.siteId = $scope.model.selectedSite.id;
+        }
+        dataService.saveDept($scope.model).then(function (result) {
             $state.go('app.depart');
         });
     };

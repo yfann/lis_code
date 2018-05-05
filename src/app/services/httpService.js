@@ -87,18 +87,26 @@ angular.module('httpService', []).
                     });
                 },
                 //lab category
-                getLabCategoryById:function(){
-
+                getLabCategoryById:function(id){
+                    var url = '/api/system/labcategorydetail?id=';
+                    return $http.get(url + id);
                 },
                 getLabCategoryList: function (query) {
-                    var url = '/app/mock_data/labcategory_list.json';
-                    return $http.get(url);
+                    var url = '/api/system/labcategories?search=';
+                    return $http.get(url+(query?query:''));
                 },
                 saveLabCategory: function (model) {
-
+                    var url = '/api/system/labcategories';
+                    return $http.post(url,model);
                 },
-                deleteLabCategory:function(id){
-
+                deleteLabCategory:function(obj){
+                    var url = '/api/system/labcategories';
+                    return $http.delete(url,{
+                        "headers":{
+                            'Content-Type':'application/json'
+                        },
+                        data:obj
+                    });
                 },
                 //qc value
                 getQCValueById:function(id){
@@ -212,17 +220,25 @@ angular.module('httpService', []).
                 },
                 // department
                 getDeptById:function(id){
-
+                    var url = '/api/system/deptdetail?id=';
+                    return $http.get(url + id);
                 },
-                getDeptList: function () {
-                    var url = '/mock_data/dept_list.json';
-                    return $http.get(url);
+                getDeptList: function (query) {
+                    var url = host+'/api/system/depts?search=';
+                    return $http.get(url+(query?query:''));
                 },
-                deleteDept:function(id){
-
+                deleteDept:function(entity){
+                    var url = '/api/system/depts';
+                    return $http.delete(url,{
+                        "headers":{
+                            'Content-Type':'application/json'
+                        },
+                        data:entity
+                    });
                 },
-                saveDept:function(){
-
+                saveDept:function(model){
+                    var url = '/api/system/depts';
+                    return $http.post(url,model);
                 },
                 deletePatient:function(id){
 
