@@ -2,7 +2,7 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
 
     var link = 'app.medical_detail';
     var editUrl = '<a class="edit-tpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity.id)">删除</a>';
+    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -48,8 +48,15 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
         $state.go(link);
     };
 
-    $scope.delete = function (id) {
-        dataService.deleteSite(id);
+    $scope.delete = function (obj) {
+        dataService.deleteSite(obj).then(function(){
+            for(var i=0;i<$scope.gridOptions.data.length;i++){
+                if($scope.gridOptions.data[i].id==obj.id){
+                    $scope.gridOptions.data.splice(i,1);
+                    break
+                }
+            }
+        });
     };
 
     $scope.filter = function (renderableRows) {
@@ -70,7 +77,6 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
 }]);
 
 app.controller('MedicalDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
-
     $scope.model = {
         id: null,
         miCode: null,
@@ -80,10 +86,23 @@ app.controller('MedicalDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         address: null,
         desc: null
     };
+    
+    
+    if($stateParams.id){
+        dataService.getSiteById($stateParams.id).then(function(result){
+            if(result.data){
+                $scope.model=result.data;
+            }
+        });
+    }
+
+    
 
     $scope.submit = function () {
         console.log($scope.model);
-        dataService.saveSite($scope.model).then();
+        dataService.saveSite($scope.model).then(function(){
+            $state.go('app.medical');
+        });
     };
 
 }]);

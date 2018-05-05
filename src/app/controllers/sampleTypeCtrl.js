@@ -75,6 +75,10 @@ app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', functio
 
 app.controller('SampleTypeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
+    if($stateParams.id){
+
+    }
+
     $scope.model = {
         id:null,
         parentId:null,
@@ -88,7 +92,7 @@ app.controller('SampleTypeDetailCtrl', ['$scope', '$state', '$stateParams', 'dat
 
     $scope.submit = function () {
         console.log($scope.model);
-        dataService.saveSampleType($scope.model).thne();
+        dataService.saveSampleType($scope.model).then();
     };
 
 }]);

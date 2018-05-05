@@ -30,6 +30,8 @@ angular.module('httpService', []).
 angular.module('httpService', []).
     service('dataService', ['$http',
         function ($http) {
+            var host="http://localhost:8123";
+
             return {
                 getlabitemList: function () {
                     var url = '/mock_data/labitem_list.json';
@@ -105,12 +107,26 @@ angular.module('httpService', []).
                     var url = '/mock_data/employee_list.json';
                     return $http.get(url);
                 },
-                getSiteList: function () {
-                    var url = '/mock_data/site_list.json';
-                    return $http.get(url);
+                getSiteList: function (query) {
+                    var url = host+'/api/system/medicalinstitutions?search=';
+                    return $http.get(url+(query?query:''));
                 },
                 saveSite: function (model) {
-
+                    var url = '/api/system/medicalinstitutions';
+                    return $http.post(url,model);
+                },
+                getSiteById:function(id){
+                    var url = '/api/system/medicalinstitutiondetail?id=';
+                    return $http.get(url + id);
+                },
+                deleteSite:function(entity){
+                    var url = '/api/system/medicalinstitutions';
+                    return $http.delete(url,{
+                        "headers":{
+                            'Content-Type':'application/json'
+                        },
+                        data:entity
+                    });
                 },
                 getDeptList: function () {
                     var url = '/mock_data/dept_list.json';
@@ -132,9 +148,6 @@ angular.module('httpService', []).
 
                 },
                 deleteLabItemSet:function(id){
-
-                },
-                deleteSite:function(id){
 
                 },
                 deletePatient:function(id){
