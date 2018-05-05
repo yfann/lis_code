@@ -45,28 +45,21 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function
     };
 
     $scope.filter=function(renderableRows){
-        // var matcher = new RegExp($scope.filterValue);
-        // renderableRows.forEach( function( row ) {
-        //   var match = false;
-        //   [ 'name' ].forEach(function( field ){
-        //     if ( row.entity[field].match(matcher) ){
-        //       match = true;
-        //     }
-        //   });
-        //   if ( !match ){
-        //     row.visible = false;
-        //   }
-        // });
+        var matcher = new RegExp($scope.filterValue);
+        renderableRows.forEach( function( row ) {
+          var match = false;
+          [ 'requestNo' ].forEach(function( field ){
+            if ( row.entity[field].match(matcher) ){
+              match = true;
+            }
+          });
+          if ( !match ){
+            row.visible = false;
+          }
+        });
         return renderableRows;
     };
 
-    $scope.accept=function(){
-
-    };
-
-    $scope.reject=function(){
-
-    };
 }]);
 
 app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
@@ -77,6 +70,14 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
     };
     dataService.getRequestList().then(function (result) {
         $scope.itemList = result.data;
+    });
+
+    $scope.$watch('model.selectedlabItem',function(newV,oldV){
+        if(newV){
+            dataService.getRequestById(newV.id).then(function (result) {
+                $scope.requestDetail = result.data;
+            });
+        }
     });
 
     $scope.submit = function () {
