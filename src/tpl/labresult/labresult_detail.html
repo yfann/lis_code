@@ -40,30 +40,44 @@
                 <div class="form-group">
                     <label class="col-md-1 control-label col-md-offset-1">英文名</label>
                     <div class="col-md-1">
-                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.englishName">
+                        <input type="text" class="form-control" ng-model="item.labResult.englishName">
                     </div>
                     <label class="col-sm-1 control-label">中文名</label>
                     <div class="col-md-1">
-                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.chtName">
+                        <input type="text" class="form-control" ng-model="item.labResult.chtName">
                     </div>
                     <label class="col-sm-1 control-label">检验结果值</label>
                     <div class="col-md-1">
-                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.resultValue">
+                        <input type="text" class="form-control" ng-model="item.labResult.resultValue">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label col-md-offset-1">结果范围值</label>
                     <div class="col-sm-1">
-                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.refRange">
+                        <input type="text" class="form-control" ng-model="item.labResult.refRange">
                     </div>
                     <label class="col-sm-1 control-label">检验结果单位</label>
                     <div class="col-sm-1">
-                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.unit">
+                        <input type="text" class="form-control" ng-model="item.labResult.unit">
                     </div>
                     <label class="col-sm-1 control-label">排序</label>
                     <div class="col-sm-1">
-                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.seqNo">
+                        <input type="text" class="form-control" ng-model="item.labResult.seqNo">
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                    <label class="col-sm-1 control-label col-md-offset-1">参考最低值</label>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" ng-model="item.labResult.refLo">
+                    </div>
+                    <label class="col-sm-1 control-label">参考最高值</label>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" ng-model="item.labResult.refHi">
+                    </div>
+                    <label class="col-sm-1 control-label"></label>
+                    <div class="col-sm-1">
                     </div>
                 </div>
             </div>
