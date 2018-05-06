@@ -104,5 +104,9 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
 }]);
 
 app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
-
+    if ($stateParams.id) {
+        dataService.getRequestById($stateParams.id).then(function (result) {
+            $scope.model = result.data;
+        });
+    }
 }]);
