@@ -48,11 +48,18 @@
     margin-left: 20px;
 }
 
-/*form start*/
+/*form*/
 .fann-lis .form-group.select-group{
     height: 34px;
 }
 
+.fann-lis label.required:after{
+    content: '*';
+    color: #f00;
+    font-size: 134%;
+    position: absolute;
+    right: 1px;
+}
 
 /*dialog*/
 .common-dialog{
