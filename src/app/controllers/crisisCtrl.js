@@ -68,15 +68,20 @@ app.controller('CrisisListCtrl', ['$scope', '$state', 'dataService', function ($
     $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
-            // var match = false;
-            // ['normalLow'].forEach(function (field) {
-            //     if (row.entity[field].match && row.entity[field].match(matcher)) {
-            //         match = true;
-            //     }
-            // });
-            // if (!match) {
-            //     row.visible = false;
-            // }
+            var match = false;
+            ['labItem.itemName', 'normalUpper','normalLow'].forEach(function (field) {
+                var entity = row.entity;
+                field.split('.').forEach(function (f) {
+                    entity = entity[f];
+                });
+                entity = entity + '';
+                if (entity.match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
+            }
         });
         return renderableRows;
     };
@@ -93,15 +98,15 @@ app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSer
         crisisLow: null,
         crisisClinical: null,
         clinicasSignificance: null,
-        selectedlabItem:null
+        selectedlabItem: null
     };
     $scope.labItemList = null;
     dataService.getlabitemList().then(function (result) {
         $scope.labItemList = result.data;
-        if($stateParams.id){
-            dataService.getCrisisById($stateParams.id).then(function(result){
-                if(result.data){
-                    $scope.model=result.data;
+        if ($stateParams.id) {
+            dataService.getCrisisById($stateParams.id).then(function (result) {
+                if (result.data) {
+                    $scope.model = result.data;
                     for (var i = 0; i < $scope.labItemList.length; i++) {
                         if ($scope.labItemList[i].id == $scope.model.lmId) {
                             $scope.model.selectedlabItem = $scope.labItemList[i];
@@ -119,7 +124,7 @@ app.controller('CrisisDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSer
         if ($scope.model.selectedlabItem) {
             $scope.model.lmId = $scope.model.selectedlabItem.id;
         }
-        dataService.saveCrisis($scope.model).then(function () {  
+        dataService.saveCrisis($scope.model).then(function () {
             $state.go('app.crisis');
         });
     };
