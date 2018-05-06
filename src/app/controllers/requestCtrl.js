@@ -1,4 +1,4 @@
-app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', function ($scope, $modal, $state, dataService) {
+app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService','util', function ($scope, $modal, $state, dataService,util) {
     $scope.model = {
         filterValue: null,
         startTime: null,
@@ -25,7 +25,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         $scope.model.endOpened = true;
     };
 
-    var tpl = '<div><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
+    var tpl = '<div ng-hide="row.entity.reStatus!=1"><button class="btn grid-btn btn-success" ng-click="grid.appScope.accept(row.entity)">接受</button><button class="btn grid-btn left-space btn-danger" ng-click="grid.appScope.reject(row.entity)">拒绝</button></div>';
     var otherTpl = '<a class="edit-tpl" ui-sref="app.request_detail({id: row.entity.id})">详情</a>';
     $scope.gridOptions = {
         enableFiltering: false,
@@ -47,7 +47,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
                 displayName: '病人名字'
             },
             {
-                field: 'reqTime',
+                field: 'formatedReqTime',
                 displayName: '申请时间'
             },
             {
@@ -67,8 +67,12 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         ]
     };
 
-    $scope.load=function(){
+    $scope.load = function () {
         dataService.getRequestList().then(function (result) {
+            result.data.forEach(function (item) {
+                item.formatedReqTime = util.formateDate(item.reqTime);
+            });
+    
             $scope.gridOptions.data = result.data;
         });
     };
@@ -83,8 +87,13 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['requestNo'].forEach(function (field) {
-                if (row.entity[field].match(matcher)) {
+            ['requestNo','patient.ptName'].forEach(function (field) {
+                var entity = row.entity;
+                field.split('.').forEach(function (f) {
+                    entity = entity[f];
+                });
+                entity = entity + '';
+                if (entity.match(matcher)) {
                     match = true;
                 }
             });
@@ -106,13 +115,13 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
             templateUrl: '/app/tpl/dialog/reject_dialog.html',
             controller: 'RejectDialogCtrl',
             size: 'lg',
-            resolve:{
-                data:function(){
+            resolve: {
+                data: function () {
                     return obj;
                 },
-                grid:function(){
+                grid: function () {
                     return {
-                        reload:$scope.load
+                        reload: $scope.load
                     }
                 }
             }
@@ -123,28 +132,29 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
 }]);
 
 
-app.controller('RejectDialogCtrl', ['$scope', '$modalInstance', 'dataService','data','grid', function ($scope, $modalInstance, dataService,data,grid) {
+app.controller('RejectDialogCtrl', ['$scope', '$modalInstance', 'dataService', 'data', 'grid', function ($scope, $modalInstance, dataService, data, grid) {
     $scope.rejectReason = null;
 
     $scope.dialogSubmit = function () {
-        if(data){
-            data.rejectReason=$scope.rejectReason;
+        if (data) {
+            data.rejectReason = $scope.rejectReason;
         }
         dataService.rejectReqeust(data).then(function () {
             grid.reload();
             $modalInstance.close();
         });
-       
+
     };
 }]);
 
-app.controller('RequestDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
-    
-    
-    if($stateParams.id){
-        dataService.getRequestById($stateParams.id).then(function(result){
-            if(result.data){
-                $scope.model=result.data;
+app.controller('RequestDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', 'util', function ($scope, $state, $stateParams, dataService, util) {
+
+
+    if ($stateParams.id) {
+        dataService.getRequestById($stateParams.id).then(function (result) {
+            if (result.data) {
+                result.data.reqTime = util.formateDate(result.data.reqTime);
+                $scope.model = result.data;
             }
         });
     }

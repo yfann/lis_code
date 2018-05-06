@@ -50,11 +50,11 @@ angular.module('httpService', []).
                     return $http.get(url);
                 },
                 acceptRequest: function (obj) {
-                    var url = '/api/lis/requests/accept';
+                    var url = '/api/lis/requestaccept';
                     return $http.post(url, obj);
                 },
                 rejectReqeust: function (obj) {
-                    var url = '/api/lis/requests/refuse';
+                    var url = '/api/lis/requestrefuse';
                     return $http.post(url, obj);
                 },
                 //lab item
@@ -256,8 +256,10 @@ angular.module('httpService', []).
                     return $http.post(url, model);
                 },
                 //logistics
-                getLogiList: function () {
-                    var url = '/app/mock_data/logi_list.json';
+                getLogiList: function (from,to) {
+                    var url = '/api/lis/logistics';
+                    url +='?from=' + (from ? from : '');
+                    url +='&to=' + (to ? to : '');
                     return $http.get(url);
                 },
                 acceptLogi: function (model) {

@@ -1,4 +1,4 @@
-app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService', function ($scope, $modal, $state, dataService) {
+app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService', 'util', function ($scope, $modal, $state, dataService, util) {
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -13,15 +13,19 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
                 visible: false
             },
             {
-                field: 'sampleNo',
-                displayName: '样本号'
-            },
-            {
-                field: 'sendEmp',
+                field: 'sendEmName',
                 displayName: '送检人'
             },
             {
-                field: 'sendTime',
+                field: 'lsEmName',
+                displayName: '物流接收人'
+            },
+            {
+                field: 'centerEmName',
+                displayName: '检验中心接收人'
+            },
+            {
+                field: 'formatedSendTime',
                 displayName: '送检时间'
             },
             {
@@ -33,6 +37,10 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
 
     $scope.reload = function () {
         dataService.getLogiList().then(function (result) {
+            result.data.forEach(function (item) {
+                item.formatedSendTime = util.formateDate(item.sendTime);
+            });
+
             $scope.gridOptions.data = result.data;
         });
     };
@@ -47,8 +55,9 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['sampleNo'].forEach(function (field) {
-                if (row.entity[field].match(matcher)) {
+            ['sendEmName', 'lsEmName', 'centerEmName'].forEach(function (field) {
+                var entity = row.entity[field] + '';
+                if (entity.match(matcher)) {
                     match = true;
                 }
             });

@@ -1,4 +1,4 @@
-app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
+app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService','util', function ($scope, $state, dataService,util) {
     var editUrl = '<a class="edit-tpl" ui-sref="labresult_print({id: row.entity.id})">打印</a>'
 
     $scope.gridOptions = {
@@ -7,7 +7,7 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function
             $scope.gridApi = gridApi;
             $scope.gridApi.grid.registerRowsProcessor($scope.filter, 200);
         },
-        columnDefs:  [
+        columnDefs: [
             {
                 field: 'id',
                 visible: false
@@ -17,11 +17,11 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function
                 displayName: '申请单号'
             },
             {
-                field: 'empName',
-                displayName: '申请员工'
+                field: 'patient.ptName',
+                displayName: '病人名字'
             },
             {
-                field: 'reqTime',
+                field: 'formatedReqTime',
                 displayName: '申请时间'
             },
             {
@@ -33,6 +33,9 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function
     };
 
     dataService.getRequestList().then(function (result) {
+        result.data.forEach(function (item) {
+            item.formatedReqTime = util.formateDate(item.reqTime);
+        });
         $scope.gridOptions.data = result.data;
     });
 
@@ -44,18 +47,23 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', function
         $state.go('app.labresult_detail');
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'requestNo' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['requestNo','patient.ptName'].forEach(function (field) {
+                var entity = row.entity;
+                field.split('.').forEach(function (f) {
+                    entity = entity[f];
+                });
+                entity = entity + '';
+                if (entity.match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -72,8 +80,8 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
         $scope.itemList = result.data;
     });
 
-    $scope.$watch('model.selectedlabItem',function(newV,oldV){
-        if(newV){
+    $scope.$watch('model.selectedlabItem', function (newV, oldV) {
+        if (newV) {
             dataService.getRequestById(newV.id).then(function (result) {
                 $scope.requestDetail = result.data;
             });
