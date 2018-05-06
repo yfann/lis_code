@@ -2,7 +2,7 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
 
     var link = 'app.medical_detail';
     var editUrl = '<a class="edit-tpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
+    editUrl += '<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -49,10 +49,10 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
     };
 
     $scope.delete = function (obj) {
-        dataService.deleteSite(obj).then(function(){
-            for(var i=0;i<$scope.gridOptions.data.length;i++){
-                if($scope.gridOptions.data[i].id==obj.id){
-                    $scope.gridOptions.data.splice(i,1);
+        dataService.deleteSite(obj).then(function () {
+            for (var i = 0; i < $scope.gridOptions.data.length; i++) {
+                if ($scope.gridOptions.data[i].id == obj.id) {
+                    $scope.gridOptions.data.splice(i, 1);
                     break
                 }
             }
@@ -63,8 +63,9 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['miName'].forEach(function (field) {
-                if (row.entity[field].match(matcher)) {
+            ['miCode', 'miName', 'miCategory'].forEach(function (field) {
+                var entity = row.entity[field]+'';
+                if (entity.match(matcher)) {
                     match = true;
                 }
             });
@@ -86,21 +87,21 @@ app.controller('MedicalDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         address: null,
         desc: null
     };
-    
-    
-    if($stateParams.id){
-        dataService.getSiteById($stateParams.id).then(function(result){
-            if(result.data){
-                $scope.model=result.data;
+
+
+    if ($stateParams.id) {
+        dataService.getSiteById($stateParams.id).then(function (result) {
+            if (result.data) {
+                $scope.model = result.data;
             }
         });
     }
 
-    
+
 
     $scope.submit = function () {
         //console.log($scope.model);
-        dataService.saveSite($scope.model).then(function(){
+        dataService.saveSite($scope.model).then(function () {
             $state.go('app.medical');
         });
     };

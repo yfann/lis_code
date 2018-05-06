@@ -22,6 +22,7 @@ angular.module('app', [
     'ui.select',
     //custom
     'httpService',
+    'commonService',
     'uiDirect'
 ]);
 

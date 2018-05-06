@@ -10,10 +10,7 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label">质控检验项目</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedLabItem" 
-                                   theme="bootstrap" 
-                                   ng-disabled="false" 
-                                   search-enabled="true">
+                        <ui-select ng-model="model.selectedLabItem" theme="bootstrap" ng-disabled="false" search-enabled="true">
                             <ui-select-match>{{$select.selected.itemName}}</ui-select-match>
                             <ui-select-choices group-by="'group'" repeat="item in labItemList | filter: $select.search">
                                 <span ng-bind-html="item.itemName | highlight: $select.search"></span>
@@ -25,10 +22,7 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label">质控机构</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedSite" 
-                                   theme="bootstrap" 
-                                   ng-disabled="false" 
-                                   search-enabled="true">
+                        <ui-select ng-model="model.selectedSite" theme="bootstrap" ng-disabled="false" search-enabled="true">
                             <ui-select-match>{{$select.selected.miName}}</ui-select-match>
                             <ui-select-choices group-by="'group'" repeat="item in siteList | filter: $select.search">
                                 <span ng-bind-html="item.miName | highlight: $select.search"></span>
@@ -50,13 +44,29 @@
                         <input type="text" class="form-control" ng-model="model.qcer">
                     </div>
                 </div>
-                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <!-- <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">质控时间</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.qcTime">
+                    <div class="col-sm-10">
+                        <div class="input-group w-md">
+                            <input type="text" 
+                                   class="form-control" 
+                                   datepicker-popup="yyyy/MM/dd" 
+                                   ng-model="model.qcTime" 
+                                   is-open="qcOpened"
+                                   datepicker-options="dateOptions"
+                                   close-text="Close" 
+                                   ng-required="true"/>
+                            <span class="input-group-btn">
+                                <button type="button" 
+                                        class="btn btn-default" 
+                                        ng-click="qcOpen($event)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">质控次数</label>

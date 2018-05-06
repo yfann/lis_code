@@ -1,8 +1,8 @@
-app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
+app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', 'util', function ($scope, $state, dataService, util) {
 
     var link = 'app.qcvalue_detail';
     var editUrl = '<a class="edit-tpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
+    editUrl += '<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -25,7 +25,7 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function (
                 displayName: '仪器名称'
             },
             {
-                field: 'instrumentName',
+                field: 'labItemName',
                 displayName: '质控项目'
             },
             {
@@ -49,6 +49,10 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function (
     };
 
     dataService.getQCValueList().then(function (result) {
+        result.data.forEach(function (item) {
+            item.qcTime = util.formateDate(item.qcTime);
+        });
+
         $scope.gridOptions.data = result.data;
     });
 
@@ -61,10 +65,10 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function (
     };
 
     $scope.delete = function (obj) {
-        dataService.deleteQCValue(obj).then(function(){
-            for(var i=0;i<$scope.gridOptions.data.length;i++){
-                if($scope.gridOptions.data[i].id==obj.id){
-                    $scope.gridOptions.data.splice(i,1);
+        dataService.deleteQCValue(obj).then(function () {
+            for (var i = 0; i < $scope.gridOptions.data.length; i++) {
+                if ($scope.gridOptions.data[i].id == obj.id) {
+                    $scope.gridOptions.data.splice(i, 1);
                     break
                 }
             }
@@ -76,7 +80,8 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function (
         renderableRows.forEach(function (row) {
             var match = false;
             ['instrumentName'].forEach(function (field) {
-                if (row.entity[field].match(matcher)) {
+                var entity = row.entity[field] + '';
+                if (entity.match(matcher)) {
                     match = true;
                 }
             });
@@ -88,13 +93,13 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', function (
     };
 }]);
 
-app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
+app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', '$q', function ($scope, $state, $stateParams, dataService, $q) {
 
     $scope.model = {
         id: null,
         lmId: null,
         miId: null,
-        instrumentId:'',
+        instrumentId: '',
         instrumentName: null,
         qcer: null,
         qcTime: null,
@@ -107,27 +112,62 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         other4: null,
         other5: null,
         other6: null,
-        selectedLabItem:null,
-        selectedSite:null
+        selectedLabItem: null,
+        selectedSite: null
     };
 
-    $scope.labItemList=null;
-    $scope.siteList=null;
+    $scope.labItemList = null;
+    $scope.siteList = null;
 
+    $scope.siteList = null;
+    $scope.deptList = null;
+    $scope.selectedSex = null;
 
-    dataService.getlabitemList().then(function (result) {
-        $scope.labItemList = result.data;
-    });
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1,
+        class: 'datepicker'
+    };
 
-    dataService.getSiteList().then(function (result) {
-        $scope.siteList = result.data;
-    });
+    $scope.qcOpen = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.qcOpened = true;
+    };
 
-    if($stateParams.id){
-        dataService.getQCValueById($stateParams.id).then(function(result){
-            if(result.data){
-                $scope.model=result.data;
+    if ($stateParams.id) {
+        $q.all([
+            dataService.getlabitemList(),
+            dataService.getSiteList(),
+            dataService.getQCValueById($stateParams.id)
+        ]).then(function (result) {
+            $scope.labItemList = result[0].data;
+            $scope.siteList = result[1].data;
+            $scope.model = result[2].data;
+            if ($scope.labItemList) {
+                $scope.labItemList.forEach(function (item) {
+                    if (item.id == $scope.model.lmId) {
+                        $scope.model.selectedLabItem = item;
+                    }
+                });
             }
+            if ($scope.siteList) {
+                $scope.siteList.forEach(function (item) {
+                    if (item.id == $scope.model.miId) {
+                        $scope.model.selectedSite = item;
+                    }
+                });
+            }
+            // if($scope.model.qcTime){
+            //     $scope.model.qcTime=new Date($scope.model.qcTime);
+            // }
+        });
+    } else {
+        dataService.getlabitemList().then(function (result) {
+            $scope.labItemList = result.data;
+        });
+        dataService.getSiteList().then(function (result) {
+            $scope.siteList = result.data;
         });
     }
 
@@ -139,7 +179,7 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         if ($scope.model.selectedSite) {
             $scope.model.miId = $scope.model.selectedSite.id;
         }
-        dataService.saveQCValue($scope.model).then(function(){
+        dataService.saveQCValue($scope.model).then(function () {
             $state.go('app.qcvalue');
         });
     };

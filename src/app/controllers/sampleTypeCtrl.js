@@ -1,9 +1,9 @@
 app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
 
-    var link='app.sampletype_detail';
-    var editUrl = '<a class="edit-tpl" ui-sref="'+link+'({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
-    
+    var link = 'app.sampletype_detail';
+    var editUrl = '<a class="edit-tpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>';
+    editUrl += '<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
+
     $scope.gridOptions = {
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
@@ -53,28 +53,29 @@ app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', functio
     };
 
     $scope.delete = function (obj) {
-        dataService.deleteSampleType(obj).then(function(){
-            for(var i=0;i<$scope.gridOptions.data.length;i++){
-                if($scope.gridOptions.data[i].id==obj.id){
-                    $scope.gridOptions.data.splice(i,1);
+        dataService.deleteSampleType(obj).then(function () {
+            for (var i = 0; i < $scope.gridOptions.data.length; i++) {
+                if ($scope.gridOptions.data[i].id == obj.id) {
+                    $scope.gridOptions.data.splice(i, 1);
                     break
                 }
             }
         });
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'code' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['code', 'chtName', 'engName', 'seqNo'].forEach(function (field) {
+                var entity = row.entity[field] + '';
+                if (entity.match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -83,19 +84,19 @@ app.controller('SampleTypeListCtrl', ['$scope', '$state', 'dataService', functio
 app.controller('SampleTypeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
     $scope.model = {
-        id:null,
-        parentId:null,
-        code:null,
-        chtName:null,
-        engName:null,
-        seqNo:null,
-        helpCode:null
+        id: null,
+        parentId: null,
+        code: null,
+        chtName: null,
+        engName: null,
+        seqNo: null,
+        helpCode: null
     };
 
-    if($stateParams.id){
-        dataService.getSampleTypeById($stateParams.id).then(function(result){
-            if(result.data){
-                $scope.model=result.data;
+    if ($stateParams.id) {
+        dataService.getSampleTypeById($stateParams.id).then(function (result) {
+            if (result.data) {
+                $scope.model = result.data;
             }
         });
     }
@@ -103,7 +104,7 @@ app.controller('SampleTypeDetailCtrl', ['$scope', '$state', '$stateParams', 'dat
 
     $scope.submit = function () {
         console.log($scope.model);
-        dataService.saveSampleType($scope.model).then(function(){
+        dataService.saveSampleType($scope.model).then(function () {
             $state.go('app.sampletype');
         });
     };
