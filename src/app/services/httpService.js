@@ -266,6 +266,11 @@ angular.module('httpService', []).
                     var url = '/api/lis/logistics';
                     return $http.post(url,model);
                 },
+                //labresult
+                saveLabResult:function(model){
+                    var url = '/api/system/labresults';
+                    return $http.post(url,model);
+                },
                 //other
                 getSexList: function () {
                     var url = '/app/mock_data/sex_list.json';
