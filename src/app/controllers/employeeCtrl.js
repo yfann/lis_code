@@ -2,7 +2,7 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
 
     var link = 'app.employee_detail';
     var editUrl = '<a class="edit-tpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
+    editUrl += '<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -53,10 +53,10 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
     };
 
     $scope.delete = function (obj) {
-        dataService.deleteEmployee(obj).then(function(){
-            for(var i=0;i<$scope.gridOptions.data.length;i++){
-                if($scope.gridOptions.data[i].id==obj.id){
-                    $scope.gridOptions.data.splice(i,1);
+        dataService.deleteEmployee(obj).then(function () {
+            for (var i = 0; i < $scope.gridOptions.data.length; i++) {
+                if ($scope.gridOptions.data[i].id == obj.id) {
+                    $scope.gridOptions.data.splice(i, 1);
                     break
                 }
             }
@@ -67,8 +67,9 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['emName'].forEach(function (field) {
-                if (row.entity[field].match(matcher)) {
+            ['emCode', 'emName', 'titleName', 'idNumber'].forEach(function (field) {
+                var entity = row.entity[field] + '';
+                if (entity.match(matcher)) {
                     match = true;
                 }
             });
@@ -80,7 +81,7 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
     };
 }]);
 
-app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
+app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', '$q', function ($scope, $state, $stateParams, dataService, $q) {
     //console.log($stateParams);
     $scope.model = {
 
@@ -89,15 +90,15 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
         deptId: null,
         emCode: null,
         emName: null,
-        iDNumber: null,
+        idNumber: null,
         phone: null,
         titleId: null,
         titleName: null,
         password: null,
         desc: null,
         birthDay: null,
-        selectedSite:null,
-        selectedDept:null
+        selectedSite: null,
+        selectedDept: null
     };
 
     $scope.siteList = null;
@@ -113,24 +114,39 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
     $scope.openDate = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
-
         $scope.opened = true;
     };
 
-    if($stateParams.id){
-        dataService.getEmployeeById($stateParams.id).then(function(result){
-            if(result.data){
-                $scope.model=result.data;
+    if ($stateParams.id) {
+        $q.all([
+            dataService.getSiteList(),
+            dataService.getDeptList(),
+            dataService.getEmployeeById($stateParams.id)
+        ]).then(function (result) {
+            $scope.siteList = result[0].data;
+            $scope.deptList = result[1].data;
+            $scope.model = result[2].data;
+            if ($scope.siteList) {
+                $scope.siteList.forEach(function (item) {
+                    if (item.id == $scope.model.siteId)
+                        $scope.model.selectedSite = item;
+                });
+            }
+            if ($scope.deptList) {
+                $scope.deptList.forEach(function (item) {
+                    if (item.id == $scope.model.deptId)
+                        $scope.model.selectedDept = item;
+                });
             }
         });
+    } else {
+        dataService.getSiteList().then(function (result) {
+            $scope.siteList = result.data;
+        });
+        dataService.getDeptList().then(function (result) {
+            $scope.deptList = result.data;
+        });
     }
-
-    dataService.getSiteList().then(function (result) {
-        $scope.siteList = result.data;
-    });
-    dataService.getDeptList().then(function (result) {
-        $scope.deptList = result.data;
-    });
 
 
 
@@ -143,7 +159,7 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
             $scope.model.deptId = $scope.model.selectedDept.id;
         }
 
-        dataService.saveEmployee($scope.model).then(function(){
+        dataService.saveEmployee($scope.model).then(function () {
             $state.go('app.employee');
         });
     };
