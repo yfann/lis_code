@@ -2,18 +2,15 @@
     <h1 class="m-n font-thin h3" translate="nav.labresult"></h1>
 </div>
 <div class="wrapper-md">
-    <div class="panel panel-default">
-        <div class="panel-heading font-bold" translate="nav.labresult">
-        </div>
-        <div class="panel-body">
-            <form name="form" class="form-horizontal form-validation">
+    <form name="form" class="form-horizontal form-validation">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold" translate="nav.labresult">
+            </div>
+            <div class="panel-body">
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label">申请单</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedlabItem" 
-                                   theme="bootstrap" 
-                                   ng-disabled="false" 
-                                   search-enabled="true">
+                        <ui-select ng-model="data.selectedlabItem" theme="bootstrap" ng-disabled="false" search-enabled="true">
                             <ui-select-match>{{$select.selected.requestNo}}</ui-select-match>
                             <ui-select-choices group-by="'group'" repeat="item in itemList | filter: $select.search">
                                 <span ng-bind-html="item.requestNo | highlight: $select.search"></span>
@@ -21,56 +18,68 @@
                         </ui-select>
                     </div>
                 </div>
-                <div class="line line-dashed b-b line-lg pull-in"></div>
+            </div>
+        </div>
+
+        <div class="panel panel-default" ng-repeat="item in model.labInfos track by $index">
+            <div class="panel-body">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">英文名</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control">
+                        <label class="col-md-1 control-label col-md-offset-1">项目名称：</label>
+                        <div class="col-md-1">
+                            <label class="control-label">{{item.labItem.itemName}}</label>
+                        </div>
+                        <label class="col-sm-1 control-label">检验类别：</label>
+                        <div class="col-md-1">
+                            <label class="control-label">{{item.labItem.categoryName}}</label>
+                        </div>
+                        <label class="col-sm-1 control-label"></label>
+                        <div class="col-md-1">
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                    <label class="col-md-1 control-label col-md-offset-1">英文名</label>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.englishName">
+                    </div>
+                    <label class="col-sm-1 control-label">中文名</label>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.chtName">
+                    </div>
+                    <label class="col-sm-1 control-label">检验结果值</label>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.resultValue">
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">中文名</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control">
+                    <label class="col-sm-1 control-label col-md-offset-1">结果范围值</label>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.refRange">
+                    </div>
+                    <label class="col-sm-1 control-label">检验结果单位</label>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.unit">
+                    </div>
+                    <label class="col-sm-1 control-label">排序</label>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" ng-model="model.labInfoList[$index].labResult.seqNo">
                     </div>
                 </div>
-                <div class="line line-dashed b-b line-lg pull-in"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">检验结果值</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="line line-dashed b-b line-lg pull-in"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">结果范围值</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="line line-dashed b-b line-lg pull-in"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">检验结果单位</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="line line-dashed b-b line-lg pull-in"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">排序</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="line line-dashed b-b line-lg pull-in"></div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
                 <div class="form-group">
                     <div class="col-sm-4 col-sm-offset-2">
                         <button class="btn btn-primary" translate="button.save" ng-click="submit()" ng-disabled="form.$invalid"></button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+
+
+    </form>
 
 </div>

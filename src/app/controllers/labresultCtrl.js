@@ -1,4 +1,4 @@
-app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService','util', function ($scope, $state, dataService,util) {
+app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', function ($scope, $state, dataService, util) {
     var editUrl = '<a class="edit-tpl" ui-sref="labresult_print({id: row.entity.id})">打印</a>'
 
     $scope.gridOptions = {
@@ -51,7 +51,7 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService','util', f
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['requestNo','patient.ptName'].forEach(function (field) {
+            ['requestNo', 'patient.ptName'].forEach(function (field) {
                 var entity = row.entity;
                 field.split('.').forEach(function (f) {
                     entity = entity[f];
@@ -72,24 +72,33 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService','util', f
 
 app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
-    $scope.model = {
-        selectedlabItem: null,
-        normalUp: null
+    $scope.data = {
+        selectedlabItem: null
     };
     dataService.getRequestList().then(function (result) {
         $scope.itemList = result.data;
     });
 
-    $scope.$watch('model.selectedlabItem', function (newV, oldV) {
+    $scope.$watch('data.selectedlabItem', function (newV, oldV) {
         if (newV) {
             dataService.getRequestById(newV.id).then(function (result) {
-                $scope.requestDetail = result.data;
+                $scope.model = result.data;
+                if ($scope.model.labInfos) {
+                    $scope.model.labInfos.forEach(function (item) {
+                        //init list
+                        if(!item.labResult){
+                            item.labResult={};
+                        }
+                    });
+                }
             });
         }
     });
 
     $scope.submit = function () {
-        console.log($scope.model);
+        dataService.saveLabResult($scope.model.labInfos).then(function(){
+            $state.go('app.labresult');
+        });
     };
 
 }]);
