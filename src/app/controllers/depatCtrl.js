@@ -61,8 +61,9 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['deptName'].forEach(function (field) {
-                if (row.entity[field].match(matcher)) {
+            ['deptCode','deptName'].forEach(function (field) {
+                var entity= row.entity[field]+'';
+                if (entity.match(matcher)) {
                     match = true;
                 }
             });

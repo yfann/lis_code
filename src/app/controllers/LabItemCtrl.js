@@ -2,7 +2,7 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
 
     var link = 'app.labitem_detail';
     var editUrl = '<a class="edit-tpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
+    editUrl += '<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -22,14 +22,14 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
             },
             {
                 field: 'standardCode',
-                displayName: '标准代码'
+                displayName: '检验分类'
             },
             {
                 field: 'itemName',
                 displayName: '项目名称'
             },
             {
-                field: 'resultType',
+                field: 'category',
                 displayName: '结果类型'
             },
             {
@@ -53,10 +53,10 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
     };
 
     $scope.delete = function (obj) {
-        dataService.deleteLabItem(obj).then(function(){
-            for(var i=0;i<$scope.gridOptions.data.length;i++){
-                if($scope.gridOptions.data[i].id==obj.id){
-                    $scope.gridOptions.data.splice(i,1);
+        dataService.deleteLabItem(obj).then(function () {
+            for (var i = 0; i < $scope.gridOptions.data.length; i++) {
+                if ($scope.gridOptions.data[i].id == obj.id) {
+                    $scope.gridOptions.data.splice(i, 1);
                     break
                 }
             }
@@ -67,8 +67,9 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['itemName'].forEach(function (field) {
-                if (row.entity[field].match(matcher)) {
+            ['itemCode', 'itemName', 'standardCode'].forEach(function (field) {
+                var entity = row.entity[field] + '';
+                if (entity.match(matcher)) {
                     match = true;
                 }
             });
@@ -80,7 +81,7 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
     };
 }]);
 
-app.controller('LabitemDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
+app.controller('LabitemDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', '$q', function ($scope, $state, $stateParams, dataService, $q) {
     //console.log($stateParams);
     $scope.model = {
         id: null,
@@ -106,18 +107,29 @@ app.controller('LabitemDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         canLessZero: null,
         meanOfclinic: null,
         desc: null,
-        selectedLabCategory:null
+        selectedLabCategory: null
     };
     $scope.labCategoryList = null;
-    dataService.getLabCategoryList().then(function (result) {
-        $scope.labCategoryList = result.data;
-    });
 
-    if($stateParams.id){
-        dataService.getLabItemById($stateParams.id).then(function(result){
-            if(result.data){
-                $scope.model=result.data;
+
+    if ($stateParams.id) {
+        $q.all([
+            dataService.getLabCategoryList(),
+            dataService.getLabItemById($stateParams.id)
+        ]).then(function (result) {
+            $scope.labCategoryList = result[0].data;
+            $scope.model = result[1].data;
+            if ($scope.labCategoryList) {
+                $scope.labCategoryList.forEach(function (item) {
+                    if (item.id == $scope.model.lcId) {
+                        $scope.model.selectedLabCategory = item;
+                    }
+                });
             }
+        });
+    } else {
+        dataService.getLabCategoryList().then(function (result) {
+            $scope.labCategoryList = result.data;
         });
     }
 
@@ -126,8 +138,7 @@ app.controller('LabitemDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         if ($scope.model.selectedLabCategory) {
             $scope.model.lcId = $scope.model.selectedLabCategory.id;
         }
-        dataService.saveLabitem($scope.model).then(function(){
-
+        dataService.saveLabitem($scope.model).then(function () {
             $state.go('app.labitem');
         });
     };
