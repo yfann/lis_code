@@ -16,9 +16,9 @@
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">检验类别名称</label>
+                    <label class="col-sm-2 control-label required">检验类别名称</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.lcName">
+                        <input type="text" class="form-control" ng-model="model.lcName" required>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -46,13 +46,14 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">检验次数</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.examNum">
+                        <input placeholder="数字" name="examNum" type="text" class="form-control" ng-model="model.examNum" ng-pattern="/^[0-9]+(.[0-9]{4d})?$/">
+                        <span class="error-msg" ng-show='form.examNum.$error.validator'>请输入数字</span>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <div class="col-sm-4 col-sm-offset-2">
-                        <button class="btn btn-primary" translate="button.save" ng-click="submit()"></button>
+                        <button class="btn btn-primary" translate="button.save" ng-click="submit()" ng-disabled="form.$invalid"></button>
                     </div>
                 </div>
             </form>

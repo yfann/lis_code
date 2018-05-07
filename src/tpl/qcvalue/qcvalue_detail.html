@@ -8,7 +8,7 @@
         <div class="panel-body">
             <form name="form" class="form-horizontal form-validation">
                 <div class="form-group select-group">
-                    <label class="col-sm-2 control-label">质控检验项目</label>
+                    <label class="col-sm-2 control-label required">质控检验项目</label>
                     <div class="col-md-4">
                         <ui-select ng-model="model.selectedLabItem" theme="bootstrap" ng-disabled="false" search-enabled="true">
                             <ui-select-match>{{$select.selected.itemName}}</ui-select-match>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group select-group">
-                    <label class="col-sm-2 control-label">质控机构</label>
+                    <label class="col-sm-2 control-label required">质控机构</label>
                     <div class="col-md-4">
                         <ui-select ng-model="model.selectedSite" theme="bootstrap" ng-disabled="false" search-enabled="true">
                             <ui-select-match>{{$select.selected.miName}}</ui-select-match>
@@ -39,9 +39,9 @@
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">质控操作员</label>
+                    <label class="col-sm-2 control-label required">质控操作员</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.qcer">
+                        <input type="text" class="form-control" ng-model="model.qcer" required>
                     </div>
                 </div>
                 <!-- <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -69,16 +69,16 @@
                 </div> -->
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">质控次数</label>
+                    <label class="col-sm-2 control-label required">质控次数</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.qcNum">
+                        <input placeholder="数字" ng-pattern="/^[0-9]*$/" type="text" class="form-control" ng-model="model.qcNum" required>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">值控制</label>
+                    <label class="col-sm-2 control-label required">值控制</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.value">
+                        <input placeholder="数字" ng-pattern="/^[0-9]+(.[0-9]{4d})?$/" type="text" class="form-control" ng-model="model.value" required>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>

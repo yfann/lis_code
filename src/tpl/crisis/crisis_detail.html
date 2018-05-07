@@ -8,7 +8,7 @@
         <div class="panel-body">
             <form name="form" class="form-horizontal form-validation">
                 <div class="form-group select-group">
-                    <label class="col-sm-2 control-label">检验项目</label>
+                    <label class="col-sm-2 control-label required">检验项目</label>
                     <div class="col-md-4">
                         <ui-select ng-model="model.selectedlabItem" 
                                    theme="bootstrap" 
@@ -23,30 +23,30 @@
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">正常上限</label>
+                    <label class="col-sm-2 control-label required">正常上限</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.normalUpper">
+                        <input placeholder="数字" ng-pattern="/^[0-9]+(.[0-9]{4d})?$/" type="text" class="form-control" ng-model="model.normalUpper" required>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">正常下限</label>
+                    <label class="col-sm-2 control-label required">正常下限</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.normalLow">
+                        <input placeholder="数字" ng-pattern="/^[0-9]+(.[0-9]{4d})?$/" type="text" class="form-control" ng-model="model.normalLow" required>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">危机上限</label>
+                    <label class="col-sm-2 control-label required">危机上限</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.crisisUpper">
+                        <input placeholder="数字" ng-pattern="/^[0-9]+(.[0-9]{4d})?$/" type="text" class="form-control" ng-model="model.crisisUpper" required>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">危机下限</label>
+                    <label class="col-sm-2 control-label required">危机下限</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.crisisLow">
+                        <input placeholder="数字" ng-pattern="/^[0-9]+(.[0-9]{4d})?$/" type="text" class="form-control" ng-model="model.crisisLow" required>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
