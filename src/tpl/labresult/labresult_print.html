@@ -2,7 +2,7 @@
     <table class="table">
         <tr>
             <th colspan="6" class="title">
-                <label>Title</label>
+                <label>检验报告单</label>
             </th>
         </tr>
         <tr>
@@ -15,7 +15,8 @@
                 <label class="label-name">{{model.patient.age}}</label>
             </td>
             <td>
-                <label class="label-name">病历号：</label>
+                <label class="label-name">性别：</label>
+                <label class="label-name">{{model.patient.sex}}</label>
             </td>
             <td>
                 <label class="label-name">检验标本：</label>
@@ -24,48 +25,52 @@
                 <label class="label-name">样本号：</label>
             </td>
             <td>
-                <label class="label-name">类别：</label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label class="label-name">性别：</label>
-                <label class="label-name">{{model.patient.sex}}</label>
-            </td>
-            <td>
-                <label class="label-name">床号：</label>
-            </td>
-            <td>
-                <label class="label-name">科室：</label>
-            </td>
-            <td>
-                <label class="label-name">申请医师：</label>
-            </td>
-            <td>
-                <label class="label-name">申请时间：</label>
-            </td>
-            <td>
-                <label class="label-name">诊断：</label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label class="label-name">申请序号：</label>
-            </td>
-            <td>
                 <label class="label-name">备注：</label>
                 <label class="label-name">{{model.patient.desc}}</label>
             </td>
+        </tr>
+      </table>
+      <table class="table">
+        <tr>
+            <th>
+                <label class="label-name">序号</label>
+            </th>
+            <th>
+                <label class="label-name">代码</label>
+            </th>
+            <th>
+                <label class="label-name">项目名称</label>
+            </th>
+            <th>
+                <label class="label-name">检验结果值</label>
+            </th>
+            <th>
+                <label class="label-name">结果范围值</label>
+            </th>
+            <th>
+                <label class="label-name">检验结果单位</label>
+            </th>
+        </tr>
+        <tr ng-repeat="item in model.labInfos track by $index">
             <td>
-                
+                <label class="label-name">{{$index}}</label>
             </td>
             <td>
-                
+                <label class="label-name">{{item.labItem.itemCode}}</label>
             </td>
             <td>
+                <label class="label-name">{{item.labItem.itemName}}</label>
             </td>
             <td>
+                <label class="label-name">{{item.labResult.resultValue}}</label>
+            </td>
+            <td>
+                <label class="label-name">{{item.labResult.refRange}}</label>
+            </td>
+            <td>
+                <label class="label-name">{{item.labResult.unit}}</label>
             </td>
         </tr>
+
       </table>
 </div>
