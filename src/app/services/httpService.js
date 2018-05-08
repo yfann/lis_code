@@ -28,50 +28,50 @@
 
 
 angular.module('httpService', []).
-    service('dataService', ['$http',
-        function ($http) {
-            var host = "http://localhost:8123";
+    service('dataService', ['$http', 'config',
+        function ($http,config) {
+            var host = config.host;
 
             return {
                 //request
                 getRequestReportById: function (id) {
-                    var url = '/api/lis/requests/reports?id=';
+                    var url = host + '/api/lis/requests/reports?id=';
                     return $http.get(url + id);
                 },
                 getRequestById: function (id) {
-                    var url = '/api/lis/requestdetail?id=';
+                    var url = host + '/api/lis/requestdetail?id=';
                     return $http.get(url + id);
                 },
                 getRequestList: function (query, from, to) {
-                    var url = '/api/lis/requests';
-                    url +='?search=' + (query ? query : '');
-                    url +='&from=' + (from ? from : '');
-                    url +='&to=' + (to ? to : '');
+                    var url = host + '/api/lis/requests';
+                    url += '?search=' + (query ? query : '');
+                    url += '&from=' + (from ? from : '');
+                    url += '&to=' + (to ? to : '');
                     return $http.get(url);
                 },
                 acceptRequest: function (obj) {
-                    var url = '/api/lis/requestaccept';
+                    var url = host + '/api/lis/requestaccept';
                     return $http.post(url, obj);
                 },
                 rejectReqeust: function (obj) {
-                    var url = '/api/lis/requestrefuse';
+                    var url = host + '/api/lis/requestrefuse';
                     return $http.post(url, obj);
                 },
                 //lab item
                 getLabItemById: function (id) {
-                    var url = '/api/system/labitemdetail?id=';
+                    var url = host + '/api/system/labitemdetail?id=';
                     return $http.get(url + id);
                 },
                 getlabitemList: function (query) {
-                    var url = '/api/system/labitems?search=';
+                    var url = host + '/api/system/labitems?search=';
                     return $http.get(url + (query ? query : ''));
                 },
                 saveLabitem: function (model) {
-                    var url = '/api/system/labitems';
+                    var url = host + '/api/system/labitems';
                     return $http.post(url, model);
                 },
                 deleteLabItem: function (obj) {
-                    var url = '/api/system/labitems';
+                    var url = host + '/api/system/labitems';
                     return $http.delete(url, {
                         "headers": {
                             'Content-Type': 'application/json'
@@ -81,19 +81,19 @@ angular.module('httpService', []).
                 },
                 //lab item set
                 getLabItemSetById: function (id) {
-                    var url = '/api/system/labitemsetdetail?id=';
+                    var url = host + '/api/system/labitemsetdetail?id=';
                     return $http.get(url + id);
                 },
                 getLabItemSetList: function (query) {
-                    var url = '/api/system/labitemsets?search=';
+                    var url = host + '/api/system/labitemsets?search=';
                     return $http.get(url + (query ? query : ''));
                 },
                 saveLabItemSet: function (model) {
-                    var url = '/api/system/labitemsets';
+                    var url = host + '/api/system/labitemsets';
                     return $http.post(url, model);
                 },
                 deleteLabItemSet: function (obj) {
-                    var url = '/api/system/labitemsets';
+                    var url = host + '/api/system/labitemsets';
                     return $http.delete(url, {
                         "headers": {
                             'Content-Type': 'application/json'
@@ -103,19 +103,19 @@ angular.module('httpService', []).
                 },
                 //lab category
                 getLabCategoryById: function (id) {
-                    var url = '/api/system/labcategorydetail?id=';
+                    var url = host + '/api/system/labcategorydetail?id=';
                     return $http.get(url + id);
                 },
                 getLabCategoryList: function (query) {
-                    var url = '/api/system/labcategories?search=';
+                    var url = host + '/api/system/labcategories?search=';
                     return $http.get(url + (query ? query : ''));
                 },
                 saveLabCategory: function (model) {
-                    var url = '/api/system/labcategories';
+                    var url = host + '/api/system/labcategories';
                     return $http.post(url, model);
                 },
                 deleteLabCategory: function (obj) {
-                    var url = '/api/system/labcategories';
+                    var url = host + '/api/system/labcategories';
                     return $http.delete(url, {
                         "headers": {
                             'Content-Type': 'application/json'
@@ -125,19 +125,19 @@ angular.module('httpService', []).
                 },
                 //qc value
                 getQCValueById: function (id) {
-                    var url = '/api/system/qcvaluedetail?id=';
+                    var url = host + '/api/system/qcvaluedetail?id=';
                     return $http.get(url + id);
                 },
                 getQCValueList: function (query) {
-                    var url = '/api/system/qcvalues?search=';
+                    var url = host + '/api/system/qcvalues?search=';
                     return $http.get(url + (query ? query : ''));
                 },
                 saveQCValue: function (model) {
-                    var url = '/api/system/qcvalues';
+                    var url = host + '/api/system/qcvalues';
                     return $http.post(url, model);
                 },
                 deleteQCValue: function (obj) {
-                    var url = '/api/system/qcvalues';
+                    var url = host + '/api/system/qcvalues';
                     return $http.delete(url, {
                         "headers": {
                             'Content-Type': 'application/json'
@@ -147,7 +147,7 @@ angular.module('httpService', []).
                 },
                 //sample type
                 getSampleTypeById: function (id) {
-                    var url = '/api/system/sampletypedetail?id=';
+                    var url = host + '/api/system/sampletypedetail?id=';
                     return $http.get(url + id);
                 },
                 getSampleTypeList: function (query) {
@@ -155,11 +155,11 @@ angular.module('httpService', []).
                     return $http.get(url + (query ? query : ''));
                 },
                 saveSampleType: function (model) {
-                    var url = '/api/system/sampletypes';
+                    var url = host + '/api/system/sampletypes';
                     return $http.post(url, model);
                 },
                 deleteSampleType: function (obj) {
-                    var url = '/api/system/sampletypes';
+                    var url = host + '/api/system/sampletypes';
                     return $http.delete(url, {
                         "headers": {
                             'Content-Type': 'application/json'
@@ -169,7 +169,7 @@ angular.module('httpService', []).
                 },
                 //crisis
                 getCrisisById: function (id) {
-                    var url = '/api/system/crisisdetail?id=';
+                    var url = host + '/api/system/crisisdetail?id=';
                     return $http.get(url + id);
                 },
                 getCrisisList: function (query) {
@@ -177,11 +177,11 @@ angular.module('httpService', []).
                     return $http.get(url + (query ? query : ''));
                 },
                 saveCrisis: function (model) {
-                    var url = '/api/system/crisis';
+                    var url = host + '/api/system/crisis';
                     return $http.post(url, model);
                 },
                 deleteCrisis: function (obj) {
-                    var url = '/api/system/crisis';
+                    var url = host + '/api/system/crisis';
                     return $http.delete(url, {
                         "headers": {
                             'Content-Type': 'application/json'
@@ -191,11 +191,11 @@ angular.module('httpService', []).
                 },
                 //user
                 getEmployeeById: function (id) {
-                    var url = '/api/system/userdetail?id=';
+                    var url = host + '/api/system/userdetail?id=';
                     return $http.get(url + id);
                 },
                 saveEmployee: function (model) {
-                    var url = '/api/system/users';
+                    var url = host + '/api/system/users';
                     return $http.post(url, model);
                 },
                 getEmployeeList: function (query) {
@@ -203,7 +203,7 @@ angular.module('httpService', []).
                     return $http.get(url + (query ? query : ''));
                 },
                 deleteEmployee: function (obj) {
-                    var url = '/api/system/users';
+                    var url = host + '/api/system/users';
                     return $http.delete(url, {
                         "headers": {
                             'Content-Type': 'application/json'
@@ -217,15 +217,15 @@ angular.module('httpService', []).
                     return $http.get(url + (query ? query : ''));
                 },
                 saveSite: function (model) {
-                    var url = '/api/system/medicalinstitutions';
+                    var url = host + '/api/system/medicalinstitutions';
                     return $http.post(url, model);
                 },
                 getSiteById: function (id) {
-                    var url = '/api/system/medicalinstitutiondetail?id=';
+                    var url = host + '/api/system/medicalinstitutiondetail?id=';
                     return $http.get(url + id);
                 },
                 deleteSite: function (entity) {
-                    var url = '/api/system/medicalinstitutions';
+                    var url = host + '/api/system/medicalinstitutions';
                     return $http.delete(url, {
                         "headers": {
                             'Content-Type': 'application/json'
@@ -235,7 +235,7 @@ angular.module('httpService', []).
                 },
                 // department
                 getDeptById: function (id) {
-                    var url = '/api/system/deptdetail?id=';
+                    var url = host + '/api/system/deptdetail?id=';
                     return $http.get(url + id);
                 },
                 getDeptList: function (query) {
@@ -243,7 +243,7 @@ angular.module('httpService', []).
                     return $http.get(url + (query ? query : ''));
                 },
                 deleteDept: function (entity) {
-                    var url = '/api/system/depts';
+                    var url = host + '/api/system/depts';
                     return $http.delete(url, {
                         "headers": {
                             'Content-Type': 'application/json'
@@ -252,35 +252,35 @@ angular.module('httpService', []).
                     });
                 },
                 saveDept: function (model) {
-                    var url = '/api/system/depts';
+                    var url = host + '/api/system/depts';
                     return $http.post(url, model);
                 },
                 //logistics
-                getLogiList: function (from,to) {
-                    var url = '/api/lis/logistics';
-                    url +='?from=' + (from ? from : '');
-                    url +='&to=' + (to ? to : '');
+                getLogiList: function (from, to) {
+                    var url = host + '/api/lis/logistics';
+                    url += '?from=' + (from ? from : '');
+                    url += '&to=' + (to ? to : '');
                     return $http.get(url);
                 },
                 acceptLogi: function (model) {
-                    var url = '/api/lis/logistics';
-                    return $http.post(url,model);
+                    var url = host + '/api/lis/logistics';
+                    return $http.post(url, model);
                 },
                 //labresult
-                saveLabResult:function(model){
-                    var url = '/api/system/labresults';
-                    return $http.post(url,model);
+                saveLabResult: function (model) {
+                    var url = host + '/api/system/labresults';
+                    return $http.post(url, model);
                 },
                 //other
                 getSexList: function () {
-                    var url = '/app/mock_data/sex_list.json';
+                    var url = host + '/app/mock_data/sex_list.json';
                     return $http.get(url);
                 },
                 deletePatient: function (id) {
 
                 },
                 getSampleList: function () {
-                    var url = '/mock_data/sample_list.json';
+                    var url = host + '/mock_data/sample_list.json';
                     return $http.get(url);
                 },
                 savePatient: function (model) {
