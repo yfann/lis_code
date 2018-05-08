@@ -1,5 +1,6 @@
-angular.module('commonService', []).
-    service('util', [function () {
+angular.module('commonService').
+    service('util', ['enumService', function (enumSerbice) {
+        var enumMap = enumSerbice;
         return {
             formateDate: function (date) {
                 var d = new Date(date),
@@ -11,6 +12,12 @@ angular.module('commonService', []).
                 if (day.length < 2) day = '0' + day;
 
                 return [year, month, day].join('-');
+            },
+            getRequestStatus: function (value) {
+                return enumMap['request_st'][value];
+            },
+            getLogisticsStatus: function (value) {
+                return enumMap['logistics_st'][value];
             }
         };
     }]);

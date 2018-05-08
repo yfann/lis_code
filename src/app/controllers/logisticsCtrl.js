@@ -33,7 +33,7 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
                 displayName: '送检时间'
             },
             {
-                field: 'lsStatus',
+                field: 'lsStatusName',
                 displayName: '物流状态'
             }
         ]
@@ -43,6 +43,7 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
         dataService.getLogiList().then(function (result) {
             result.data.forEach(function (item) {
                 item.formatedSendTime = util.formateDate(item.sendTime);
+                item.lsStatusName = util.getLogisticsStatus(item.lsStatus);
             });
 
             $scope.gridOptions.data = result.data;
@@ -59,7 +60,7 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['sendEmName', 'lsEmName', 'centerEmName'].forEach(function (field) {
+            ['sendEmName', 'lsEmName', 'centerEmName','lsStatusName'].forEach(function (field) {
                 var entity = row.entity[field] + '';
                 if (entity.match(matcher)) {
                     match = true;

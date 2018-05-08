@@ -29,7 +29,7 @@
 
 angular.module('httpService', []).
     service('dataService', ['$http', 'config',
-        function ($http,config) {
+        function ($http, config) {
             var host = config.host;
 
             return {
@@ -274,6 +274,10 @@ angular.module('httpService', []).
                 //other
                 getSexList: function () {
                     var url = host + '/app/mock_data/sex_list.json';
+                    return $http.get(url);
+                },
+                getEnum: function () {
+                    var url = host + '/app/config/enum.js';
                     return $http.get(url);
                 },
                 deletePatient: function (id) {

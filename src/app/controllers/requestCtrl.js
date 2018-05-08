@@ -55,7 +55,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService','
                 displayName: '申请时间'
             },
             {
-                field: 'reStatus',
+                field: 'reStatusName',
                 displayName: '申请单状态'
             },
             {
@@ -75,6 +75,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService','
         dataService.getRequestList().then(function (result) {
             result.data.forEach(function (item) {
                 item.formatedReqTime = util.formateDate(item.reqTime);
+                item.reStatusName = util.getRequestStatus(item.reStatus);
             });
     
             $scope.gridOptions.data = result.data;
@@ -91,7 +92,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService','
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['requestNo','patient.ptName','miName'].forEach(function (field) {
+            ['requestNo','patient.ptName','miName','reStatusName'].forEach(function (field) {
                 var entity = row.entity;
                 field.split('.').forEach(function (f) {
                     if(entity[f]){

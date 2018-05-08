@@ -27,3 +27,5 @@ angular.module('app', [
 ]);
 
 angular.module('uiDirect',[]);
+
+angular.module('commonService',[]);
