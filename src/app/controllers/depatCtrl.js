@@ -23,8 +23,8 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
                 displayName: '科室名称'
             },
             {
-                field: 'siteName',
-                displayName: '所属机构'
+                field: 'miName',
+                displayName: '机构名称'
             },
             {
                 name: 'edit',
@@ -61,7 +61,7 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['deptCode','deptName'].forEach(function (field) {
+            ['deptCode','deptName','miName'].forEach(function (field) {
                 var entity= row.entity[field]+'';
                 if (entity.match(matcher)) {
                     match = true;

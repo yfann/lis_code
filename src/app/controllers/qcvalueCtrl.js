@@ -79,7 +79,7 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', 'util', fu
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['instrumentName'].forEach(function (field) {
+            ['miName','instrumentName','labItemName'].forEach(function (field) {
                 var entity = row.entity[field] + '';
                 if (entity.match(matcher)) {
                     match = true;
