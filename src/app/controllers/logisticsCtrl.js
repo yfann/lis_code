@@ -25,6 +25,10 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
                 displayName: '检验中心接收人'
             },
             {
+                field: 'miName',
+                displayName: '机构名称'
+            },
+            {
                 field: 'formatedSendTime',
                 displayName: '送检时间'
             },

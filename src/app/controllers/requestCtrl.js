@@ -47,6 +47,10 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService','
                 displayName: '病人名字'
             },
             {
+                field: 'miName',
+                displayName: '机构名称'
+            },
+            {
                 field: 'formatedReqTime',
                 displayName: '申请时间'
             },
@@ -87,10 +91,12 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService','
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['requestNo','patient.ptName'].forEach(function (field) {
+            ['requestNo','patient.ptName','miName'].forEach(function (field) {
                 var entity = row.entity;
                 field.split('.').forEach(function (f) {
-                    entity = entity[f];
+                    if(entity[f]){
+                        entity = entity[f];
+                    }
                 });
                 entity = entity + '';
                 if (entity.match(matcher)) {
