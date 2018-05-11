@@ -1,4 +1,4 @@
-app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService','util', function ($scope, $modal, $state, dataService,util) {
+app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 'util', function ($scope, $modal, $state, dataService, util) {
     $scope.model = {
         filterValue: null,
         startTime: null,
@@ -77,7 +77,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService','
                 item.formatedReqTime = util.formateDate(item.reqTime);
                 item.reStatusName = util.getRequestStatus(item.reStatus);
             });
-    
+
             $scope.gridOptions.data = result.data;
         });
     };
@@ -89,21 +89,46 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService','
     };
 
     $scope.filter = function (renderableRows) {
-        var matcher = new RegExp($scope.filterValue);
+        var matcher = new RegExp($scope.model.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['requestNo','patient.ptName','miName','reStatusName'].forEach(function (field) {
+            ['requestNo', 'patient.ptName', 'miName', 'reStatusName'].forEach(function (field) {
                 var entity = row.entity;
                 field.split('.').forEach(function (f) {
-                    if(entity[f]){
+                    if (entity[f]) {
                         entity = entity[f];
                     }
                 });
                 entity = entity + '';
-                if (entity.match(matcher)) {
+                if ($scope.model.filterValue && entity.match(matcher)) {
+                    match = true;
+                } else if ($scope.model.filterValue == null || $scope.model.filterValue == '') {
                     match = true;
                 }
+
             });
+            var time = row.entity['formatedReqTime'];
+            var current = time ? new Date(time).getTime() : null;
+
+            if ($scope.model.startTime && current) {
+                var start = new Date($scope.model.startTime).getTime();
+                if (start > current) {
+                    match = false;
+                }
+            }
+            if ($scope.model.endTime && current) {
+                var end = new Date($scope.model.endTime).getTime();
+                if (current > end) {
+                    match = false;
+                }
+            }
+
+            if (($scope.model.startTime || $scope.model.endTime) && !current) {
+                match = false;
+            }
+
+
+
             if (!match) {
                 row.visible = false;
             }
