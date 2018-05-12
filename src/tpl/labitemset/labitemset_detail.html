@@ -8,25 +8,50 @@
         <div class="panel-body">
             <form name="form" class="form-horizontal form-validation">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">组合项目代码</label>
+                    <label class="col-sm-2 control-label required">组合项目代码</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.lisCode">
+                        <input type="text" class="form-control" ng-model="model.lisCode" required>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">组合项目名称</label>
+                    <label class="col-sm-2 control-label required">组合项目名称</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" ng-model="model.lisName">
+                        <input type="text" class="form-control" ng-model="model.lisName" required>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">检验项目</label>
-                    <div class="col-md-4">
+                    <label class="col-sm-2 control-label required">检验项目</label>
+                    <!-- <div class="col-md-4">
                         <select ui-jq="chosen" multiple class="w-md">
                             <option value="{{item.id}}" ng-repeat="item in labItemList">{{item.itemName}}</option>
                         </select>
+                    </div> -->
+                    <!-- <div class="col-md-4">
+                        <ui-select ng-model="model.selectedlabItems" 
+                                   theme="bootstrap" 
+                                   ng-disabled="false" 
+                                   search-enabled="true"
+                                   multiple
+                                   required>
+                            <ui-select-match>{{$item.itemName}}</ui-select-match>
+                            <ui-select-choices group-by="'group'" repeat="item in labItemList | filter: $select.search">
+                                <span ng-bind-html="item.itemName | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div> -->
+                    <div class="col-md-4">
+                        <ui-select ng-model="model.selectedlabItem" 
+                                   theme="bootstrap" 
+                                   ng-disabled="false" 
+                                   search-enabled="true"
+                                   required>
+                            <ui-select-match>{{$select.selected.itemName}}</ui-select-match>
+                            <ui-select-choices group-by="'group'" repeat="item in labItemList | filter: $select.search">
+                                <span ng-bind-html="item.itemName | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
                     </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>

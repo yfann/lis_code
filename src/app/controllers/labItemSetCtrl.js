@@ -1,9 +1,9 @@
 app.controller('LabItemSetListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
 
-    var link='app.labitemset_detail';
-    var editUrl = '<a class="edit-tpl" ui-sref="'+link+'({id: row.entity.id})">编辑</a>';
-    editUrl+='<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
-    
+    var link = 'app.labitemset_detail';
+    var editUrl = '<a class="edit-tpl" ui-sref="' + link + '({id: row.entity.id})">编辑</a>';
+    editUrl += '<a class="delete-tpl" ng-click="grid.appScope.delete(row.entity)">删除</a>';
+
     $scope.gridOptions = {
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
@@ -49,28 +49,29 @@ app.controller('LabItemSetListCtrl', ['$scope', '$state', 'dataService', functio
     };
 
     $scope.delete = function (obj) {
-        dataService.deleteLabItemSet(id).then(function(){
-            for(var i=0;i<$scope.gridOptions.data.length;i++){
-                if($scope.gridOptions.data[i].id==obj.id){
-                    $scope.gridOptions.data.splice(i,1);
+        dataService.deleteLabItemSet(obj).then(function () {
+            for (var i = 0; i < $scope.gridOptions.data.length; i++) {
+                if ($scope.gridOptions.data[i].id == obj.id) {
+                    $scope.gridOptions.data.splice(i, 1);
                     break
                 }
             }
         });
     };
 
-    $scope.filter=function(renderableRows){
+    $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
-        renderableRows.forEach( function( row ) {
-          var match = false;
-          [ 'lisName' ].forEach(function( field ){
-            if ( row.entity[field].match(matcher) ){
-              match = true;
+        renderableRows.forEach(function (row) {
+            var match = false;
+            ['lisName', 'lisCode'].forEach(function (field) {
+                var entity = row.entity[field] + '';
+                if (entity.match(matcher)) {
+                    match = true;
+                }
+            });
+            if (!match) {
+                row.visible = false;
             }
-          });
-          if ( !match ){
-            row.visible = false;
-          }
         });
         return renderableRows;
     };
@@ -80,18 +81,38 @@ app.controller('LabItemSetDetailCtrl', ['$scope', '$state', '$stateParams', 'dat
 
     $scope.model = {
         selectedlabItem: null,
-        normalUp: null
+        lisCode: null,
+        lisName: null,
+        comment: null,
     };
 
-    $scope.selectedlabItem=null;
-    $scope.labItemList=null;
+    $scope.selectedlabItem = null;
+    $scope.labItemList = null;
 
     dataService.getlabitemList().then(function (result) {
         $scope.labItemList = result.data;
+        if ($stateParams.id) {
+            dataService.getLabItemSetById($stateParams.id).then(function (result) {
+                if (result.data) {
+                    $scope.model = result.data;
+                    for (var i = 0; i < $scope.labItemList.length; i++) {
+                        if ($scope.labItemList[i].id == $scope.model.lmId) {
+                            $scope.model.selectedlabItem = $scope.labItemList[i];
+                        }
+                    }
+                }
+            });
+        }
     });
 
     $scope.submit = function () {
-        console.log($scope.model);
+        if ($scope.model.selectedlabItem) {
+            $scope.model.lmId = $scope.model.selectedlabItem.id;
+        }
+
+        dataService.saveLabItemSet($scope.model).then(function () {
+            $state.go('app.labitemset');
+        });
     };
 
 }]);
