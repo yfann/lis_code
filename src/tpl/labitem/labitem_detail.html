@@ -13,7 +13,8 @@
                         <ui-select ng-model="model.selectedLabCategory" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
-                                   search-enabled="true">
+                                   search-enabled="true"
+                                   required>
                             <ui-select-match>{{$select.selected.lcName}}</ui-select-match>
                             <ui-select-choices group-by="'group'" repeat="item in labCategoryList | filter: $select.search">
                                 <span ng-bind-html="item.lcName | highlight: $select.search"></span>

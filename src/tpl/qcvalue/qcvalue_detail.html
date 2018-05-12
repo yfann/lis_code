@@ -10,7 +10,7 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label required">质控检验项目</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedLabItem" theme="bootstrap" ng-disabled="false" search-enabled="true">
+                        <ui-select ng-model="model.selectedLabItem" theme="bootstrap" ng-disabled="false" search-enabled="true" required>
                             <ui-select-match>{{$select.selected.itemName}}</ui-select-match>
                             <ui-select-choices group-by="'group'" repeat="item in labItemList | filter: $select.search">
                                 <span ng-bind-html="item.itemName | highlight: $select.search"></span>
@@ -22,7 +22,7 @@
                 <div class="form-group select-group">
                     <label class="col-sm-2 control-label required">质控机构</label>
                     <div class="col-md-4">
-                        <ui-select ng-model="model.selectedSite" theme="bootstrap" ng-disabled="false" search-enabled="true">
+                        <ui-select ng-model="model.selectedSite" theme="bootstrap" ng-disabled="false" search-enabled="true" required>
                             <ui-select-match>{{$select.selected.miName}}</ui-select-match>
                             <ui-select-choices group-by="'group'" repeat="item in siteList | filter: $select.search">
                                 <span ng-bind-html="item.miName | highlight: $select.search"></span>

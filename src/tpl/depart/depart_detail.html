@@ -11,8 +11,11 @@
                         <ui-select ng-model="model.selectedSite" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
-                                   search-enabled="true">
-                            <ui-select-match>{{$select.selected.miName}}</ui-select-match>
+                                   search-enabled="true"
+                                   required>
+                            <ui-select-match>
+                                <span ng-bind="$select.selected.miName"></span>
+                            </ui-select-match>
                             <ui-select-choices group-by="'group'" repeat="item in siteList | filter: $select.search">
                                 <span ng-bind-html="item.miName | highlight: $select.search"></span>
                             </ui-select-choices>
