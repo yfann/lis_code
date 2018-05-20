@@ -62,7 +62,7 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
         renderableRows.forEach(function (row) {
             var match = false,depMatch=false;
             if($scope.model.selectedSite){
-                if(row.entity['deptName']==$scope.model.selectedSite.miName){
+                if(row.entity['miName']==$scope.model.selectedSite.miName){
                     depMatch=true;
                 }else{
                     depMatch=false;
