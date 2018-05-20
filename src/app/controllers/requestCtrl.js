@@ -193,6 +193,7 @@ app.controller('RequestDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         dataService.getRequestById($stateParams.id).then(function (result) {
             if (result.data) {
                 result.data.reqTime = util.formateDate(result.data.reqTime);
+                result.data.reStatusName = util.getRequestStatus(result.data.reStatus);
                 $scope.model = result.data;
             }
         });
