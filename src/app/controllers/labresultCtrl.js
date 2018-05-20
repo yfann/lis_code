@@ -1,4 +1,4 @@
-app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', function ($scope, $state, dataService, util) {
+app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', '$location', function ($scope, $state, dataService, util,$location) {
     var editUrl = '<a class="edit-tpl" ui-sref="labresult_print({id: row.entity.id})">查看</a>'
 
     $scope.gridOptions = {
@@ -35,13 +35,19 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
             }
         ]
     };
-
-    dataService.getRequestList().then(function (result) {
-        result.data.forEach(function (item) {
-            item.formatedReqTime = util.formateDate(item.reqTime);
+    var params=$location.search();
+    if(params.reid){
+        debugger
+    }else{
+        dataService.getRequestList().then(function (result) {
+            result.data.forEach(function (item) {
+                item.formatedReqTime = util.formateDate(item.reqTime);
+            });
+            $scope.gridOptions.data = result.data;
         });
-        $scope.gridOptions.data = result.data;
-    });
+    }
+
+
 
     $scope.search = function () {
         $scope.gridApi.grid.refresh();
@@ -118,6 +124,7 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
 }]);
 
 app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
+    
     if ($stateParams.id) {
         dataService.getRequestById($stateParams.id).then(function (result) {
             $scope.model = result.data;
