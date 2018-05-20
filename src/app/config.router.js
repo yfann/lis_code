@@ -218,6 +218,14 @@ angular.module('app')
                         templateUrl: 'tpl/labitemset/labitemset_detail.html',
                         controller: 'LabItemSetDetailCtrl'
                     })
+                    .state('app.analyze', {
+                        url: '/analyze',
+                        params: {
+                            data: null
+                        },
+                        templateUrl: 'tpl/analyze/analyze.html',
+                        controller: 'AnalyzeCtrl'
+                    })
                     .state('labresult_print', {
                         url: '/labresult_print',
                         params: {
@@ -234,6 +242,7 @@ angular.module('app')
                         templateUrl: 'tpl/logistics/logistics_print.html',
                         controller: 'LogisticsPrintCtrl'
                     })
+
             }
         ]
     );

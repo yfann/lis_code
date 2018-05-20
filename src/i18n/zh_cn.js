@@ -13,7 +13,8 @@
      "logistics_manage":"物流管理",
      "sampletype_manage":"样本类型管理",
      "qcvalue_manage":"质控维护",
-     "labresult":"检验结果"
+     "labresult":"检验结果",
+     "analyze":"统计分析"
   },
   "header":{
     "user":{
@@ -30,7 +31,8 @@
     "create":"新建",
     "confirm":"确定",
     "send_sample":"送检样本",
-    "accept_sample":"接受样本"
+    "accept_sample":"接受样本",
+    "analyze":"分析"
   },
   "list":{
     "filter_tip":"输入搜索关键字"
