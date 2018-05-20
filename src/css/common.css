@@ -8,6 +8,10 @@
     margin-right: 10px;
 }
 
+.fann-lis .red{
+    color: red;
+}
+
 /*ui grid start*/
 .fann-lis .ui-grid-cell .edit-tpl,.fann-lis .ui-grid-cell .delete-tpl{
     color: #2a6496;
@@ -126,16 +130,12 @@
     margin-right: auto;
 }
 
+.fann-lis .logistics-print .title,
 .fann-lis .labresult-print .title{
     text-align: center;
     font-size: 22px;
     font-weight: bold;
-}
-
-.fann-lis .logistics-print .title{
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
+    color: #000;
 }
 
 .fann-lis .logistics-print table td{
@@ -151,4 +151,20 @@
 }
 .fann-lis .logistics-print .labe-item{
     margin-top:5px;
+}
+
+.fann-lis .print-footer{
+    margin-top: 40px;
+}
+
+.fann-lis .labresult-print .print-footer .item{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.fann-lis .labresult-print .list-header{
+    border-bottom: 2px solid #000;
+    border-top: 2px solid #000;
+    font-weight: bold;
+    color: #000;
 }

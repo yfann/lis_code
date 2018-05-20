@@ -19,19 +19,20 @@
                 <label class="label-name">{{model.patient.sex}}</label>
             </td>
             <td>
-                <label class="label-name">检验标本：</label>
+                <label class="label-name">机构：</label>
+                <label class="label-name">{{model.miName}}</label>
             </td>
             <td>
-                <label class="label-name">样本号：</label>
+
             </td>
             <td>
                 <label class="label-name">备注：</label>
                 <label class="label-name">{{model.patient.desc}}</label>
             </td>
         </tr>
-      </table>
-      <table class="table">
-        <tr>
+    </table>
+    <table class="table">
+        <tr class="list-header">
             <th>
                 <label class="label-name">序号</label>
             </th>
@@ -62,15 +63,32 @@
                 <label class="label-name">{{item.labItem.itemName}}</label>
             </td>
             <td>
-                <label class="label-name">{{item.labResult.resultValue}}</label>
+                <label class="label-name {{(item.labResult.resultValue<item.labResult.refLo||item.labResult.resultValue>item.labResult.refHi)?'red':''}}">{{item.labResult.resultValue}}</label>
             </td>
             <td>
-                <label class="label-name">{{item.labResult.refRange}}</label>
+                <label class="label-name">{{item.labResult.refLo}} - {{item.labResult.refHi}}</label>
             </td>
             <td>
                 <label class="label-name">{{item.labResult.unit}}</label>
             </td>
         </tr>
-
-      </table>
+    </table>
+    <div class="print-footer">
+        <div class="item">
+            <label class="label-name">送检时间：</label>
+            <label class="label-name"></label>
+        </div>
+        <div class="item">
+            <label class="label-name">报告时间：</label>
+            <label class="label-name"></label>
+        </div>
+        <div class="item">
+            <label class="label-name">送检人：</label>
+            <label class="label-name"></label>
+        </div>
+        <div class="item">
+            <label class="label-name">审核者：</label>
+            <label class="label-name"></label>
+        </div>
+    </div>
 </div>
