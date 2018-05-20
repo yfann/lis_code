@@ -29,6 +29,7 @@
     "search":"查询",
     "create":"新建",
     "confirm":"确定",
+    "send_sample":"送检样本",
     "accept_sample":"接受样本"
   },
   "list":{

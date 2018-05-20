@@ -81,9 +81,24 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
 
     };
 
-    $scope.openDialog = function () {
+    $scope.openAcceptDialog = function () {
         $modal.open({
-            templateUrl: '/app/tpl/dialog/sample_dialog.html',
+            templateUrl: '/app/tpl/dialog/accept_sample_dialog.html',
+            controller: 'SampleDialogCtrl',
+            size: 'lg',
+            resolve: {
+                grid: function () {
+                    return {
+                        reload: $scope.reload
+                    }
+                }
+            }
+        });
+    };
+
+    $scope.openSendDialog = function () {
+        $modal.open({
+            templateUrl: '/app/tpl/dialog/send_sample_dialog.html',
             controller: 'SampleDialogCtrl',
             size: 'lg',
             resolve: {
