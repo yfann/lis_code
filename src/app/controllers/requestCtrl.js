@@ -1,10 +1,11 @@
 app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 'util', function ($scope, $modal, $state, dataService, util) {
     $scope.model = {
         filterValue: null,
-        startTime: null,
-        endTime: null,
+        startTime: new Date(),
+        endTime: new Date(),
         startOpened: false,
-        endOpened: false
+        endOpened: false,
+        selectedSite: null
     };
 
     $scope.dateOptions = {
@@ -31,7 +32,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
-            $scope.gridApi.grid.registerRowsProcessor($scope.filter, 200);
+            //$scope.gridApi.grid.registerRowsProcessor($scope.filter, 200);
         },
         columnDefs: [
             {
@@ -72,7 +73,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
     };
 
     $scope.load = function () {
-        dataService.getRequestList().then(function (result) {
+        dataService.getRequestList($scope.model.filterValue, $scope.model.startTime, $scope.model.endTime).then(function (result) {
             result.data.forEach(function (item) {
                 item.formatedReqTime = util.formateDate(item.reqTime);
                 item.reStatusName = util.getRequestStatus(item.reStatus);
@@ -82,10 +83,10 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         });
     };
 
-    $scope.load();
-
     $scope.search = function () {
-        $scope.gridApi.grid.refresh();
+        //$scope.gridApi.grid.refresh();
+        $scope.gridOptions.data = null;
+        $scope.load();
     };
 
     $scope.filter = function (renderableRows) {
@@ -160,9 +161,7 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         });
     };
 
-    $scope.model = {
-        selectedSite: null
-    };
+
     $scope.siteList = null;
 
     dataService.getSiteList().then(function (result) {
