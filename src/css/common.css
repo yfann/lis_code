@@ -48,6 +48,19 @@
     margin-left: 20px;
 }
 
+.fann-lis .filter-item{
+    margin-left: 20px;
+    width: 200px;
+}
+
+.fann-lis .filter-item button{
+    width: 100%;
+}
+
+.fann-lis .filter-item input{
+    width: 100%;
+}
+
 /*form*/
 .fann-lis .form-group.select-group{
     height: 34px;

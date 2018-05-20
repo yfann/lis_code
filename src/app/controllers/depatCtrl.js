@@ -60,11 +60,22 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
     $scope.filter = function (renderableRows) {
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
-            var match = false;
-            ['deptCode','deptName','miName'].forEach(function (field) {
+            var match = false,depMatch=false;
+            if($scope.model.selectedSite){
+                if(row.entity['deptName']==$scope.model.selectedSite.miName){
+                    depMatch=true;
+                }else{
+                    depMatch=false;
+                }
+
+            }else{
+                depMatch=true;
+            }
+
+            ['deptCode','miName'].forEach(function (field) {
                 var entity= row.entity[field]+'';
                 if (entity.match(matcher)) {
-                    match = true;
+                    match = true && depMatch;
                 }
             });
             if (!match) {
@@ -73,6 +84,15 @@ app.controller('DepartListCtrl', ['$scope', '$state', 'dataService', function ($
         });
         return renderableRows;
     };
+
+    $scope.model = {
+        selectedSite: null
+    };
+    $scope.siteList = null;
+
+    dataService.getSiteList().then(function (result) {
+        $scope.siteList = result.data;
+    });
 }]);
 
 app.controller('DepartDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
