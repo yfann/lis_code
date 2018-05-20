@@ -1,5 +1,5 @@
 app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', function ($scope, $state, dataService, util) {
-    var editUrl = '<a class="edit-tpl" ui-sref="labresult_print({id: row.entity.id})">打印</a>'
+    var editUrl = '<a class="edit-tpl" ui-sref="labresult_print({id: row.entity.id})">查看</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,

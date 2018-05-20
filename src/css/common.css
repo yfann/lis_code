@@ -120,6 +120,12 @@
 }
 
 /*print*/
+.fann-lis .labresult-print{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .fann-lis .labresult-print .title{
     text-align: center;
     font-size: 22px;
