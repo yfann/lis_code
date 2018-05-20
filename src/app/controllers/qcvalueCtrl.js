@@ -113,11 +113,13 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         other5: null,
         other6: null,
         selectedLabItem: null,
-        selectedSite: null
+        selectedSite: null,
+        selectedQcer: null
     };
 
     $scope.labItemList = null;
     $scope.siteList = null;
+    $scope.userList = null;
 
     $scope.siteList = null;
     $scope.deptList = null;
@@ -139,11 +141,13 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         $q.all([
             dataService.getlabitemList(),
             dataService.getSiteList(),
-            dataService.getQCValueById($stateParams.id)
+            dataService.getQCValueById($stateParams.id),
+            dataService.getEmployeeList()
         ]).then(function (result) {
             $scope.labItemList = result[0].data;
             $scope.siteList = result[1].data;
             $scope.model = result[2].data;
+            $scope.userList = result[3].data;
             if ($scope.labItemList) {
                 $scope.labItemList.forEach(function (item) {
                     if (item.id == $scope.model.lmId) {
@@ -155,6 +159,13 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
                 $scope.siteList.forEach(function (item) {
                     if (item.id == $scope.model.miId) {
                         $scope.model.selectedSite = item;
+                    }
+                });
+            }
+            if ($scope.userList) {
+                $scope.userList.forEach(function (item) {
+                    if (item.id == $scope.model.qcer) {
+                        $scope.model.selectedQcer = item;
                     }
                 });
             }
@@ -178,6 +189,9 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         }
         if ($scope.model.selectedSite) {
             $scope.model.miId = $scope.model.selectedSite.id;
+        }
+        if ($scope.model.selectedQcer) {
+            $scope.model.qcer = $scope.model.selectedQcer.id;
         }
         dataService.saveQCValue($scope.model).then(function () {
             $state.go('app.qcvalue');
