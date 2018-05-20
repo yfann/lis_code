@@ -160,6 +160,14 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
         });
     };
 
+    $scope.model = {
+        selectedSite: null
+    };
+    $scope.siteList = null;
+
+    dataService.getSiteList().then(function (result) {
+        $scope.siteList = result.data;
+    });
 
 }]);
 

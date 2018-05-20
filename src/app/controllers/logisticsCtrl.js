@@ -95,6 +95,15 @@ app.controller('LogisticsListCtrl', ['$scope', '$modal', '$state', 'dataService'
             }
         });
     };
+
+    $scope.model = {
+        selectedSite: null
+    };
+    $scope.siteList = null;
+
+    dataService.getSiteList().then(function (result) {
+        $scope.siteList = result.data;
+    });
 }]);
 
 app.controller('SampleDialogCtrl', ['$scope', '$state', '$modalInstance', 'dataService', 'grid', function ($scope, $state, $modalInstance, dataService, grid) {

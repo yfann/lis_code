@@ -74,6 +74,15 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
         return renderableRows;
     };
 
+    $scope.model = {
+        selectedSite: null
+    };
+    $scope.siteList = null;
+
+    dataService.getSiteList().then(function (result) {
+        $scope.siteList = result.data;
+    });
+
 }]);
 
 app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
@@ -106,7 +115,6 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
             $state.go('app.labresult');
         });
     };
-
 }]);
 
 app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
