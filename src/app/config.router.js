@@ -226,6 +226,22 @@ angular.module('app')
                         templateUrl: 'tpl/analyze/analyze.html',
                         controller: 'AnalyzeCtrl'
                     })
+                    .state('app.change_pwd', {
+                        url: '/change_pwd',
+                        params: {
+                            data: null
+                        },
+                        templateUrl: 'tpl/user/change_pwd.html',
+                        controller: 'UserCtrl'
+                    })
+                    .state('login', {
+                        url: '/login',
+                        params: {
+                            data: null
+                        },
+                        templateUrl: 'tpl/user/login.html',
+                        controller: 'UserCtrl'
+                    })
                     .state('labresult_print', {
                         url: '/labresult_print',
                         params: {

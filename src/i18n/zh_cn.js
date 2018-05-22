@@ -1,4 +1,7 @@
 {
+  "app":{
+    "name":"LIS"
+  },
   "nav":{
      "system_manage":"系统管理",
      "crisis_manage":"危机管理",
@@ -32,7 +35,8 @@
     "confirm":"确定",
     "send_sample":"送检样本",
     "accept_sample":"接受样本",
-    "analyze":"分析"
+    "analyze":"分析",
+    "login":"登录"
   },
   "list":{
     "filter_tip":"输入搜索关键字"
