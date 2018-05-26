@@ -64,7 +64,7 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
         renderableRows.forEach(function (row) {
             var match = false;
             ['miCode', 'miName', 'miCategory'].forEach(function (field) {
-                var entity = row.entity[field]+'';
+                var entity = row.entity[field] + '';
                 if (entity.match(matcher)) {
                     match = true;
                 }
@@ -77,7 +77,7 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
     };
 }]);
 
-app.controller('MedicalDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
+app.controller('MedicalDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', '$q', function ($scope, $state, $stateParams, dataService, $q) {
     $scope.model = {
         id: null,
         miCode: null,
@@ -85,14 +85,47 @@ app.controller('MedicalDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         miCategory: null,
         areaCode: null,
         address: null,
-        desc: null
+        desc: null,
+        selectedParentSite: null,
+        parentId: null,
+        parentName: null
     };
-
+    $scope.parentSiteList = null;
+    $scope.isTopMI = false;
 
     if ($stateParams.id) {
-        dataService.getSiteById($stateParams.id).then(function (result) {
-            if (result.data) {
-                $scope.model = result.data;
+        $q.all([
+            dataService.getSiteList(),
+            dataService.getSiteById($stateParams.id)
+        ]).then(function (result) {
+            if (result[0].data && result[0].data.length > 0) {
+                $scope.parentSiteList = result[0].data.filter(function (item) {
+                    return item.parentId == null && item.id != $stateParams.id;
+                });
+                result[0].data.forEach(function (item) {
+                    if (item.parentId == $stateParams.id) {
+                        $scope.isTopMI = true;
+                    }
+                });
+            }
+
+            if (result[1].data) {
+                $scope.model = result[1].data;
+                if ($scope.model.parentId) {
+                    for (var i = 0; i < $scope.parentSiteList.length; i++) {
+                        if ($scope.parentSiteList[i].id == $scope.model.parentId) {
+                            $scope.model.selectedParentSite = $scope.parentSiteList[i];
+                        }
+                    }
+                }
+            }
+        });
+    } else {
+        dataService.getSiteList().then(function (result) {
+            if (result.data && result.data.length > 0) {
+                $scope.parentSiteList = result.data.filter(function (item) {
+                    return item.parentId == null;
+                });
             }
         });
     }
@@ -101,6 +134,10 @@ app.controller('MedicalDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
 
     $scope.submit = function () {
         //console.log($scope.model);
+        if ($scope.model.selectedParentSite) {
+            $scope.model.parentId = $scope.model.selectedParentSite.id;
+            $scope.model.parentName = $scope.model.selectedParentSite.miName;
+        }
         dataService.saveSite($scope.model).then(function () {
             $state.go('app.medical');
         });

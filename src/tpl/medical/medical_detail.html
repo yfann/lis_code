@@ -7,6 +7,24 @@
         </div>
         <div class="panel-body">
             <form name="form" class="form-horizontal form-validation">
+            <div class="form-group select-group" ng-hide="isTopMI">
+                    <label class="col-sm-2 control-label required">上级机构</label>
+                    <div class="col-md-4">
+                        <ui-select ng-model="model.selectedParentSite" 
+                                    theme="bootstrap" 
+                                    ng-disabled="false" 
+                                    search-enabled="true"
+                                    required>
+                            <ui-select-match>
+                                <span ng-bind="$select.selected.miName"></span>
+                            </ui-select-match>
+                            <ui-select-choices group-by="'group'" repeat="item in parentSiteList | filter: $select.search">
+                                <span ng-bind-html="item.miName | highlight: $select.search"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">机构编码</label>
                     <div class="col-md-4">
