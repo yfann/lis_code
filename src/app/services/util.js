@@ -3,6 +3,10 @@ angular.module('commonService').
         var enumMap = enumSerbice;
         return {
             formateDate: function (date) {
+                if(!date){
+                    return null;
+                }
+
                 var d = new Date(date),
                     month = '' + (d.getMonth() + 1),
                     day = '' + d.getDate(),
