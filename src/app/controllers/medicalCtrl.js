@@ -29,6 +29,10 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
                 displayName: '机构类别'
             },
             {
+                field: 'parentName',
+                displayName: '上级机构'
+            },
+            {
                 name: 'edit',
                 displayName: '操作',
                 cellTemplate: editUrl
@@ -63,7 +67,7 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['miCode', 'miName', 'miCategory'].forEach(function (field) {
+            ['miCode', 'miName', 'miCategory','parentName'].forEach(function (field) {
                 var entity = row.entity[field] + '';
                 if (entity.match(matcher)) {
                     match = true;
