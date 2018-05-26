@@ -25,6 +25,10 @@ app.controller('LabItemSetListCtrl', ['$scope', '$state', 'dataService', functio
                 displayName: '组合项目名称'
             },
             {
+                field: 'labItemString',
+                displayName: '包含项目'
+            },
+            {
                 field: 'comment',
                 displayName: '备注'
             },
@@ -63,7 +67,7 @@ app.controller('LabItemSetListCtrl', ['$scope', '$state', 'dataService', functio
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['lisName', 'lisCode'].forEach(function (field) {
+            ['lisName', 'lisCode','labItemString'].forEach(function (field) {
                 var entity = row.entity[field] + '';
                 if (entity.match(matcher)) {
                     match = true;
