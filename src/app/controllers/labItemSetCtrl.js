@@ -80,7 +80,7 @@ app.controller('LabItemSetListCtrl', ['$scope', '$state', 'dataService', functio
 app.controller('LabItemSetDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
 
     $scope.model = {
-        selectedlabItem: null,
+        labItems: [],
         lisCode: null,
         lisName: null,
         comment: null,
@@ -95,10 +95,17 @@ app.controller('LabItemSetDetailCtrl', ['$scope', '$state', '$stateParams', 'dat
             dataService.getLabItemSetById($stateParams.id).then(function (result) {
                 if (result.data) {
                     $scope.model = result.data;
-                    for (var i = 0; i < $scope.labItemList.length; i++) {
-                        if ($scope.labItemList[i].id == $scope.model.lmId) {
-                            $scope.model.selectedlabItem = $scope.labItemList[i];
-                        }
+                    if ($scope.model.labItems && $scope.model.labItems.length > 0 &&
+                        $scope.labItemList && $scope.labItemList.length > 0) {
+                        var list = [];
+                        $scope.model.labItems.forEach(function (item) {
+                            $scope.labItemList.forEach(function (lab) {
+                                if (item.id == lab.id) {
+                                    list.push(lab);
+                                }
+                            });
+                        });
+                        $scope.model.labItems = list;
                     }
                 }
             });
@@ -106,10 +113,6 @@ app.controller('LabItemSetDetailCtrl', ['$scope', '$state', '$stateParams', 'dat
     });
 
     $scope.submit = function () {
-        if ($scope.model.selectedlabItem) {
-            $scope.model.lmId = $scope.model.selectedlabItem.id;
-        }
-
         dataService.saveLabItemSet($scope.model).then(function () {
             $state.go('app.labitemset');
         });

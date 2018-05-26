@@ -28,8 +28,8 @@
                             <option value="{{item.id}}" ng-repeat="item in labItemList">{{item.itemName}}</option>
                         </select>
                     </div> -->
-                    <!-- <div class="col-md-4">
-                        <ui-select ng-model="model.selectedlabItems" 
+                    <div class="col-md-4">
+                        <ui-select ng-model="model.labItems" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
                                    search-enabled="true"
@@ -40,8 +40,8 @@
                                 <span ng-bind-html="item.itemName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
-                    </div> -->
-                    <div class="col-md-4">
+                    </div>
+                    <!-- <div class="col-md-4">
                         <ui-select ng-model="model.selectedlabItem" 
                                    theme="bootstrap" 
                                    ng-disabled="false" 
@@ -52,7 +52,7 @@
                                 <span ng-bind-html="item.itemName | highlight: $select.search"></span>
                             </ui-select-choices>
                         </ui-select>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">

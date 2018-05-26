@@ -134,16 +134,17 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
             $scope.siteList = result[0].data;
             $scope.deptList = result[1].data;
             $scope.model = result[2].data;
+            $scope.model.password1 = $scope.model.password;
             if ($scope.siteList) {
                 $scope.siteList.forEach(function (item) {
-                    if (item.id == $scope.model.siteId){
+                    if (item.id == $scope.model.siteId) {
                         $scope.model.selectedSite = item;
                     }
                 });
             }
             if ($scope.deptList) {
                 $scope.deptList.forEach(function (item) {
-                    if (item.id == $scope.model.deptId){
+                    if (item.id == $scope.model.deptId) {
                         $scope.model.selectedDept = item;
                     }
                 });
