@@ -39,9 +39,16 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
             }
         ]
     };
+    $scope.model = {
+        selectedParentSite: null
+    };
+    $scope.parentSiteList = null;
 
     dataService.getSiteList().then(function (result) {
         $scope.gridOptions.data = result.data;
+        $scope.parentSiteList = result.data.filter(function (item) {
+            return item.parentId == null;
+        });
     });
 
     $scope.search = function () {
@@ -67,12 +74,20 @@ app.controller('MedicalListCtrl', ['$scope', '$state', 'dataService', function (
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['miCode', 'miName', 'miCategory','parentName'].forEach(function (field) {
+            ['miCode', 'miName', 'miCategory'].forEach(function (field) {
                 var entity = row.entity[field] + '';
                 if (entity.match(matcher)) {
                     match = true;
                 }
             });
+            if ($scope.model.selectedParentSite) {
+                if (row.entity['parentName'] == $scope.model.selectedParentSite.miName) {
+
+                } else {
+                    match = false;
+                }
+            }
+
             if (!match) {
                 row.visible = false;
             }
