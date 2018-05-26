@@ -33,6 +33,14 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
                 displayName: '身份证号'
             },
             {
+                field: 'miName',
+                displayName: '机构名称'
+            },
+            {
+                field: 'deptName',
+                displayName: '科室名称'
+            },
+            {
                 name: 'edit',
                 displayName: '操作',
                 cellTemplate: editUrl
@@ -67,7 +75,7 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['emCode', 'emName', 'titleName', 'idNumber'].forEach(function (field) {
+            ['emCode', 'emName', 'titleName', 'idNumber', 'miName', 'deptName'].forEach(function (field) {
                 var entity = row.entity[field] + '';
                 if (entity.match(matcher)) {
                     match = true;
