@@ -275,6 +275,15 @@ angular.module('httpService', []).
                     var url = host + '/api/system/labresults';
                     return $http.post(url, model);
                 },
+                //analysis
+                getAnalysis:function(from,to,mi,type){
+                    var url = host + '/api/lis/samplereport';
+                    url += '?from=' + (from ? from : '');
+                    url += '&to=' + (to ? to : '');
+                    url += '&mi=' + (mi ? mi : '');
+                    url += '&sampleType=' + (type ? type : '');
+                    return $http.get(url);
+                },
                 //other
                 getSexList: function () {
                     var url = host + '/app/mock_data/sex_list.json';
