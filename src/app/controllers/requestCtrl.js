@@ -195,6 +195,19 @@ app.controller('RequestDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
                 result.data.reqTime = util.formateDate(result.data.reqTime);
                 result.data.reStatusName = util.getRequestStatus(result.data.reStatus);
                 $scope.model = result.data;
+
+                if ($scope.model.labInfos) {
+                    $scope.model.labInfos.forEach(function (item) {
+                        if (item.labSample) {
+                            if (item.labSample.logistics) {
+                                item.labSample.logistics.lsStatusName = util.getLogisticsStatus(item.labSample.logistics.lsStatus);
+                                item.labSample.logistics.sendTimeFormate = util.formateDate(item.labSample.logistics.sendTime);
+                                item.labSample.logistics.centerReceiveTimeFormate = util.formateDate(item.labSample.logistics.centerReceiveTime);
+                                item.labSample.logistics.lsReceiveTimeFormate = util.formateDate(item.labSample.logistics.lsReceiveTime);
+                            }
+                        }
+                    });
+                }
             }
         });
     }
