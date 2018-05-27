@@ -262,8 +262,12 @@ angular.module('httpService', []).
                     url += '&to=' + (to ? to : '');
                     return $http.get(url);
                 },
+                sendLogi: function (model) {
+                    var url = host + '/api/lis/sendlogistics';
+                    return $http.post(url, model);
+                },
                 acceptLogi: function (model) {
-                    var url = host + '/api/lis/logistics';
+                    var url = host + '/api/lis/receivelogistics';
                     return $http.post(url, model);
                 },
                 //labresult

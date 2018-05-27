@@ -253,7 +253,8 @@ angular.module('app')
                     .state('logistics_print', {
                         url: '/logistics_print',
                         params: {
-                            data: null
+                            data: null,
+                            type: null
                         },
                         templateUrl: 'tpl/logistics/logistics_print.html',
                         controller: 'LogisticsPrintCtrl'
