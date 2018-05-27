@@ -79,7 +79,7 @@ app.controller('QcvalueListCtrl', ['$scope', '$state', 'dataService', 'util', fu
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['miName','instrumentName','labItemName'].forEach(function (field) {
+            ['miName', 'instrumentName', 'labItemName'].forEach(function (field) {
                 var entity = row.entity[field] + '';
                 if (entity.match(matcher)) {
                     match = true;
@@ -120,6 +120,7 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
     $scope.labItemList = null;
     $scope.siteList = null;
     $scope.userList = null;
+    $scope.filterUserList = null;
 
     $scope.siteList = null;
     $scope.deptList = null;
@@ -163,7 +164,12 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
                 });
             }
             if ($scope.userList) {
-                $scope.userList.forEach(function (item) {
+                if($scope.model.selectedSite){
+                    $scope.filterUserList = $scope.userList.filter(function (item) {
+                        return item.miName == $scope.model.selectedSite.miName;
+                    });
+                }
+                $scope.filterUserList.forEach(function (item) {
                     if (item.id == $scope.model.qcer) {
                         $scope.model.selectedQcer = item;
                     }
@@ -180,7 +186,17 @@ app.controller('QcvalueDetailCtrl', ['$scope', '$state', '$stateParams', 'dataSe
         dataService.getSiteList().then(function (result) {
             $scope.siteList = result.data;
         });
+        dataService.getEmployeeList().then(function(result){
+            $scope.userList = result.data;
+        });
     }
+
+    $scope.selectSite = function (model) {
+        $scope.filterUserList = $scope.userList.filter(function (item) {
+            return item.miName == model.miName;
+        });
+        $scope.model.selectedQcer = null;
+    };
 
     $scope.submit = function () {
         //console.log($scope.model);
