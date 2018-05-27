@@ -1,11 +1,11 @@
-app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', '$location', function ($scope, $state, dataService, util,$location) {
+app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', '$location', function ($scope, $state, dataService, util, $location) {
     var editUrl = '<a class="edit-tpl" ui-sref="labresult_print({id: row.entity.id})">查看</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
-            $scope.gridApi.grid.registerRowsProcessor($scope.filter, 200);
+           // $scope.gridApi.grid.registerRowsProcessor($scope.filter, 200);
         },
         columnDefs: [
             {
@@ -18,7 +18,7 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
             },
             {
                 field: 'dept',
-                displayName: '部门'
+                displayName: '科室'
             },
             {
                 field: 'inspector',
@@ -29,14 +29,28 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
                 displayName: '创建时间'
             },
             {
+                field: 'status',
+                displayName: '检验状态'
+            },
+            {
                 name: 'edit',
                 displayName: '操作',
                 cellTemplate: editUrl
             }
         ]
     };
-    var params=$location.search();
-    if(params.reid){
+
+    $scope.load = function () {
+        dataService.getReports($scope.filterValue).then(function (result) {
+            result.data.forEach(function (item) {
+                item.formatedCreateTime = util.formateDate(item.createTime);
+            });
+            $scope.gridOptions.data = result.data;
+        });
+    };
+
+    var params = $location.search();
+    if (params.reid) {
         dataService.getRequestById(params.reid).then(function (result) {
             if (result.data) {
                 result.data.reports.forEach(function (item) {
@@ -45,19 +59,16 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
                 $scope.gridOptions.data = result.data.reports;
             }
         });
-    }else{
-        dataService.getReports().then(function (result) {
-            result.data.forEach(function (item) {
-                item.formatedCreateTime = util.formateDate(item.createTime);
-            });
-            $scope.gridOptions.data = result.data;
-        });
-    }
+    } else {
+        $scope.load();
+    };
+
 
 
 
     $scope.search = function () {
-        $scope.gridApi.grid.refresh();
+        //$scope.gridApi.grid.refresh();
+        $scope.load();
     };
 
     $scope.create = function () {
@@ -68,10 +79,10 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['requestNo', 'patient.ptName','miName'].forEach(function (field) {
+            ['requestNo', 'patient.ptName', 'miName'].forEach(function (field) {
                 var entity = row.entity;
                 field.split('.').forEach(function (f) {
-                    if(entity[f]){
+                    if (entity[f]) {
                         entity = entity[f];
                     }
                 });
@@ -114,8 +125,8 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
                 if ($scope.model.labInfos) {
                     $scope.model.labInfos.forEach(function (item) {
                         //init list
-                        if(!item.labResult){
-                            item.labResult={};
+                        if (!item.labResult) {
+                            item.labResult = {};
                         }
                     });
                 }
@@ -124,19 +135,19 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
     });
 
     $scope.submit = function () {
-        dataService.saveLabResult($scope.model.labInfos).then(function(){
+        dataService.saveLabResult($scope.model.labInfos).then(function () {
             $state.go('app.labresult');
         });
     };
 }]);
 
 app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', 'util', function ($scope, $state, $stateParams, dataService, util) {
-    
+
     if ($stateParams.id) {
         dataService.getReportById($stateParams.id).then(function (result) {
-            result.data.formatedApplicationTime=util.formateDate(result.data.applicationTime);
-            result.data.formatedSendTime=util.formateDate(result.data.sendTime);
-            result.data.formatedReportTime=util.formateDate(result.data.reportTime);
+            result.data.formatedApplicationTime = util.formateDate(result.data.applicationTime);
+            result.data.formatedSendTime = util.formateDate(result.data.sendTime);
+            result.data.formatedReportTime = util.formateDate(result.data.reportTime);
             $scope.model = result.data;
         });
     }
