@@ -154,12 +154,12 @@
 }
 
 .fann-lis .print-footer{
-    margin-top: 40px;
+    margin-top: 80px;
 }
 
 .fann-lis .labresult-print .print-footer .item{
     display: inline-block;
-    margin-left: 10px;
+    margin-right: 60px;
 }
 
 .fann-lis .labresult-print .list-header{

@@ -13,20 +13,20 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
                 visible: false
             },
             {
-                field: 'requestNo',
-                displayName: '申请单号'
-            },
-            {
-                field: 'patient.ptName',
+                field: 'patientName',
                 displayName: '病人名字'
             },
             {
-                field: 'miName',
-                displayName: '机构名称'
+                field: 'dept',
+                displayName: '部门'
             },
             {
-                field: 'formatedReqTime',
-                displayName: '申请时间'
+                field: 'inspector',
+                displayName: '审核者'
+            },
+            {
+                field: 'formatedCreateTime',
+                displayName: '创建时间'
             },
             {
                 name: 'edit',
@@ -37,11 +37,18 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
     };
     var params=$location.search();
     if(params.reid){
-        debugger
+        dataService.getRequestById(params.reid).then(function (result) {
+            if (result.data) {
+                result.data.reports.forEach(function (item) {
+                    item.formatedCreateTime = util.formateDate(item.createTime);
+                });
+                $scope.gridOptions.data = result.data.reports;
+            }
+        });
     }else{
-        dataService.getRequestList().then(function (result) {
+        dataService.getReports().then(function (result) {
             result.data.forEach(function (item) {
-                item.formatedReqTime = util.formateDate(item.reqTime);
+                item.formatedCreateTime = util.formateDate(item.createTime);
             });
             $scope.gridOptions.data = result.data;
         });
@@ -123,10 +130,13 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
     };
 }]);
 
-app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', function ($scope, $state, $stateParams, dataService) {
+app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', 'util', function ($scope, $state, $stateParams, dataService, util) {
     
     if ($stateParams.id) {
-        dataService.getRequestById($stateParams.id).then(function (result) {
+        dataService.getReportById($stateParams.id).then(function (result) {
+            result.data.formatedApplicationTime=util.formateDate(result.data.applicationTime);
+            result.data.formatedSendTime=util.formateDate(result.data.sendTime);
+            result.data.formatedReportTime=util.formateDate(result.data.reportTime);
             $scope.model = result.data;
         });
     }

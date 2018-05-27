@@ -73,7 +73,11 @@ app.controller('RequestListCtrl', ['$scope', '$modal', '$state', 'dataService', 
     };
 
     $scope.load = function () {
-        dataService.getRequestList($scope.model.filterValue, util.formateDate($scope.model.startTime), util.formateDate($scope.model.endTime)).then(function (result) {
+        var miId = null;
+        if ($scope.model.selectedSite) {
+            miId = $scope.model.selectedSite.id;
+        }
+        dataService.getRequestList($scope.model.filterValue, util.formateDate($scope.model.startTime), util.formateDate($scope.model.endTime), miId).then(function (result) {
             result.data.forEach(function (item) {
                 item.formatedReqTime = util.formateDate(item.reqTime);
                 item.reStatusName = util.getRequestStatus(item.reStatus);

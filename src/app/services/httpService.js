@@ -42,11 +42,12 @@ angular.module('httpService', []).
                     var url = host + '/api/lis/requestdetail?id=';
                     return $http.get(url + id);
                 },
-                getRequestList: function (query, from, to) {
+                getRequestList: function (query, from, to, miId) {
                     var url = host + '/api/lis/requests';
                     url += '?search=' + (query ? query : '');
                     url += '&from=' + (from ? from : '');
                     url += '&to=' + (to ? to : '');
+                    url += '&miId=' + (miId ? miId : '');
                     return $http.get(url);
                 },
                 acceptRequest: function (obj) {
@@ -274,6 +275,15 @@ angular.module('httpService', []).
                 saveLabResult: function (model) {
                     var url = host + '/api/system/labresults';
                     return $http.post(url, model);
+                },
+                //report
+                getReports:function(query){
+                    var url = host + '/api/lis/reports?search=';
+                    return $http.get(url + (query ? query : ''));
+                },
+                getReportById:function(id){
+                    var url = host + '/api/lis/reportsdetail?id=';
+                    return $http.get(url + id);
                 },
                 //analysis
                 getAnalysis:function(from,to,mi,type){
