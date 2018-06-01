@@ -277,18 +277,18 @@ angular.module('httpService', []).
                     return $http.post(url, model);
                 },
                 //report
-                getReports:function(query,mi){
+                getReports: function (query, mi) {
                     var url = host + '/api/lis/reports';
                     url += '?search=' + (query ? query : '');
                     url += '&miInfo=' + (mi ? mi : '');
                     return $http.get(url);
                 },
-                getReportById:function(id){
+                getReportById: function (id) {
                     var url = host + '/api/lis/reportsdetail?id=';
                     return $http.get(url + id);
                 },
                 //analysis
-                getAnalysis:function(from,to,mi,type){
+                getAnalysis: function (from, to, mi, type) {
                     var url = host + '/api/lis/samplereport';
                     url += '?from=' + (from ? from : '');
                     url += '&to=' + (to ? to : '');
@@ -312,11 +312,14 @@ angular.module('httpService', []).
                     var url = host + '/mock_data/sample_list.json';
                     return $http.get(url);
                 },
-                savePatient: function (model) {
+                //login
+                login: function (username, password) {
+                    var url = host + '/api/system/login';
+                    return $http.post(url, {
+                        code: username,
+                        password: password
+                    });
+                }
 
-                },
-                getPatientList: function () {
-
-                },
             };
         }]);
