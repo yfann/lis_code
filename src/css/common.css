@@ -125,7 +125,7 @@
 
 /*print*/
 .fann-lis .labresult-print{
-    width: 60%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -167,4 +167,9 @@
     border-top: 2px solid #000;
     font-weight: bold;
     color: #000;
+}
+
+.print-button {
+    position: absolute;
+    top: 9px;
 }

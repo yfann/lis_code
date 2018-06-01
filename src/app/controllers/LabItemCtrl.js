@@ -21,7 +21,7 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
                 displayName: '代码'
             },
             {
-                field: 'standardCode',
+                field: 'category',
                 displayName: '检验分类'
             },
             {
@@ -29,7 +29,7 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
                 displayName: '项目名称'
             },
             {
-                field: 'category',
+                field: 'resultType',
                 displayName: '结果类型'
             },
             {

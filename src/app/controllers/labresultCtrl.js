@@ -5,7 +5,7 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
         enableFiltering: false,
         onRegisterApi: function (gridApi) {
             $scope.gridApi = gridApi;
-           // $scope.gridApi.grid.registerRowsProcessor($scope.filter, 200);
+            // $scope.gridApi.grid.registerRowsProcessor($scope.filter, 200);
         },
         columnDefs: [
             {
@@ -148,6 +148,23 @@ app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataS
             result.data.formatedApplicationTime = util.formateDate(result.data.applicationTime);
             result.data.formatedSendTime = util.formateDate(result.data.sendTime);
             result.data.formatedReportTime = util.formateDate(result.data.reportTime);
+            if (result.data.details) {
+                result.data.details.forEach(function (item) {
+                    var resultValue = new Number(item.labResult.resultValue);
+                    var refLo = new Number(item.labResult.refLo);
+                    var refHi = new Number(item.labResult.refHi);
+                    if (!isNaN(resultValue) && !isNaN(refLo) && !isNaN(refHi)) {
+                        if (resultValue < refLo || resultValue > refHi) {
+                            item.isRed = true;
+                        }
+                    } else {
+                        item.isRange = true;
+                        if(item.labResult.resultValue != item.labResult.refRange){
+                            item.isRed = true;
+                        }
+                    }
+                });
+            }
             $scope.model = result.data;
         });
     }

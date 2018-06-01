@@ -1,4 +1,10 @@
 <div class="labresult-print">
+    <style type="text/css" media="print">
+        .print-button {
+            display: none;
+        }
+    </style>
+    <button class="print-button" onclick="window.print()">打印</button>
     <table class="table">
         <tr>
             <th colspan="6" class="title">
@@ -87,10 +93,10 @@
                 <label class="label-name">{{item.labItem.itemName}}</label>
             </td>
             <td>
-                <label class="label-name {{(item.labResult.resultValue<item.labResult.refLo||item.labResult.resultValue>item.labResult.refHi)?'red':''}}">{{item.labResult.resultValue}}</label>
+                <label class="label-name {{item.isRed?'red':''}}">{{item.labResult.resultValue}}</label>
             </td>
             <td>
-                <label class="label-name">{{item.labResult.refLo}} - {{item.labResult.refHi}}</label>
+                <label class="label-name">{{item.isRange?item.labResult.refRange:item.labResult.refLo+" - "+item.labResult.refHi}}</label>
             </td>
             <td>
                 <label class="label-name">{{item.labResult.unit}}</label>
