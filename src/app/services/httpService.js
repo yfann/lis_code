@@ -277,9 +277,11 @@ angular.module('httpService', []).
                     return $http.post(url, model);
                 },
                 //report
-                getReports:function(query){
-                    var url = host + '/api/lis/reports?search=';
-                    return $http.get(url + (query ? query : ''));
+                getReports:function(query,mi){
+                    var url = host + '/api/lis/reports';
+                    url += '?search=' + (query ? query : '');
+                    url += '&miInfo=' + (mi ? mi : '');
+                    return $http.get(url);
                 },
                 getReportById:function(id){
                     var url = host + '/api/lis/reportsdetail?id=';

@@ -21,7 +21,7 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
                 displayName: '代码'
             },
             {
-                field: 'category',
+                field: 'categoryName',
                 displayName: '检验分类'
             },
             {
@@ -67,7 +67,7 @@ app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function (
         var matcher = new RegExp($scope.filterValue);
         renderableRows.forEach(function (row) {
             var match = false;
-            ['itemCode', 'itemName', 'standardCode'].forEach(function (field) {
+            ['itemCode', 'itemName', 'categoryName', 'resultType'].forEach(function (field) {
                 var entity = row.entity[field] + '';
                 if (entity.match(matcher)) {
                     match = true;

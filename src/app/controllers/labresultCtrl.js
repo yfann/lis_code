@@ -17,6 +17,10 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
                 displayName: '病人名字'
             },
             {
+                field: 'miName',
+                displayName: '送检机构'
+            },
+            {
                 field: 'dept',
                 displayName: '科室'
             },
@@ -40,8 +44,16 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
         ]
     };
 
+    $scope.model = {
+        selectedSite: null
+    };
+
     $scope.load = function () {
-        dataService.getReports($scope.filterValue).then(function (result) {
+        var miId = null;
+        if ($scope.model.selectedSite) {
+            miId = $scope.model.selectedSite.id;
+        }
+        dataService.getReports($scope.filterValue,miId).then(function (result) {
             result.data.forEach(function (item) {
                 item.formatedCreateTime = util.formateDate(item.createTime);
             });
