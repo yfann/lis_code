@@ -27,6 +27,11 @@ angular.module('app')
         user: {}
       }
 
+      var user = storage.getUser();
+      if (user) {
+        $scope.app.user = user;
+      }
+
       // save settings to local storage
       // if ( angular.isDefined($localStorage.settings) ) {
       //   $scope.app.settings = $localStorage.settings;
@@ -75,7 +80,7 @@ angular.module('app')
         storage.logout();
         $state.go('login');
       }
-      $scope.user = {};
+
       storage.callback = function (user, isAdmin) {
         if (user) {
           $scope.app.user = user;
