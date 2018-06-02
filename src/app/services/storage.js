@@ -13,6 +13,9 @@ angular.module('commonService').
             logout: function () {
                 $localStorage.token = null;
                 $localStorage.user = null;
+            },
+            getUser: function () {
+                return $localStorage.user;
             }
         };
     }]);

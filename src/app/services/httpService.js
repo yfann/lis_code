@@ -319,6 +319,13 @@ angular.module('httpService', []).
                         code: username,
                         password: password
                     });
+                },
+                changepwd: function (id, srcpwd, newpwd) {
+                    var url = host + '/api/system/changepwd';
+                    url += '?userId=' + (id ? id : '');
+                    url += '&srcPwd=' + (srcpwd ? srcpwd : '');
+                    url += '&newPwd=' + (newpwd ? newpwd : '');
+                    return $http.get(url);
                 }
 
             };

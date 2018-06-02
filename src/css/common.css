@@ -173,3 +173,10 @@
     position: absolute;
     top: 9px;
 }
+
+.fann-lis .login-err-message{
+    color: red;
+    height: 18px;
+    margin-bottom: 5px;
+    text-align: center;
+}
