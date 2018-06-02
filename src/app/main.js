@@ -22,7 +22,9 @@ angular.module('app')
           asideFolded: false,
           asideDock: false,
           container: false
-        }
+        },
+        isAdmin: false,
+        user: {}
       }
 
       // save settings to local storage
@@ -64,9 +66,14 @@ angular.module('app')
       $scope.user = {};
       storage.callback = function (user) {
         if (user) {
-          $scope.user = user;
+          $scope.app.user = user;
+          if (user.emCode && user.emCode.toLowerCase() == 'admin') {
+            $scope.app.isAdmin = true;
+          }else{
+            $scope.app.isAdmin = false;
+          }
         }
-      }
+      };
 
       $scope.$watch('$localStorage.user', function () {
         if ($scope.app.settings.asideDock && $scope.app.settings.asideFixed) {
