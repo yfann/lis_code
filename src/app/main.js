@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window',
-    function ($scope, $translate, $localStorage, $window) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$state', 'storage',
+    function ($scope, $translate, $localStorage, $window, $state, storage) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');
@@ -55,4 +55,25 @@ angular.module('app')
       //fix me
       //$scope.filter_tip = T('list.filter_tip');
       $scope.filter_tip = '输入搜索关键字';
+
+
+      $scope.logout = function () {
+        storage.logout();
+        $state.go('login');
+      }
+      $scope.user = {};
+      storage.callback = function (user) {
+        if (user) {
+          $scope.user = user;
+        }
+      }
+
+      $scope.$watch('$localStorage.user', function () {
+        if ($scope.app.settings.asideDock && $scope.app.settings.asideFixed) {
+          // aside dock and fixed must set the header fixed.
+          $scope.app.settings.headerFixed = true;
+        }
+        // save to local storage
+        $localStorage.settings = $scope.app.settings;
+      }, true);
     }]);

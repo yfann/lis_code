@@ -53,7 +53,7 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
         if ($scope.model.selectedSite) {
             miId = $scope.model.selectedSite.id;
         }
-        dataService.getReports($scope.filterValue,miId).then(function (result) {
+        dataService.getReports($scope.filterValue, miId).then(function (result) {
             result.data.forEach(function (item) {
                 item.formatedCreateTime = util.formateDate(item.createTime);
             });
@@ -62,8 +62,8 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
     };
 
     var params = $location.search();
-    if (params.reid) {
-        dataService.getRequestById(params.reid).then(function (result) {
+    if (params.requestId) {
+        dataService.getRequestById(params.requestId).then(function (result) {
             if (result.data) {
                 result.data.reports.forEach(function (item) {
                     item.formatedCreateTime = util.formateDate(item.createTime);
@@ -153,10 +153,11 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
     };
 }]);
 
-app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', 'util', function ($scope, $state, $stateParams, dataService, util) {
-
-    if ($stateParams.id) {
-        dataService.getReportById($stateParams.id).then(function (result) {
+app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', 'util', '$location', function ($scope, $state, $stateParams, dataService, util, $location) {
+    var params = $location.search();
+    var id = $stateParams.id || params ? params.reportId : null;
+    if (id) {
+        dataService.getReportById(id).then(function (result) {
             result.data.formatedApplicationTime = util.formateDate(result.data.applicationTime);
             result.data.formatedSendTime = util.formateDate(result.data.sendTime);
             result.data.formatedReportTime = util.formateDate(result.data.reportTime);
@@ -171,7 +172,7 @@ app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataS
                         }
                     } else {
                         item.isRange = true;
-                        if(item.labResult.resultValue != item.labResult.refRange){
+                        if (item.labResult.resultValue != item.labResult.refRange) {
                             item.isRed = true;
                         }
                     }

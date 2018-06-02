@@ -1,4 +1,4 @@
-app.controller('UserCtrl', ['$scope', '$modal', '$state', 'dataService', 'util', '$localStorage', function ($scope, $modal, $state, dataService, util,$localStorage) {
+app.controller('UserCtrl', ['$scope', '$modal', '$state', 'dataService', 'util', 'storage', function ($scope, $modal, $state, dataService, util, storage) {
 
     $scope.model = {
         userName: null,
@@ -7,11 +7,10 @@ app.controller('UserCtrl', ['$scope', '$modal', '$state', 'dataService', 'util',
 
     $scope.login = function () {
         if ($scope.model.userName && $scope.model.password) {
-            dataService.login($scope.model.userName, $scope.model.password).then(function (data) {
-                debugger
-                if(data.token){
-                    $localStorage.set('token',data.token);
-                    $localStorage.set('user',data.user);
+            dataService.login($scope.model.userName, $scope.model.password).then(function (result) {
+                if (result.data && result.data.token) {
+                    storage.setTokenAndUser(result.data.token,result.data.user);
+                    $state.go('app.request');
                 }
             });
         }
