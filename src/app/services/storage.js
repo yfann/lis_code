@@ -7,7 +7,7 @@ angular.module('commonService').
                 $localStorage.token = token;
                 $localStorage.user = user;
                 if (this.callback) {
-                    this.callback(user);
+                    this.callback(user, this.isAdmin());
                 }
             },
             logout: function () {
@@ -16,6 +16,21 @@ angular.module('commonService').
             },
             getUser: function () {
                 return $localStorage.user;
+            },
+            isLogin: function () {
+                if ($localStorage.token) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            isAdmin: function () {
+                if ($localStorage.user) {
+                    if ($localStorage.user.emCode && $localStorage.user.emCode.toLowerCase() == 'admin') {
+                        return true;
+                    }
+                }
+                return false;
             }
         };
     }]);

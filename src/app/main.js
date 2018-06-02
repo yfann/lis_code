@@ -49,8 +49,20 @@ angular.module('app')
         return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
       }
 
+      $scope.adminList = ['app.crisis', 'app.crisis_detail', 'app.depart', 'app.depart_detail', 'app.employee', 'app.employee_detail', 'app.medical', 'app.medical_detail', 'app.labitem', 'app.labitem_detail', 'app.category', 'app.category_detail', 'app.sampletype', 'app.sampletype_detail', 'app.qcvalue', 'app.qcvalue_detail', 'app.labitemset', 'app.labitemset_detail',];
       $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-
+        if (toState.name == 'login') {
+          return;
+        }
+        if (!storage.isLogin()) {
+          $state.go('login');
+        }
+        for (var i = 0; i < $scope.adminList.length; i++) {
+          if ($scope.adminList[i] == toState.name && !storage.isAdmin()) {
+            event.preventDefault();
+            break;
+          }
+        }
       });
 
       //top level scope
@@ -64,23 +76,11 @@ angular.module('app')
         $state.go('login');
       }
       $scope.user = {};
-      storage.callback = function (user) {
+      storage.callback = function (user, isAdmin) {
         if (user) {
           $scope.app.user = user;
-          if (user.emCode && user.emCode.toLowerCase() == 'admin') {
-            $scope.app.isAdmin = true;
-          }else{
-            $scope.app.isAdmin = false;
-          }
+          $scope.app.isAdmin = isAdmin;
         }
       };
 
-      $scope.$watch('$localStorage.user', function () {
-        if ($scope.app.settings.asideDock && $scope.app.settings.asideFixed) {
-          // aside dock and fixed must set the header fixed.
-          $scope.app.settings.headerFixed = true;
-        }
-        // save to local storage
-        $localStorage.settings = $scope.app.settings;
-      }, true);
     }]);

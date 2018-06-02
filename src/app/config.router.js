@@ -9,6 +9,7 @@ angular.module('app')
             function ($rootScope, $state, $stateParams) {
                 $rootScope.$state = $state;
                 $rootScope.$stateParams = $stateParams;
+
             }
         ]
     )
@@ -16,7 +17,7 @@ angular.module('app')
         ['$stateProvider', '$urlRouterProvider',
             function ($stateProvider, $urlRouterProvider) {
 
-                $urlRouterProvider.otherwise('/app/request');
+                $urlRouterProvider.otherwise('/login');
 
                 $stateProvider
                     .state('app', {
@@ -56,7 +57,10 @@ angular.module('app')
                             id: null
                         },
                         templateUrl: 'tpl/request/request_list.html',
-                        controller: 'RequestListCtrl'
+                        controller: 'RequestListCtrl',
+                        onEnter: function(){
+
+                        }
                     })
                     .state('app.request_detail', {
                         url: '/request_detail',
