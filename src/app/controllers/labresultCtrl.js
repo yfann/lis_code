@@ -155,7 +155,7 @@ app.controller('LabresultDetailCtrl', ['$scope', '$state', '$stateParams', 'data
 
 app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', 'util', '$location', function ($scope, $state, $stateParams, dataService, util, $location) {
     var params = $location.search();
-    var id = $stateParams.id || params ? params.reportId : null;
+    var id = $stateParams.id || (params ? params.reportId : null);
     if (id) {
         dataService.getReportById(id).then(function (result) {
             result.data.formatedApplicationTime = util.formateDate(result.data.applicationTime);
