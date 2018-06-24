@@ -92,7 +92,6 @@ app.controller('EmployeeListCtrl', ['$scope', '$state', 'dataService', function 
 app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataService', '$q', function ($scope, $state, $stateParams, dataService, $q) {
     //console.log($stateParams);
     $scope.model = {
-
         id: null,
         siteId: null,
         deptId: null,
@@ -106,7 +105,8 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
         desc: null,
         birthDay: null,
         selectedSite: null,
-        selectedDept: null
+        selectedDept: null,
+        visitMis: []
     };
 
     $scope.siteList = null;
@@ -148,6 +148,18 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
                         $scope.model.selectedDept = item;
                     }
                 });
+            }
+
+            if ($scope.siteList && $scope.model.visitMis) {
+                var list = [];
+                $scope.model.visitMis.forEach(function (item) {
+                    $scope.siteList.forEach(function (lab) {
+                        if (item.id == lab.id) {
+                            list.push(lab);
+                        }
+                    });
+                });
+                $scope.model.visitMis = list;
             }
         });
     } else {
