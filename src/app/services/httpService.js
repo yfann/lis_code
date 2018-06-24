@@ -277,10 +277,13 @@ angular.module('httpService', []).
                     return $http.post(url, model);
                 },
                 //report
-                getReports: function (query, mi) {
+                getReports: function (query, mi, reqDate, patientId, requestNo) {
                     var url = host + '/api/lis/reports';
                     url += '?search=' + (query ? query : '');
                     url += '&miInfo=' + (mi ? mi : '');
+                    url += '&reqDate=' + (reqDate ? reqDate : '');
+                    url += '&patientId=' + (patientId ? patientId : '');
+                    url += '&requestNo=' + (requestNo ? requestNo : '');
                     return $http.get(url);
                 },
                 getReportById: function (id) {

@@ -45,15 +45,40 @@ app.controller('LabresultListCtrl', ['$scope', '$state', 'dataService', 'util', 
     };
 
     $scope.model = {
-        selectedSite: null
+        selectedSite: null,
+        patientNo: null,
+        reqNo: null,
+        reqTime: null,
+        startOpened: false,
+        endOpened: false,
     };
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1,
+        class: 'datepicker'
+    };
+
+    $scope.startOpen = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.model.startOpened = true;
+    };
+
+    $scope.endOpen = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.model.endOpened = true;
+    };
+
+
 
     $scope.load = function () {
         var miId = null;
         if ($scope.model.selectedSite) {
             miId = $scope.model.selectedSite.id;
         }
-        dataService.getReports($scope.filterValue, miId).then(function (result) {
+        dataService.getReports($scope.filterValue, miId, $scope.model.reqTime, $scope.model.patientNo, $scope.model.reqNo).then(function (result) {
             result.data.forEach(function (item) {
                 item.formatedCreateTime = util.formateDate(item.createTime);
             });
