@@ -4,7 +4,6 @@
             display: none;
         }
     </style>
-    <button class="print-button" onclick="window.print()">打印</button>
     <table class="table">
         <tr>
             <th colspan="6" class="title">
@@ -17,10 +16,6 @@
                 <label class="label-name">{{model.patientName}}</label>
             </td>
             <td>
-                <label class="label-name">年龄：</label>
-                <label class="label-name">{{}}</label>
-            </td>
-            <td>
                 <label class="label-name">性别：</label>
                 <label class="label-name">{{model.gender}}</label>
             </td>
@@ -28,34 +23,30 @@
                 <label class="label-name">床号：</label>
                 <label class="label-name">{{model.bedNo}}</label>
             </td>
-            <td>
-                <label class="label-name">申请医生：</label>
-                <label class="label-name">{{model.applicationDoctor}}</label>
-            </td>
-            <td>
-                <label class="label-name">申请时间：</label>
-                <label class="label-name">{{model.formatedApplicationTime}}</label>
-            </td>
+
         </tr>
         <tr>
-            <td>
-                <label class="label-name">科室：</label>
-                <label class="label-name">{{model.dept}}</label>
+            <td >
+                <label class="label-name">申请医生：</label>
+                <label class="label-name">{{model.applicationDoctor}}</label>
             </td>
             <td>
                 <label class="label-name">类别：</label>
                 <label class="label-name">{{model.category}}</label>
             </td>
             <td>
-
+                <label class="label-name">科室：</label>
+                <label class="label-name">{{model.dept}}</label>
             </td>
-            <td>
-
+         </tr>
+         <tr>
+            <td colspan="3">
+                <label class="label-name">申请时间：</label>
+                <label class="label-name">{{model.formatedApplicationTime}}</label>
             </td>
-            <td>
-
-            </td>
-            <td>
+        </tr>
+        <tr>
+            <td colspan="3">
                 <label class="label-name">备注：</label>
                 <label class="label-name">{{model.comment}}</label>
             </td>
