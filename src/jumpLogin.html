@@ -1,0 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+
+<HEAD>
+    <TITLE>LIS - ×Ô¶¯µÇÂ¼</TITLE>
+</HEAD>
+
+<BODY>
+    <input type="hidden" name="userName" id="userName" value="admin" />
+    <input type="hidden" name="password" id="password" value="F379EAF3C831B04DE153469D1BEC345E" />
+    <script>
+        sessionStorage.userName = document.getElementById('userName').value;
+        sessionStorage.password = document.getElementById('password').value;
+        sessionStorage.autologin = true;
+        location.href = location.origin + "/app/index.html";
+    </script>
+</BODY>
+
+</HTML>

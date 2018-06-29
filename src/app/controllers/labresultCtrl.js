@@ -207,3 +207,34 @@ app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataS
         });
     }
 }]);
+
+
+app.controller('MobiLabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', 'util', '$location', function ($scope, $state, $stateParams, dataService, util, $location) {
+    var params = $location.search();
+    var id = $stateParams.id || (params ? params.reportId : null);
+    if (id) {
+        dataService.getReportById(id).then(function (result) {
+            result.data.formatedApplicationTime = util.formateDate(result.data.applicationTime);
+            result.data.formatedSendTime = util.formateDate(result.data.sendTime);
+            result.data.formatedReportTime = util.formateDate(result.data.reportTime);
+            if (result.data.details) {
+                result.data.details.forEach(function (item) {
+                    var resultValue = new Number(item.labResult.resultValue);
+                    var refLo = new Number(item.labResult.refLo);
+                    var refHi = new Number(item.labResult.refHi);
+                    if (!isNaN(resultValue) && !isNaN(refLo) && !isNaN(refHi)) {
+                        if (resultValue < refLo || resultValue > refHi) {
+                            item.isRed = true;
+                        }
+                    } else {
+                        item.isRange = true;
+                        if (item.labResult.resultValue != item.labResult.refRange) {
+                            item.isRed = true;
+                        }
+                    }
+                });
+            }
+            $scope.model = result.data;
+        });
+    }
+}]);

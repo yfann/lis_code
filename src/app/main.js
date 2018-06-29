@@ -23,9 +23,16 @@ angular.module('app')
           asideDock: false,
           container: false
         },
-        isAdmin: false,
         user: {}
-      }
+      };
+
+      $scope.isAdmin = function () {
+        var user = localStorage.curUser;
+        if (user) {
+          return storage.isAdmin(JSON.parse(user));
+        }
+        return false;
+      };
 
       var user = storage.getUser();
       if (user) {
@@ -59,7 +66,7 @@ angular.module('app')
         if (toState.name == 'login') {
           return;
         }
-        if (!storage.isLogin()) {
+        if (toState.name != 'mobi_labresult_print' && !storage.isLogin()) {
           $state.go('login');
         }
         for (var i = 0; i < $scope.adminList.length; i++) {

@@ -27,4 +27,14 @@ app.controller('UserCtrl', ['$scope', '$modal', '$state', 'dataService', 'util',
             $state.go('app.request');
         });
     }
+
+    if (sessionStorage.autologin) {
+        $scope.autologin = true;
+        $scope.model.userName = sessionStorage.getItem('userName');
+        $scope.model.password = sessionStorage.getItem('password');
+        sessionStorage.removeItem('userName');
+        sessionStorage.removeItem('password');
+        sessionStorage.removeItem('autologin');
+        $scope.login();
+    }
 }]);

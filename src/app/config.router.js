@@ -263,6 +263,15 @@ angular.module('app')
                         templateUrl: 'tpl/logistics/logistics_print.html',
                         controller: 'LogisticsPrintCtrl'
                     })
+                    .state('mobi_labresult_print', {
+                        url: '/mobi_labresult',
+                        params: {
+                            data: null,
+                            type: null
+                        },
+                        templateUrl: 'tpl/labresult/mobi_labresult_print.html',
+                        controller: 'MobiLabresultPrintCtrl'
+                    })
 
             }
         ]

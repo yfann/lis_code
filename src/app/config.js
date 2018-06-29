@@ -2,9 +2,11 @@
 
 var app =
   angular.module('app').config(
-    ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide','$httpProvider',
-      function ($controllerProvider, $compileProvider, $filterProvider, $provide,$httpProvider) {
-        $httpProvider.defaults.withCredentials = true;
+    ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide','$httpProvider','$cookiesProvider',
+      function ($controllerProvider, $compileProvider, $filterProvider, $provide,$httpProvider,$cookiesProvider) {
+          $httpProvider.defaults.withCredentials = true;
+          $cookiesProvider.defaults = $cookiesProvider.defaults || {};
+          $cookiesProvider.defaults.path = "/";
         // lazy controller, directive and service
         app.controller = $controllerProvider.register;
         app.directive = $compileProvider.directive;
@@ -14,13 +16,16 @@ var app =
         app.constant = $provide.constant;
         app.value = $provide.value;
       }
-    ]).config(['$translateProvider', function ($translateProvider) {
+    ]).config(['$translateProvider', '$httpProvider', '$cookiesProvider', function ($translateProvider, $httpProvider, $cookiesProvider) {
       $translateProvider.useStaticFilesLoader({
         prefix: 'i18n/',
         suffix: '.js'
       });
       $translateProvider.preferredLanguage('zh_cn');
       $translateProvider.useLocalStorage();
+      $httpProvider.defaults.withCredentials = true;
+      $cookiesProvider.defaults = $cookiesProvider.defaults || {};
+      $cookiesProvider.defaults.path = "/";
     }]);
 
 // 翻译快捷方式
@@ -39,5 +44,5 @@ app.run(['$translate', '$localStorage',
 ]);
 
 app.constant('config', {
-  host: 'http://localhost:8123'
+  host: location.origin
 });

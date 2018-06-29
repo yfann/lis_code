@@ -154,7 +154,7 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
                 var list = [];
                 $scope.model.visitMis.forEach(function (item) {
                     $scope.siteList.forEach(function (lab) {
-                        if (item.id == lab.id) {
+                        if (item.miId == lab.id) {
                             list.push(lab);
                         }
                     });
@@ -181,9 +181,19 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
         if ($scope.model.selectedDept) {
             $scope.model.deptId = $scope.model.selectedDept.id;
         }
-
+        $scope.model.visitMis = $scope.model.visitMis || [];
+        angular.forEach($scope.model.visitMis, function (item) {
+            item.miId = item.id;
+        });
         dataService.saveEmployee($scope.model).then(function () {
             $state.go('app.employee');
+        });
+    };
+
+    $scope.selectAllOrg = function () {
+        $scope.model.visitMis = [];
+        angular.forEach($scope.siteList, function (item) {
+            $scope.model.visitMis.push(item);
         });
     };
 

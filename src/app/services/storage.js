@@ -6,37 +6,41 @@ angular.module('commonService').
             setTokenAndUser: function (token, user) {
                 // $localStorage.token = token;
                 // $localStorage.user = user;
-                $cookieStore.put('token',token);
-                $cookieStore.put('user',user);
+                //$cookies.token =  token;
+                //$cookies.user = JSON.stringify(user); 
+                $.cookie('token', token, { path: '/' });
+                $.cookie('user', JSON.stringify(user), { path: '/' });
+                localStorage.curUser = JSON.stringify(user);
+                var isAdmin = user && user.emCode && user.emCode.toLowerCase() === 'admin';
                 if (this.callback) {
-                    this.callback(user, this.isAdmin());
+                    this.callback(user, isAdmin);
                 }
             },
             logout: function () {
                 // $localStorage.token = null;
                 // $localStorage.user = null;
-                $cookieStore.remove("token");
-                $cookieStore.remove("user");
+                delete $cookies['token'];
+                delete $cookies['user'];
+                localStorage.removeItem('curUser');
             },
             getUser: function () {
                 //return $localStorage.user;
-                return $cookieStore.get("user");
+                if (!$cookies.user) {
+                    return null;
+                }
+                return JSON.parse($cookies.user);
             },
             isLogin: function () {
-                if ($cookieStore.get("token")) {
+                if ($cookies.token) {
                     return true;
                 } else {
                     return false;
                 }
             },
-            isAdmin: function () {
-                var user=$cookieStore.get("user");
-                if (user) {
-                    if (user.emCode && user.emCode.toLowerCase() == 'admin') {
-                        return true;
-                    }
-                }
-                return false;
+            isAdmin: function (u) {
+                var user = u || JSON.parse($cookies.user || '{}');
+                var isAdmin = user && user.emCode && user.emCode.toLowerCase() === 'admin';
+                return isAdmin;
             }
         };
     }]);
