@@ -206,6 +206,10 @@ app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataS
             $scope.model = result.data;
         });
     }
+
+    $scope.downloadPDF = function () {
+        window.open(location.origin + '/home/DownloadPdf?reportId=' + id, '_blank');
+    };
 }]);
 
 
@@ -213,6 +217,10 @@ app.controller('MobiLabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'd
     var params = $location.search();
     var id = $stateParams.id || (params ? params.reportId : null);
     if (id) {
+        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|micromessenger/i.test(navigator.userAgent);
+        if (!isMobile) {
+            $state.go('labresult_print', { id: id });
+        }
         dataService.getReportById(id).then(function (result) {
             result.data.formatedApplicationTime = util.formateDate(result.data.applicationTime);
             result.data.formatedSendTime = util.formateDate(result.data.sendTime);

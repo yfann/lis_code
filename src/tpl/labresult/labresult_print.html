@@ -5,6 +5,7 @@
         }
     </style>
     <button class="print-button" onclick="window.print()">打印</button>
+    <button class="print-button" ng-click="downloadPDF()" style="left:150px;">下载</button>
     <table class="table">
         <tr>
             <th colspan="6" class="title">
@@ -15,6 +16,10 @@
             <td>
                 <label class="label-name">姓名：</label>
                 <label class="label-name">{{model.patientName}}</label>
+            </td>
+            <td>
+                <label class="label-name">年龄：</label>
+                <label class="label-name">{{model.age}}</label>
             </td>
             <td>
                 <label class="label-name">性别：</label>
@@ -32,18 +37,15 @@
                 <label class="label-name">申请时间：</label>
                 <label class="label-name">{{model.formatedApplicationTime}}</label>
             </td>
+        </tr>
+        <tr>
             <td>
                 <label class="label-name">科室：</label>
                 <label class="label-name">{{model.dept}}</label>
             </td>
-        </tr>
-        <tr>
             <td>
                 <label class="label-name">类别：</label>
                 <label class="label-name">{{model.category}}</label>
-            </td>
-            <td>
-
             </td>
             <td>
 
@@ -116,7 +118,7 @@
             <label class="label-name">{{model.approvaler}}</label>
         </div>
         <div class="item">
-            <label class="label-name">审核者：</label>
+            <label class="label-name">审核人：</label>
             <label class="label-name">{{model.inspector}}</label>
         </div>
     </div>

@@ -1,4 +1,4 @@
-app.controller('UserCtrl', ['$scope', '$modal', '$state', 'dataService', 'util', 'storage', function ($scope, $modal, $state, dataService, util, storage) {
+﻿app.controller('UserCtrl', ['$scope', '$modal', '$state', 'dataService', 'util', 'storage', function ($scope, $modal, $state, dataService, util, storage) {
 
     $scope.model = {
         userName: null,
@@ -16,6 +16,12 @@ app.controller('UserCtrl', ['$scope', '$modal', '$state', 'dataService', 'util',
                     $state.go('app.request');
                 } else if (result.data) {
                     $scope.model.errMessage = result.data.message;
+                    if ($scope.autologin) {
+                        var ele = document.getElementsByTagName('h1')[0];
+                        if (ele) {
+                            ele.innerText = '自动登录失败: ' + result.data.message;
+                        }
+                    }
                 }
             });
         }

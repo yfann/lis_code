@@ -1565,6 +1565,9 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
             $scope.model.visitMis.push(item);
         });
     };
+    $scope.clearOrg = function () {
+        $scope.model.visitMis = [];
+    };
 
 }]);
 app.controller('LabitemListCtrl', ['$scope', '$state', 'dataService', function ($scope, $state, dataService) {
@@ -2046,6 +2049,10 @@ app.controller('LabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'dataS
             $scope.model = result.data;
         });
     }
+
+    $scope.downloadPDF = function () {
+        window.open(location.origin + '/home/DownloadPdf?reportId=' + id, '_blank');
+    };
 }]);
 
 
@@ -2053,6 +2060,10 @@ app.controller('MobiLabresultPrintCtrl', ['$scope', '$state', '$stateParams', 'd
     var params = $location.search();
     var id = $stateParams.id || (params ? params.reportId : null);
     if (id) {
+        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|micromessenger/i.test(navigator.userAgent);
+        if (!isMobile) {
+            $state.go('labresult_print', { id: id });
+        }
         dataService.getReportById(id).then(function (result) {
             result.data.formatedApplicationTime = util.formateDate(result.data.applicationTime);
             result.data.formatedSendTime = util.formateDate(result.data.sendTime);
@@ -3130,6 +3141,12 @@ app.controller('UserCtrl', ['$scope', '$modal', '$state', 'dataService', 'util',
                     $state.go('app.request');
                 } else if (result.data) {
                     $scope.model.errMessage = result.data.message;
+                    if ($scope.autologin) {
+                        var ele = document.getElementsByTagName('h1')[0];
+                        if (ele) {
+                            ele.innerText = '自动登录失败: ' + result.data.message;
+                        }
+                    }
                 }
             });
         }

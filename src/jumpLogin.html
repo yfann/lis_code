@@ -1,19 +1,42 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<HTML>
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>LIS - 自动登录</title>
+</head>
+<body>
+    <div class="container w-xxl w-auto-xs per100">
+        <style>
+            .per100 {
+                width: 100% !important;
+            }
+        </style>
+        <div style="text-align:center; margin-top:100px; width:100%;">
+            <h1>正在自动登录，请稍候... </h1>
+        </div>
+    </div>
 
-<HEAD>
-    <TITLE>LIS - �Զ���¼</TITLE>
-</HEAD>
-
-<BODY>
-    <input type="hidden" name="userName" id="userName" value="admin" />
-    <input type="hidden" name="password" id="password" value="F379EAF3C831B04DE153469D1BEC345E" />
     <script>
-        sessionStorage.userName = document.getElementById('userName').value;
-        sessionStorage.password = document.getElementById('password').value;
-        sessionStorage.autologin = true;
-        location.href = location.origin + "/app/index.html";
-    </script>
-</BODY>
+        var getParameterByName = function (name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        };
 
-</HTML>
+        var userName = getParameterByName('userName'), password = getParameterByName('password');
+        if (!userName || !password) {
+            var ele = document.getElementsByTagName('h1')[0];
+            ele.innerText = '自动登录失败！ (参数错误)';
+        } else {
+            sessionStorage.userName = userName;
+            sessionStorage.password = password;
+            sessionStorage.autologin = true;
+            location.href = location.origin + "/app/index.html";
+        }
+    </script>
+</body>
+
+</html>

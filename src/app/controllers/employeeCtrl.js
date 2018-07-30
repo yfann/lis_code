@@ -196,5 +196,8 @@ app.controller('EmployeeDetailCtrl', ['$scope', '$state', '$stateParams', 'dataS
             $scope.model.visitMis.push(item);
         });
     };
+    $scope.clearOrg = function () {
+        $scope.model.visitMis = [];
+    };
 
 }]);
