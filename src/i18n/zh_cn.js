@@ -17,7 +17,8 @@
      "sampletype_manage":"样本类型管理",
      "qcvalue_manage":"质控维护",
      "labresult":"检验结果",
-     "analyze":"统计分析"
+     "analyze":"统计分析",
+     "report_search":"检验报告查询"
   },
   "header":{
     "user":{

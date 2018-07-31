@@ -299,6 +299,15 @@ angular.module('httpService', []).
                     url += '&sampleType=' + (type ? type : '');
                     return $http.get(url);
                 },
+
+                //search report
+                searchReport: function (patientName,idCard,date) {
+                    var url = host + '/api/lis/reportsearch';
+                    url += '?patientName=' + (patientName ? patientName : '');
+                    url += '&idCard=' + (idCard ? idCard : '');
+                    url += '&date=' + (date ? date : '');
+                    return $http.get(url);
+                },
                 //other
                 getSexList: function () {
                     var url = host + '/app/mock_data/sex_list.json';
