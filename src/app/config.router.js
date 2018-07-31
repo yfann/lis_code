@@ -280,6 +280,14 @@ angular.module('app')
                         templateUrl: 'tpl/labresult/mobi_labresult_print.html',
                         controller: 'MobiLabresultPrintCtrl'
                     })
+                    .state('report_print', {
+                        url: '/report_print',
+                        params: {
+                            id: null
+                        },
+                        templateUrl: 'tpl/reportsearch/report_print.html',
+                        controller: 'ReportPrintCtrl'
+                    })
 
             }
         ]

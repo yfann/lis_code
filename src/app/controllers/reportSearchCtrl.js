@@ -1,5 +1,5 @@
 app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '$location', function ($scope, $state, dataService, util, $location) {
-    var editUrl = '<a class="edit-tpl" ui-sref="labresult_print({id: row.entity.id})">查看</a>'
+    var editUrl = '<a class="edit-tpl" ui-sref="report_print({id: row.entity.id})">查看</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -90,41 +90,47 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
             $scope.gridOptions.data = result.data;
         });
     };
-
-    var params = $location.search();
-    if (params.requestId) {
-        dataService.getRequestById(params.requestId).then(function (result) {
-            if (result.data) {
-                result.data.reports.forEach(function (item) {
-                    item.formatedCreateTime = util.formateDate(item.createTime);
-                });
-                $scope.gridOptions.data = result.data.reports;
-            }
-        });
-    } else {
-        $scope.load();
-    };
-
-
-
-
     $scope.search = function () {
         //$scope.gridApi.grid.refresh();
         $scope.load();
     };
 
-    $scope.create = function () {
-        $state.go('app.labresult_detail');
+    $scope.load();
+
+}]);
+
+
+
+app.controller('ReportPrintCtrl', ['$scope', '$state', '$stateParams', 'dataService', 'util', '$location', function ($scope, $state, $stateParams, dataService, util, $location) {
+    var params = $location.search();
+    var id = $stateParams.id || (params ? params.reportId : null);
+    if (id) {
+        dataService.getReportById(id).then(function (result) {
+            result.data.formatedApplicationTime = util.formateDate(result.data.applicationTime);
+            result.data.formatedSendTime = util.formateDate(result.data.sendTime);
+            result.data.formatedReportTime = util.formateDate(result.data.reportTime);
+            if (result.data.details) {
+                result.data.details.forEach(function (item) {
+                    var resultValue = new Number(item.labResult.resultValue);
+                    var refLo = new Number(item.labResult.refLo);
+                    var refHi = new Number(item.labResult.refHi);
+                    if (!isNaN(resultValue) && !isNaN(refLo) && !isNaN(refHi)) {
+                        if (resultValue < refLo || resultValue > refHi) {
+                            item.isRed = true;
+                        }
+                    } else {
+                        item.isRange = true;
+                        if (item.labResult.resultValue != item.labResult.refRange) {
+                            item.isRed = true;
+                        }
+                    }
+                });
+            }
+            $scope.model = result.data;
+        });
+    }
+
+    $scope.downloadPDF = function () {
+        window.open(location.origin + '/home/DownloadPdf?reportId=' + id, '_blank');
     };
-
-
-    $scope.model = {
-        selectedSite: null
-    };
-    $scope.siteList = null;
-
-    dataService.getSiteList().then(function (result) {
-        $scope.siteList = result.data;
-    });
-
 }]);

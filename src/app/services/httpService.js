@@ -308,6 +308,7 @@ angular.module('httpService', []).
                     url += '&date=' + (date ? date : '');
                     return $http.get(url);
                 },
+                
                 //other
                 getSexList: function () {
                     var url = host + '/app/mock_data/sex_list.json';
