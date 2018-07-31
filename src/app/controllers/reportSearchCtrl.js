@@ -13,27 +13,39 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
             },
             {
                 field: 'patientName',
-                displayName: '病人名字'
+                displayName: '姓名'
+            },
+            {
+                field: 'gender',
+                displayName: '性别'
+            },
+            {
+                field: 'birthDay',
+                displayName: '生日'
+            },
+            {
+                field: 'age',
+                displayName: '年龄'
             },
             {
                 field: 'miName',
-                displayName: '送检机构'
+                displayName: '检验医院名称'
             },
             {
-                field: 'dept',
-                displayName: '科室'
+                field: 'reportTime',
+                displayName: '检验日期'
             },
             {
-                field: 'inspector',
-                displayName: '审核者'
+                field: 'setName',
+                displayName: '检验项目'
             },
             {
-                field: 'formatedCreateTime',
-                displayName: '创建时间'
+                field: 'sampleId',
+                displayName: '检验样本号'
             },
             {
-                field: 'status',
-                displayName: '检验状态'
+                field: 'deviceName',
+                displayName: '检验仪器'
             },
             {
                 name: 'edit',
