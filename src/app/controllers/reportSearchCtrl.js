@@ -1,5 +1,5 @@
 app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '$location', function ($scope, $state, dataService, util, $location) {
-    var editUrl = '<a class="edit-tpl" ui-sref="report_print({id: row.entity.id})">查看</a>'
+    var editUrl = '<a class="edit-tpl" ui-sref="report_print({id: row.entity.id})">查看</a> <a class="edit-tpl" ng-click="grid.appScope.downloadPDF(row.entity.id)">下载</a>'
 
     $scope.gridOptions = {
         enableFiltering: false,
@@ -97,6 +97,9 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
 
     $scope.load();
 
+    $scope.downloadPDF = function (id) {
+        window.open(location.origin + '/home/DownloadPdf?reportId=' + id, '_blank');
+    };
 }]);
 
 
