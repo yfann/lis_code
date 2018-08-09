@@ -19,6 +19,7 @@ angular.module('app', [
     'ui.grid',
     'ui.grid.edit',
     'ui.grid.selection',
+    'ui.grid.pagination',
     'ui.select',
     //custom
     'httpService',

@@ -301,11 +301,18 @@ angular.module('httpService', []).
                 },
 
                 //search report
-                searchReport: function (patientName,idCard,date) {
+                searchReport: function (patientName,idCard,date,pageNumber,pageSize) {
                     var url = host + '/api/lis/reportsearch';
                     url += '?patientName=' + (patientName ? patientName : '');
                     url += '&idCard=' + (idCard ? idCard : '');
                     url += '&date=' + (date ? date : '');
+                    url += '&pageNumber=' + (pageNumber ? pageNumber : '');
+                    url += '&pageSize=' + (pageSize ? pageSize : '');
+                    return $http.get(url);
+                },
+
+                getReportTotalNum:function(){
+                    var url = host + '/api/lis/reportsearch/total';
                     return $http.get(url);
                 },
                 

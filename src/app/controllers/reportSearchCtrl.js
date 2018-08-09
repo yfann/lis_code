@@ -1,11 +1,10 @@
-app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '$location', function ($scope, $state, dataService, util, $location) {
+app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '$location','$q', function ($scope, $state, dataService, util, $location, $q) {
     var editUrl = '<a class="edit-tpl" ui-sref="report_print({id: row.entity.id})">查看</a> <a class="edit-tpl" ng-click="grid.appScope.downloadPDF(row.entity.id)">下载</a>'
 
     $scope.gridOptions = {
-        enableFiltering: false,
-        onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
-        },
+        paginationPageSizes: [25, 50, 75],
+        paginationPageSize: 25,
+        useExternalPagination: true,
         columnDefs: [
             {
                 field: 'id',
@@ -52,7 +51,15 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
                 displayName: '操作',
                 cellTemplate: editUrl
             }
-        ]
+        ],
+        onRegisterApi: function (gridApi) {
+            $scope.gridApi = gridApi;
+            gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                $scope.paginationOptions.pageNumber = newPage;
+                $scope.paginationOptions.pageSize = pageSize;
+                $scope.load();
+            });
+        }
     };
 
     $scope.model = {
@@ -62,6 +69,12 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
         checkoutDate: null,
         startOpened: false,
         endOpened: false,
+    };
+
+
+    $scope.paginationOptions = {
+        pageNumber: 1,
+        pageSize: 25
     };
 
     $scope.dateOptions = {
@@ -82,20 +95,27 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
         $scope.model.endOpened = true;
     };
 
-
-
     $scope.load = function () {
-
-        dataService.searchReport($scope.model.patientName,$scope.model.idCard,$scope.model.checkoutDate).then(function (result) {
+        dataService.searchReport($scope.model.patientName, $scope.model.idCard, $scope.model.checkoutDate, $scope.paginationOptions.pageNumber, $scope.paginationOptions.pageSize).then(function (result) {
             $scope.gridOptions.data = result.data;
         });
     };
+
+    $q.all([
+        dataService.getReportTotalNum(),
+        dataService.searchReport($scope.model.patientName, $scope.model.idCard, $scope.model.checkoutDate, $scope.paginationOptions.pageNumber, $scope.paginationOptions.pageSize)
+    ]).then(function(result){
+        $scope.gridOptions.totalItems = result[0].data;
+        $scope.gridOptions.data = result[1].data;
+    });
+
+
     $scope.search = function () {
         //$scope.gridApi.grid.refresh();
         $scope.load();
     };
 
-    $scope.load();
+    //$scope.load();
 
     $scope.downloadPDF = function (id) {
         window.open(location.origin + '/home/DownloadPdf?reportId=' + id, '_blank');
