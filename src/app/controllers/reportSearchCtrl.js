@@ -1,4 +1,4 @@
-app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '$location','$q', function ($scope, $state, dataService, util, $location, $q) {
+app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '$location', '$q', function ($scope, $state, dataService, util, $location, $q) {
     var editUrl = '<a class="edit-tpl" ui-sref="report_print({id: row.entity.id})">查看</a> <a class="edit-tpl" ng-click="grid.appScope.downloadPDF(row.entity.id)">下载</a>'
 
     $scope.gridOptions = {
@@ -57,7 +57,7 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
             gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
                 $scope.paginationOptions.pageNumber = newPage;
                 $scope.paginationOptions.pageSize = pageSize;
-                $scope.load();
+                $scope.pageLoad();
             });
         }
     };
@@ -95,19 +95,38 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
         $scope.model.endOpened = true;
     };
 
-    $scope.load = function () {
+    $scope.pageLoad = function () {
         dataService.searchReport($scope.model.patientName, $scope.model.idCard, $scope.model.checkoutDate, $scope.paginationOptions.pageNumber, $scope.paginationOptions.pageSize).then(function (result) {
             $scope.gridOptions.data = result.data;
         });
     };
 
-    $q.all([
-        dataService.getReportTotalNum(),
-        dataService.searchReport($scope.model.patientName, $scope.model.idCard, $scope.model.checkoutDate, $scope.paginationOptions.pageNumber, $scope.paginationOptions.pageSize)
-    ]).then(function(result){
-        $scope.gridOptions.totalItems = result[0].data;
-        $scope.gridOptions.data = result[1].data;
-    });
+    $scope.loadAll = function (redirect) {
+        $q.all([
+            dataService.getReportTotalNum(),
+            dataService.searchReport($scope.model.patientName, $scope.model.idCard, $scope.model.checkoutDate, $scope.paginationOptions.pageNumber, $scope.paginationOptions.pageSize)
+        ]).then(function (result) {
+            $scope.gridOptions.totalItems = result[0].data;
+            $scope.gridOptions.data = result[1].data;
+            if (redirect) {
+                if (result[1].data.length == 1) {
+                    $state.go('report_print', { id: result[1].data[0].id });
+                }
+            }
+        });
+    }
+
+
+    var params = $location.search();
+    if (params.innerId) {
+        $scope.model.patientName = null;
+        $scope.model.idCard = params.innerId;
+        $scope.model.checkoutDate = null;
+        $scope.loadAll(true);
+    } else {
+        $scope.loadAll();
+    }
+
 
 
     $scope.search = function () {
@@ -115,11 +134,13 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
         $scope.load();
     };
 
-    //$scope.load();
+
 
     $scope.downloadPDF = function (id) {
         window.open(location.origin + '/home/DownloadPdf?reportId=' + id, '_blank');
     };
+
+
 }]);
 
 
