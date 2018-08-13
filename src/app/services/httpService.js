@@ -311,8 +311,11 @@ angular.module('httpService', []).
                     return $http.get(url);
                 },
 
-                getReportTotalNum:function(){
-                    var url = host + '/api/lis/reportsearch/total';
+                getReportTotalNum: function (patientName, idCard, date) {
+                    var url = host + '/api/lis/reportsearchtotal';
+                    url += '?patientName=' + (patientName ? patientName : '');
+                    url += '&idCard=' + (idCard ? idCard : '');
+                    url += '&date=' + (date ? date : '');
                     return $http.get(url);
                 },
                 

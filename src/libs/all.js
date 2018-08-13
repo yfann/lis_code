@@ -2382,7 +2382,8 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
             },
             {
                 field: 'reportTime',
-                displayName: '检验日期'
+                displayName: '检验日期',
+                cellTemplate: '<span>{{row.entity.reportTime|date:"yyyy-MM-dd"}}</span>'
             },
             {
                 field: 'setName',
@@ -2451,10 +2452,24 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
         });
     };
 
+    var formatDate = function (date) {
+        if (!date) return '';
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    };
+
     $scope.loadAll = function (redirect) {
+        var date = formatDate($scope.model.checkoutDate);
         $q.all([
-            dataService.getReportTotalNum(),
-            dataService.searchReport($scope.model.patientName, $scope.model.idCard, $scope.model.checkoutDate, $scope.paginationOptions.pageNumber, $scope.paginationOptions.pageSize)
+            dataService.getReportTotalNum($scope.model.patientName, $scope.model.idCard, date),
+            dataService.searchReport($scope.model.patientName, $scope.model.idCard, date, $scope.paginationOptions.pageNumber, $scope.paginationOptions.pageSize)
         ]).then(function (result) {
             $scope.gridOptions.totalItems = result[0].data;
             $scope.gridOptions.data = result[1].data;
@@ -2481,7 +2496,7 @@ app.controller('ReportSearchCtrl', ['$scope', '$state', 'dataService', 'util', '
 
     $scope.search = function () {
         //$scope.gridApi.grid.refresh();
-        $scope.load();
+        $scope.loadAll();
     };
 
 
@@ -3969,8 +3984,11 @@ angular.module('httpService', []).
                     return $http.get(url);
                 },
 
-                getReportTotalNum:function(){
-                    var url = host + '/api/lis/reportsearch/total';
+                getReportTotalNum: function (patientName, idCard, date) {
+                    var url = host + '/api/lis/reportsearchtotal';
+                    url += '?patientName=' + (patientName ? patientName : '');
+                    url += '&idCard=' + (idCard ? idCard : '');
+                    url += '&date=' + (date ? date : '');
                     return $http.get(url);
                 },
                 
